@@ -11,12 +11,12 @@ module SystemBus
     input MEMRead       mem_read,
     input MEMWrite      mem_write,
 
+    output logic [31:0] lcd_read_data,
+    output logic [31:0] button_read_data,
     output logic [31:0] read_data
 );
     DeviceDataSrc device_data_src;
     logic [31:0] data_memory_data;
-    logic [31:0] lcd_read_data;
-    logic [31:0] button_read_data;
     logic [31:0] selected_data;
 
     MemoryBus memory_bus(

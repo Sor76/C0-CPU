@@ -4,8 +4,7 @@ module InstructionMemory #(
     parameter INSTRUCTION_COUNTS = 65536,
     parameter PROGRAM_NAME = "program.mem"
 ) (
-    input logic  [31:0] address,
-    output logic [31:0] instruction
+    FetchStageBus.master fetch_stage_bus
 );
     // In byte, that would be INSTRUCTION_COUNTS * 4(bytes), which typically is 262KB.
     logic [7:0] memory_block [INSTRUCTION_COUNTS * 4 - 1:0] = '{default: 0};
@@ -40,7 +39,7 @@ module InstructionMemory #(
 
     always_comb begin
         // Convert the little-endian in to big-endian instruction because I already designs most of the processor to be big-endian before knowing the little-endian thing. lol
-        instruction = {
+        fetch_stage_bus.instruction = {
             memory_block[address + 3],
             memory_block[address + 2],
             memory_block[address + 1],
