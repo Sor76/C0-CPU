@@ -1,6 +1,6 @@
 `timescale 1ns/1ps
 
-module MemoryStageTop
+module SystemBus
     import ControlSignals_pkg::*;
 (
     input logic rst_n,
@@ -68,9 +68,9 @@ module MemoryStageTop
     // Mux for choosing data into Bit Extender
     always @(device_data_src) begin
         case (device_data_src)
-            DATA_MEM: selected_data = data_memory_data;
-            LCD_CONTROLLER: selected_data = lcd_read_data;
-            BUTTON_CONTROLLER: selected_data = button_read_data;
+            DEVICE_DATA_SRC_DATA_MEM: selected_data = data_memory_data;
+            DEVICE_DATA_SRC_LCD_CONTROLLER: selected_data = lcd_read_data;
+            DEVICE_DATA_SRC_BUTTON_CONTROLLER: selected_data = button_read_data;
             default: selected_data = '0;
         endcase
     end

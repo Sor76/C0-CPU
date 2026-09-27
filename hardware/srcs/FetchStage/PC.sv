@@ -3,8 +3,8 @@
 module PC
     import ControlSignals_pkg::*;
 (
-    input logic         rst_n,
     input logic         clk,
+    input logic         rst_n,
     
     input PCSrc         pc_src,
     input logic [31:0]  jump_address,
@@ -16,9 +16,9 @@ module PC
             address <= 0;
         end else begin
             case (pc_src)
+                PCSRC_NEXT_ADDRESS: address <= address + 4;
                 PCSRC_JUMP_ADDRESS: address <= jump_address;
                 PCSRC_JUMP_JALR_ADDRESS: address <= {jump_address[31:1], 1'b0};
-                default: address <= address + 4;
             endcase
         end
     end

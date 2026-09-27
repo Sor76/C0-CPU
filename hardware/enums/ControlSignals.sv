@@ -53,8 +53,8 @@ package ControlSignals_pkg;
         PCSRC_JUMP_JALR_ADDRESS // 10
     } PCSrc;
 
-    typedef enum logic {
-        // Peripheral enum value must match the ID of each peripheral.
+    typedef enum logic [1:0] {
+        // Peripheral enum values must match the ID of each peripheral.
         DEVICE_DATA_SRC_DATA_MEM,
         DEVICE_DATA_SRC_LCD_CONTROLLER,
         DEVICE_DATA_SRC_BUTTON_CONTROLLER,
