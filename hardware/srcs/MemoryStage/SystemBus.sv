@@ -2,77 +2,40 @@
 
 module SystemBus
     import ControlSignals_pkg::*;
-(
-    input logic rst_n,
-    input logic clk,
+#(
+    parameter int DATA_MEM_ADDRESS_WIDTH    = 16,
+    parameter int BUTTON_ROWS               = 5,
+    parameter int BUTTON_COLS               = 4
+) (
+    // Processor internal buses
+    MemoryStageBus.master   mem_stage_bus,
+    MemoryStageBus.device   device_bus,
+    ExecuteStageBus.slave   ex_stage_bus,
 
-    input logic [31:0]  address,
-    input logic [31:0]  write_data,
-    input MEMRead       mem_read,
-    input MEMWrite      mem_write,
-
-    output logic [31:0] lcd_read_data,
-    output logic [31:0] button_read_data,
-    output logic [31:0] read_data
+    // Processor-Peripheral external buses
+    LCDDeviceBus.master     lcd_bus,
+    ButtonDeviceBus.master  button_bus
 );
-    DeviceDataSrc device_data_src;
-    logic [31:0] data_memory_data;
-    logic [31:0] selected_data;
-
-    MemoryBus memory_bus(
-        .clk(clk),
-        .rst_n(rst_n)
-    );
-    PeripheralBus peripheral_bus(
-        .clk(clk),
-        .rst_n(rst_n)
-    );
-    LCDBus lcd_bus;
-    ButtonBus button_bus;
-
     AddressDecoder address_decoder (
-        .address(address),
-        .write_data(write_data),
-        .mem_read(mem_read),
-        .mem_write(mem_write),
-
-        .memory_bus(memory_bus.master),
-        .peripheral_bus(peripheral_bus.master),
-
-        .device_data_src(device_data_src)
+        .mem_stage_bus(mem_stage_bus),
+        .ex_stage_bus(ex_stage_bus)
     );
 
     // Devices
-    DataMemory data_memory (
-        .bus(memory_bus.slave),
-        .memory_read_data(data_memory_data)
+    DataMemoryController #(
+        .ADDRESS_WIDTH(DATA_MEM_ADDRESS_WIDTH)
+    ) data_memory_controller (
+        .device_bus(device_bus)
     );
     LCDController lcd_controller (
-        .bus(peripheral_bus.slave),
-        .lcd_bus(lcd_bus.master),
-        .lcd_read_data(lcd_read_data)
+        .device_bus(device_bus),
+        .lcd_bus(lcd_bus)
     );
-    ButtonController button_controller (
-        .peripheral_bus(peripheral_bus.slave),
-        .button_bus(button_bus.master),
-        .button_read_data(button_read_data)
+    ButtonController #(
+        .BUTTON_ROWS(BUTTON_ROWS),
+        .BUTTON_COLS(BUTTON_COLS)
+    ) button_controller (
+        .device_bus(device_bus),
+        .button_bus(button_bus)
     );
-
-
-    BitExtender bit_extender (
-        .data(selected_data),
-        .mem_read(mem_read),
-        .extended_data(read_data)
-    );
-
-    // Mux for choosing data into Bit Extender
-    always @(device_data_src) begin
-        case (device_data_src)
-            DEVICE_DATA_SRC_DATA_MEM: selected_data = data_memory_data;
-            DEVICE_DATA_SRC_LCD_CONTROLLER: selected_data = lcd_read_data;
-            DEVICE_DATA_SRC_BUTTON_CONTROLLER: selected_data = button_read_data;
-            default: selected_data = '0;
-        endcase
-    end
-
 endmodule

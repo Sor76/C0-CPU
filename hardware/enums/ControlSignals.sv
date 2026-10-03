@@ -24,19 +24,19 @@ package ControlSignals_pkg;
     } ComOp;
     typedef enum logic [2:0] {
         // First bit or the MSB signify if the read is will be signed or unsigned extended.
-        MEM_READ_1_U_BYTE   = 3'b000,
-        MEM_READ_2_U_BYTES  = 3'b001,
-        MEM_READ_4_BYTES    = 3'b010,
-        MEM_READ_1_BYTE     = 3'b100,
-        MEM_READ_2_BYTES    = 3'b101,
-        NO_MEM_READ         = 3'b111
-    } MEMRead;
+        READ_OP_1_U_BYTE    = 3'b000,
+        READ_OP_2_U_BYTES   = 3'b001,
+        READ_OP_4_BYTES     = 3'b010,
+        READ_OP_1_BYTE      = 3'b100,
+        READ_OP_2_BYTES     = 3'b101,
+        NO_READ_OP          = 3'b111
+    } ReadOp;
     typedef enum logic [1:0] {
-        MEM_WRITE_1_BYTE,
-        MEM_WRITE_2_BYTES,
-        MEM_WRITE_4_BYTES,
-        NO_MEM_WRITE
-    } MEMWrite;
+        WRITE_OP_1_BYTE,
+        WRITE_OP_2_BYTES,
+        WRITE_OP_4_BYTES,
+        NO_WRITE_OP
+    } WriteOp;
     typedef enum logic [1:0] {
         RDSRC_ALU_RESULT,
         RDSRC_NEXT_ADDRESS,

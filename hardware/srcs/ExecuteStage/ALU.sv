@@ -3,25 +3,22 @@
 module ALU
     import ControlSignals_pkg::*;
 (
-    input logic [31:0] operand_1,
-    input logic [31:0] operand_2,
-    input ALUOp alu_op,
-
-    output logic [31:0] result = 0
+    ExecuteStageBus.master ex_stage_bus,
+    DecodeStageBus.slave id_stage_bus
 );
     always_comb begin
-        case (alu_op)
-            ADD: result = operand_1 + operand_2;
-            SUB: result = operand_1 - operand_2;
-            SLL: result = operand_1 << operand_2;
-            SLT: result = $signed(operand_1) < $signed(operand_2);
-            SLTU: result = $unsigned(operand_1) < $unsigned(operand_2);
-            XOR: result = operand_1 ^ operand_2;
-            SRL: result = operand_1 >> operand_2;
-            SRA: result = operand_1 >>> operand_2;
-            OR: result = operand_1 | operand_2;
-            AND: result = operand_1 & operand_2;
-            default: result = 0;
+        case (id_stage_bus.alu_op)
+            ADD: ex_stage_bus.alu_result = ex_stage_bus.operand_1 + ex_stage_bus.operand_2;
+            SUB: ex_stage_bus.alu_result = ex_stage_bus.operand_1 - ex_stage_bus.operand_2;
+            SLL: ex_stage_bus.alu_result = ex_stage_bus.operand_1 << ex_stage_bus.operand_2;
+            SLT: ex_stage_bus.alu_result = $signed(ex_stage_bus.operand_1) < $signed(ex_stage_bus.operand_2);
+            SLTU: ex_stage_bus.alu_result = $unsigned(ex_stage_bus.operand_1) < $unsigned(ex_stage_bus.operand_2);
+            XOR: ex_stage_bus.alu_result = ex_stage_bus.operand_1 ^ ex_stage_bus.operand_2;
+            SRL: ex_stage_bus.alu_result = ex_stage_bus.operand_1 >> ex_stage_bus.operand_2;
+            SRA: ex_stage_bus.alu_result = ex_stage_bus.operand_1 >>> ex_stage_bus.operand_2;
+            OR: ex_stage_bus.alu_result = ex_stage_bus.operand_1 | ex_stage_bus.operand_2;
+            AND: ex_stage_bus.alu_result = ex_stage_bus.operand_1 & ex_stage_bus.operand_2;
+            default: ex_stage_bus.alu_result = '0;
         endcase
     end
 endmodule

@@ -14,8 +14,8 @@ interface ControlUnitTbInterface;
     logic [1:0]                              alu_operand;
     ControlSignals_pkg::ALUOp                alu_op;
     OtherSignals_pkg::JmpOp                  jmp_op;
-    ControlSignals_pkg::MEMRead              mem_read;
-    ControlSignals_pkg::MEMWrite             mem_write;
+    ControlSignals_pkg::ReadOp               read_op;
+    ControlSignals_pkg::WriteOp              write_op;
     ControlSignals_pkg::rdSrc                rd_src;
     logic [4:0]                              rd_address;
     ControlSignals_pkg::rdWrite              rd_write;
@@ -32,8 +32,8 @@ program ControlUnitTbProgram (
     input logic [1:0]                              alu_operand,
     input ControlSignals_pkg::ALUOp                alu_op,
     input OtherSignals_pkg::JmpOp                  jmp_op,
-    input ControlSignals_pkg::MEMRead              mem_read,
-    input ControlSignals_pkg::MEMWrite             mem_write,
+    input ControlSignals_pkg::ReadOp               read_op,
+    input ControlSignals_pkg::WriteOp              write_op,
     input ControlSignals_pkg::rdSrc                rd_src,
     input logic [4:0]                              rd_address,
     input ControlSignals_pkg::rdWrite              rd_write
@@ -118,8 +118,8 @@ module ControlUnit_tb;
         .alu_operand(intf.alu_operand),
         .alu_op(intf.alu_op),
         .jmp_op(intf.jmp_op),
-        .mem_read(intf.mem_read),
-        .mem_write(intf.mem_write),
+        .read_op(intf.read_op),
+        .write_op(intf.write_op),
         .rd_src(intf.rd_src),
         .rd_address(intf.rd_address),
         .rd_write(intf.rd_write)
@@ -133,8 +133,8 @@ module ControlUnit_tb;
         .alu_operand(intf.alu_operand),
         .alu_op(intf.alu_op),
         .jmp_op(intf.jmp_op),
-        .mem_read(intf.mem_read),
-        .mem_write(intf.mem_write),
+        .read_op(intf.read_op),
+        .write_op(intf.write_op),
         .rd_src(intf.rd_src),
         .rd_address(intf.rd_address),
         .rd_write(intf.rd_write)

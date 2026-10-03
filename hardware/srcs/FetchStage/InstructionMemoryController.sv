@@ -1,13 +1,16 @@
 `timescale 1ns/1ps
 
-module InstructionMemory #(
-    parameter INSTRUCTION_COUNTS = 65536,
-    parameter PROGRAM_NAME = "program.mem"
+module InstructionMemoryController #(
+    parameter int       ADDRESS_WIDTH   = 16, // In bit
+    parameter string    PROGRAM_NAME    = "program.mem"
 ) (
-    FetchStageBus.master fetch_stage_bus
+    FetchStageBus.master if_stage_bus
 );
-    // In byte, that would be INSTRUCTION_COUNTS * 4(bytes), which typically is 262KB.
-    logic [7:0] memory_block [INSTRUCTION_COUNTS * 4 - 1:0] = '{default: 0};
+    // Using Byte addressable memory for instruction (1 address = 1 byte)
+    // Total instruction count = 2 ** ADDRESS_WIDTH / 4
+    // Byte addressable memory because "sometimes" the PC address will land on ...10, which will make 4 bytes read on Word addressable memory pretty hard/required more clock cycle.
+    // It would be easier to use Byte addressable memory that always read 4 bytes from any address.
+    (* ram_style = "block" *) logic [7:0] instruction_memory_block [0:2**ADDRESS_WIDTH - 1] = '{default: 0};
 
     // Read a program from a file with the name of PROGRAM_NAME parameter using base 16.
     // Per line, there would be 8 hex values. Those values are group into 4 group (2 per group) separate by space.
@@ -35,16 +38,13 @@ module InstructionMemory #(
     // 13 00 00 00
     // 93 92 A2 00
 
-    initial $readmemh(PROGRAM_NAME, memory_block);
-
-    always_comb begin
-        // Convert the little-endian in to big-endian instruction because I already designs most of the processor to be big-endian before knowing the little-endian thing. lol
-        fetch_stage_bus.instruction = {
-            memory_block[address + 3],
-            memory_block[address + 2],
-            memory_block[address + 1],
-            memory_block[address]
-        };
+    initial begin
+        $readmemh(PROGRAM_NAME, instruction_memory_block);
     end
-    
+
+    always_ff @(posedge if_stage_bus.clk) begin
+        // Use selected_address instead of PC's current address to combat the synchronous read of BRAM.
+        // Convert the little-endian in to big-endian instruction because I already designs most of the processor to be big-endian before knowing the little-endian thing. lol
+        if_stage_bus.instruction <= {<<8{instruction_memory_block[if_stage_bus.selected_address +:4]}};
+    end
 endmodule

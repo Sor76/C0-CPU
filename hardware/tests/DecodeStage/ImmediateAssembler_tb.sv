@@ -1,71 +1,60 @@
 `timescale 1ns/1ps
 
-import OtherSignals_pkg::*;
+program ImmediateAssemblerTbProgram #(
+    parameter int TEST_SIZE = 2 ** 24
+) (
+    DecodeStageBus.master id_stage_bus_master,
+    DecodeStageBus.slave id_stage_bus_slave
 
-class RandomFormat;
-    rand InstructionFormat value;
-    constraint rule {
-        value != R_TYPE;
-    }
-endclass
-
-program ImmediateAssemblerTbProgram (
-    output logic [19:0] imm = 0,
-    output InstructionFormat format = I_TYPE,
-    input logic [31:0] extended_imm
 );
-    RandomFormat random_format = new();
     logic [31:0] target_value;
-
     initial begin
-        repeat(1000000) begin
-            assert (random_format.randomize()) else $fatal(2, "Unable to randomize new format type.");
-            format = random_format.value;
-            case (random_format.value)
+        repeat(TEST_SIZE) begin
+            assert (std::randomize(id_stage_bus_master.instruction_format) with {id_stage_bus_master.instruction_format != R_TYPE;}) else $fatal(2, "Unable to randomize new format type.");
+            
+            // Randomizing raw imm
+            case (id_stage_bus_master.instruction_format)
                 I_TYPE, S_TYPE, B_TYPE: begin
-                    if (!std::randomize(imm) with {imm inside {[0:2**12-1]};}) $fatal(3, "Unable to randomize new target value.");
+                    if (!std::randomize(id_stage_bus_master.raw_imm) with {id_stage_bus_master.raw_imm inside {[-(2**12):2**12-1]};}) $fatal(3, "Unable to randomize new target value.");
                 end
                 U_TYPE, J_TYPE: begin
-                    if (!std::randomize(imm)) $fatal(3, "Unable to randomize new target value.");
+                    if (!std::randomize(id_stage_bus_master.raw_imm)) $fatal(3, "Unable to randomize new target value.");
                 end
             endcase
-            case (random_format.value)
+
+            // Expected extended imm
+            case (id_stage_bus_master.instruction_format)
                 I_TYPE, S_TYPE: begin
-                    target_value = imm[11:0];
+                    target_value = $signed(id_stage_bus_master.raw_imm[11:0]);
                 end 
                 B_TYPE: begin
-                    target_value = {imm[11:0], 1'b0};
+                    target_value = $signed({id_stage_bus_master.raw_imm[11:0], 1'b0});
                 end
                 U_TYPE: begin
-                    target_value = {imm, 12'b0};
+                    target_value = {id_stage_bus_master.raw_imm, 12'b0};
                 end
                 J_TYPE: begin
-                    target_value = {imm, 1'b0};
+                    target_value = $signed({id_stage_bus_master.raw_imm, 1'b0});
                 end
             endcase
 
             #1ns;
-            if (extended_imm != target_value) begin
-                $fatal(1, "Mismatch value between extended immediate value (%0d) and its target value(%0d).", extended_imm, target_value);
-            end
+            assert (id_stage_bus_master.extended_imm == target_value) else $fatal(1, "Mismatch value between extended immediate value (%0d) and its target value(%0d).", id_stage_bus_master.extended_imm, target_value);
         end
         $finish;
     end
 endprogram
 
 module ImmediateAssembler_tb;
-    logic [19:0] imm;
-    InstructionFormat format;
-    logic [31:0] extended_imm;
+    DecodeStageBus id_stage_bus ();
 
     ImmediateAssembler dut (
-        .imm(imm),
-        .format(format),
-        .extended_imm(extended_imm)
+        .id_stage_bus(id_stage_bus)
     );
-    ImmediateAssemblerTbProgram test_env (
-        .imm(imm),
-        .format(format),
-        .extended_imm(extended_imm)
+    ImmediateAssemblerTbProgram #(
+        .TEST_SIZE(2**16)
+    ) test_env (
+        .id_stage_bus_master(id_stage_bus.master),
+        .id_stage_bus_slave(id_stage_bus.slave)
     );
 endmodule

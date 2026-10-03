@@ -1,94 +1,105 @@
 `timescale 1ns/1ps
 
-import ControlSignals_pkg::*;
-
-interface RegisterFileTbInterface;
-    logic rst_n;
-    logic clk;
-
-    logic [4:0] read_address_1;
-    logic [4:0] read_address_2;
-    logic [31:0] write_data;
-    rdWrite write_enable;
-    logic [4:0] write_address;
-
-    logic [31:0] read_register_1_data;
-    logic [31:0] read_register_2_data;
-endinterface
-
 program RegisterFileTbProgram (
-    output logic rst_n = 1,
-    output logic clk = 1,
+    output logic clk,
+    output logic rst_n,
 
-    output logic [4:0] read_address_1 = 0,
-    output logic [4:0] read_address_2 = 0,
-    output logic [31:0] write_data = 0,
-    output rdWrite write_enable = NO_RD_WRITE,
-    output logic [4:0] write_address = 0,
-
-    input logic [31:0] read_register_1_data,
-    input logic [31:0] read_register_2_data
+    DecodeStageBus.master id_stage_bus_master,
+    DecodeStageBus.slave id_stage_bus_slave,
+    WritebackStageBus.master wb_stage_bus
 );
-    initial begin
-        clk = 1;
-        forever #1ns clk = !clk;
-    end
-    initial begin
-        // Writing section
-        write_enable = RD_WRITE;
-        for (int i = 0; i < 32; i = i + 1) begin
-            write_data = i;
-            write_address = i;
-            @(posedge clk);
-            @(negedge clk);
-        end
-        write_enable = NO_RD_WRITE;
-
-        // Reading section
-        for (int i = 0; i < 16; i = i + 1) begin
-            read_address_1 = i * 2;
-            read_address_2 = i * 2 + 1;
-            #1;
-            if (read_register_1_data != read_address_1 || read_register_2_data != read_address_2) $fatal(1, "Register File failed to record its value with its address.");
-        end
-
-        // Clearing section
+    task automatic reset();
         rst_n = 0;
         #1ns;
         rst_n = 1;
-        for (int i = 0; i < 16; i = i + 1) begin
-            read_address_1 = i * 2;
-            read_address_2 = i * 2 + 1;
-            #1;
-            if (read_register_1_data != 0 || read_register_2_data != 0) $fatal(2, "Register File failed to cleared its register value(s).");
+    endtask
+
+    // Signal init
+    initial begin
+        rst_n = 1;
+        clk = 0;
+        forever #10ns clk = !clk;
+    end
+
+    initial begin
+        // Writing section
+        wb_stage_bus.rd_write = RD_WRITE;
+        for (int i = 0; i < 32; i = i + 1) begin
+            wb_stage_bus.rd_write_data = i;
+            wb_stage_bus.rd_address = i;
+            @(posedge clk);
         end
+        wb_stage_bus.rd_write = NO_RD_WRITE;
+        $display("Finished writing section.");
+
+        // Reading section
+        for (int i = 0; i < 16; i = i + 1) begin
+            id_stage_bus_master.rs1_address = i * 2;
+            id_stage_bus_master.rs2_address = i * 2 + 1;
+            @(posedge clk);
+            assert (
+                id_stage_bus_slave.rs1_data == id_stage_bus_master.rs1_address &&
+                id_stage_bus_slave.rs2_data == id_stage_bus_master.rs2_address
+            ) else $fatal(1, "Register File failed to record its value with its address.");
+        end
+        $display("Finished reading section.");
+
+        // Read/Write address collision section
+        wb_stage_bus.rd_write = RD_WRITE;
+        wb_stage_bus.rd_write_data = 33;
+        for (int i = 1; i < 32; i = i + 1) begin
+            wb_stage_bus.rd_address = i;
+            id_stage_bus_master.rs1_address = i;
+            id_stage_bus_master.rs2_address = i;
+            @(posedge clk);
+            assert (
+                id_stage_bus_slave.rs1_data == 33 &&
+                id_stage_bus_slave.rs2_data == 33
+            ) else $fatal(2, "Register File failed to pass the write data to read port when read and write address collided.");
+        end
+        wb_stage_bus.rd_write = NO_RD_WRITE;
+        $display("Finished Read/Write address collision section.");
+
+        // Resetting section
+        reset();
+        @(posedge clk);
+        for (int i = 0; i < 16; i = i + 1) begin
+            id_stage_bus_master.rs1_address = i * 2;
+            id_stage_bus_master.rs2_address = i * 2 + 1;
+            @(posedge clk);
+            assert (
+                id_stage_bus_slave.rs1_data == 0 && 
+                id_stage_bus_slave.rs2_data == 0
+            ) else $fatal(3, "Register File failed to cleared its register value(s).");
+        end
+        $display("Finished resetting Register File section.");
 
         $finish;
     end
 endprogram
 
 module RegisterFile_tb;
-    RegisterFileTbInterface intf();
+    logic clk;
+    logic rst_n;
+
+    DecodeStageBus id_stage_bus(
+        .clk(clk),
+        .rst_n(rst_n)
+    );
+    WritebackStageBus wb_stage_bus(
+        .clk(clk),
+        .rst_n(rst_n)
+    );
+
     RegisterFile dut (
-        .rst_n(intf.rst_n),
-        .clk(intf.clk),
-        .read_address_1(intf.read_address_1),
-        .read_address_2(intf.read_address_2),
-        .write_data(intf.write_data),
-        .write_enable(intf.write_enable),
-        .write_address(intf.write_address),
-        .read_register_1_data(intf.read_register_1_data),
-        .read_register_2_data(intf.read_register_2_data)
+        .id_stage_bus(id_stage_bus.master),
+        .wb_stage_bus(wb_stage_bus.slave)
     );
     RegisterFileTbProgram test_env (
-        .rst_n(intf.rst_n),
-        .clk(intf.clk),
-        .read_address_1(intf.read_address_1),
-        .read_address_2(intf.read_address_2),
-        .write_data(intf.write_data),
-        .write_enable(intf.write_enable),
-        .write_address(intf.write_address),
-        .read_register_1_data(intf.read_register_1_data),
-        .read_register_2_data(intf.read_register_2_data)
+        .clk(clk),
+        .rst_n(rst_n),
+        .id_stage_bus_master(id_stage_bus.master),
+        .id_stage_bus_slave(id_stage_bus.slave),
+        .wb_stage_bus(wb_stage_bus.master)
     );
 endmodule

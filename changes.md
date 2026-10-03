@@ -2,9 +2,9 @@ List for storing the changes made mid-way when writing the FPGA code. All the di
 
 1. `ALUOp` remains 4-bits long but branching associated operations are now removed. Instead, it is moved to `ComOp` Control Signal.
     - Status: Unchecked
-2. `MEMRead` Extended to 3-bits from 2 from the addition of 3 difference read width and signed/unsigned mode.
+2. `MEMRead` got renamed to `ReadOp` to match the functionality to both data memory and peripherals, and extended to 3-bits from 2 from the addition of 3 difference read width and signed/unsigned mode.
     - Status: Unchecked
-3. `MEMWrite` Extended to 2-bits from 1 from the addition of 3 difference write width.
+3. `MEMWrite` got renamed to `WriteOp` to match the functionality to both data memory and peripherals, and Extended to 2-bits from 1 from the addition of 3 difference write width.
     - Status: Unchecked
 4. `PCSrc` Extended the width from 1-bit to 2-bits, from the addition of the specific `jalr` jump address. This also make the PC have to go under diagram redrawn as well for mux having new input.
     - Status: Unchecked
@@ -16,21 +16,25 @@ List for storing the changes made mid-way when writing the FPGA code. All the di
     - Status: Unchecked
 8. ALU will now be purely for math and logic no more comparison.
     - Status: Unchecked
-9. PC's internal mux now have another input for having first 31-bits (MSB) of the jump address as a choice.
+9. PC's internal mux now have another input for having first 31-bits (MSB) of the jump address as a choice. The choice is also combinational now instead of sequential, so that the register that holds PC's internal address and Instruction Memory Controller which use BRAM could reference to the same thing.
     - Status: Unchecked
-10. Memory (inst, data and peripheral) now use little-endian style (but the internal of the processor still use big-endian).
+10. Memory/Peripheral (inst, data and peripheral) now use little-endian style (but the internal of the processor still use big-endian).
     - Status: Unchecked
-11. Address Decoder now handles the conflict behavior from the `MEMRead` and `MEMWrite` trying to interact with the target at the same time. It is more efficient to let the Address Decoder handles this.
+11. Address Decoder now handles the conflict behavior from the `ReadOp` and `WriteOp` trying to interact with the target at the same time. It is more efficient to let the Address Decoder handles this.
     - Status: Unchecked
-13. Add new Bits Extension Unit for handling signed/unsigned extending for the `MEMRead` operation that doesn't read the full word.
+13. Add new Bits Extension Unit for handling signed/unsigned extending for the `ReadOp` operation that doesn't read the full word.
     - Status: Unchecked
-14. Add new 2 units for peripheral controller for controlling LCD and Buttons.
+14. Removed the big Peripheral Controller and leave out the controller for each peripheral.
     - Status: Unchecked
-15. Separate the bus type used for communication between memory and peripheral due to memory bus need to contain address, while the peripheral bus use chip select signal instead.
+15. Unified the bus for communication between the processor, the Data Memory and the Peripherals into one bus (separate the data line from each device). When there is a read/write request from the processor, the Address Decoder now uses a few MSB bits (probably only 2, but the number goes up and down according to the peripheral counts) for generating a device_select signal to, ofc, selecting a device. The remaining LSB bits are also passed to the target device for accessing their internal contents like data at specific data memory address.
     - Status: Unchecked
-16. Remove Peripheral Controller. Instead, the Address Decoder generates the chip select signal into peripheral bus.
+16. `DeviceDataSrc` Control Signal now separates `PERIPHERAL` into `LCD_CONTROLLER` and `BUTTON_CONTROLLER` due to removal of the Peripheral Controller, and added value for reading from none. And, expand the size to 2-bits
     - Status: Unchecked
-17. `DeviceDataSrc` Control Signal now separates `PERIPHERAL` into `LCD_CONTROLLER` and `BUTTON_CONTROLLER` due to removal of the Peripheral Controller, and added value for reading from none. And, expand the size to 2-bits
+17. Renamed Data Memory to Data Memory Controller, and switch to word addressable memory instead of byte addressable memory with terrible approach for preventing delay from accessing multiple byte. It works for now, at least.
+    - Status: Unchecked
+19. Renamed Instruction Memory to Instruction Memory Controller, but remains with byte addressable memory.
+    - Status: Unchecked
+20. Major changes to MEM and WB stage due to BRAM implementation on Data Memory Controller, which cause the read operation have a delay of 1 clock cycle. Read operation mux and bit extender for that data are now moved to WB to accommodate for the delay of the Data Memory Controller. Result of read operation from LCD, button matrix, `DeviceDataSrc` and `ReadOp` are now part of MEM/WB interstage register.
     - Status: Unchecked
 
 

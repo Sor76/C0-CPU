@@ -3,11 +3,10 @@
 module LCDController
     import ControlSignals_pkg::*;
 #(
-    parameter           CS_ADDRESS = 1
+    parameter int DEVICE_SELECT_NUMBER = 1
 ) (
-    PeripheralBus.slave peripheral_bus,
-    LCDBus.master lcd_bus,
-    output logic [31:0] lcd_read_data = 0 // Just a place holder. I will not read from the LCD to prevent 5V LCD and 3.3V FPGA incident.
+    MemoryStageBus.device   device_bus,
+    LCDDeviceBus.master     lcd_bus
 );
     // The most barebone form it could be.
     // The write_data contains both data, rs and e signal for the LCD.
@@ -25,30 +24,28 @@ module LCDController
     // Originally, I've planned this to fully controls the working of LCD, but I've a lot of fun driving the LCD without I2C
     // or any libraries. So, barebone it is.
     
-    always_ff @(posedge peripheral_bus.clk or negedge peripheral_bus.rst_n) begin
-        if (!peripheral_bus.rst_n) begin
-            lcd_bus.write_data <= 0;
+    // Read operation
+    assign device_bus.lcd_read_data = '0;
+
+    // Write operation / Reset
+    always_ff @(posedge device_bus.clk or negedge device_bus.rst_n) begin
+        if (!device_bus.rst_n) begin
+            lcd_bus.write_data <= '0;
             lcd_bus.rs <= 0;
             lcd_bus.e <= 0;
-        end else begin
-            if (peripheral_bus.cs[CS_ADDRESS] && peripheral_bus.mem_write != NO_MEM_WRITE) begin    
-                case (peripheral_bus.mem_write)
-                    MEM_WRITE_1_BYTE: begin
-                        lcd_bus.write_data <= unsigned'(peripheral_bus.write_data[3:0]);
-                        lcd_bus.rs <= peripheral_bus.write_data[4];
-                        lcd_bus.e <= peripheral_bus.write_data[5];
-                    end
-                    MEM_WRITE_2_BYTES, MEM_READ_4_BYTES: begin
-                        lcd_bus.write_data <= peripheral_bus.write_data[7:0];
-                        lcd_bus.rs <= peripheral_bus.write_data[8];
-                        lcd_bus.e <= peripheral_bus.write_data[9];
-                    end
-                endcase
-            end else begin
-                lcd_bus.write_data <= 0;
-                lcd_bus.rs <= 0;
-                lcd_bus.e <= 0;
-            end
+        end else if (device_bus.device_select[DEVICE_SELECT_NUMBER] && device_bus.write_op != NO_WRITE_OP) begin 
+            case (device_bus.write_op)
+                WRITE_OP_1_BYTE: begin
+                    lcd_bus.write_data <= unsigned'(device_bus.write_data[3:0]);
+                    lcd_bus.rs <= device_bus.write_data[4];
+                    lcd_bus.e <= device_bus.write_data[5];
+                end
+                WRITE_OP_2_BYTES, WRITE_OP_4_BYTES: begin
+                    lcd_bus.write_data <= device_bus.write_data[7:0];
+                    lcd_bus.rs <= device_bus.write_data[8];
+                    lcd_bus.e <= device_bus.write_data[9];
+                end
+            endcase
         end
     end
 endmodule
