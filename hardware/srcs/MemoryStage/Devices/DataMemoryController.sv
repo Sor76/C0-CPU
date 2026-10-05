@@ -14,6 +14,7 @@ module DataMemoryController
     // At the cost of breaking RISC-V specification (must support unalign memory access) and horrible space efficiency.
     (* ram_style = "block" *) logic [31:0] data_memory_block [0:2**ADDRESS_WIDTH - 1] = '{default: 0};
 
+    initial device_bus.data_mem_read_data = '0;
 
     // Address Decoder already handles the conflicting of read and write operation.
     // Forcing read/write 4-byte at a times. For read operation, the Bit Extender will handle the 1-2 bytes read. For write operation, some byte will be 0.

@@ -11,10 +11,13 @@ interface FetchStageBus (
     input logic clk,
     input logic rst_n
 );
+    // Interstage
     logic [31:0]    instruction;
-    logic [31:0]    selected_address; // The address that the PC will jump into in the next clock cycle.
     logic [31:0]    address; // The address that the PC have jumped into.
 
+    // Intrastage
+    logic [31:0]    selected_address; // The address that the PC will jump into in the next clock cycle.
+    
     modport master (
         input clk, rst_n,
         output instruction,

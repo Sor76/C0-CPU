@@ -40,6 +40,7 @@ module InstructionMemoryController #(
 
     initial begin
         $readmemh(PROGRAM_NAME, instruction_memory_block);
+        if_stage_bus.instruction = instruction_memory_block[0];
     end
 
     always_ff @(posedge if_stage_bus.clk) begin

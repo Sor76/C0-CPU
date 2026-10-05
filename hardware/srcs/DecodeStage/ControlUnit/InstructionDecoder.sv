@@ -86,7 +86,7 @@ module InstructionDecoder
             default: begin
                 // Default to NOP operation (addi zero, zero, 0).
                 // Need a bit of help from Operation Decoder in default statement
-                id_stage_bus.raw_imm = 0;
+                id_stage_bus.raw_imm = '0;
                 id_stage_bus.instruction_format = I_TYPE;
 
                 id_stage_bus.rs1_address = 5'b00000;

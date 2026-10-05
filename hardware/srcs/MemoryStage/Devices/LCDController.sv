@@ -45,6 +45,11 @@ module LCDController
                     lcd_bus.rs <= device_bus.write_data[8];
                     lcd_bus.e <= device_bus.write_data[9];
                 end
+                default: begin
+                    lcd_bus.write_data <= '0;
+                    lcd_bus.rs <= '0;
+                    lcd_bus.e <= '0;
+                end
             endcase
         end
     end

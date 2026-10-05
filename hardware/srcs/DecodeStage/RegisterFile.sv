@@ -8,6 +8,11 @@ module RegisterFile
 );
     logic [31:0] register_array [31:0] = '{default: 0};
 
+    initial begin
+        id_stage_bus.rs1_data = '0;
+        id_stage_bus.rs2_data = '0;
+    end
+
     // Helper functions
     function bit rd_write_check;
         return wb_stage_bus.rd_write == RD_WRITE && wb_stage_bus.rd_address != 5'b00000;

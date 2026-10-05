@@ -6,6 +6,8 @@ module PC
     FetchStageBus.master if_stage_bus,
     WritebackStageBus.slave wb_stage_bus
 );
+    initial if_stage_bus.address = '0;
+
     // Address selcting
     always_comb begin
         case (wb_stage_bus.pc_src)

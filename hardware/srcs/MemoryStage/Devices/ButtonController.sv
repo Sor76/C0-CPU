@@ -61,7 +61,7 @@ module ButtonController
 
 
     // Row scanning
-    // initial button_bus.row_out = '{default: 1};
+    initial button_bus.row_out = '{default: 1};
     logic [$clog2(BUTTON_ROWS):0] current_row = 0;
     always_ff @(posedge device_bus.clk or negedge device_bus.rst_n) begin
         if (!device_bus.rst_n) begin
@@ -160,6 +160,7 @@ module ButtonController
     end
 
     // Read operation
+    initial device_bus.button_read_data = 0;
     always @(posedge device_bus.clk) begin
         if (device_bus.device_select[DEVICE_SELECT_NUMBER] && device_bus.read_op != NO_READ_OP) begin
             for (int row = 0; row < BUTTON_ROWS; row = row + 1) begin
