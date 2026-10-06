@@ -27,7 +27,7 @@ module Top #(
         .clk(clk),
         .rst_n(rst_n)
     );
-    PC pc (
+    ProgramCounter pc (
         .if_stage_bus(if_stage_bus.master),
         .wb_stage_bus(wb_stage_bus.slave)
     );
@@ -66,12 +66,12 @@ module Top #(
         .id_stage_bus(id_stage_bus.slave)
     );
     always_ff @(posedge clk) begin
-        ex_stage_bus.rs2_data <= id_stage_bus.rs2_data;
-        ex_stage_bus.read_op <= id_stage_bus.read_op;
-        ex_stage_bus.write_op <= id_stage_bus.write_op;
-        ex_stage_bus.rd_src <= id_stage_bus.rd_src;
+        ex_stage_bus.rs2_data   <= id_stage_bus.rs2_data;
+        ex_stage_bus.read_op    <= id_stage_bus.read_op;
+        ex_stage_bus.write_op   <= id_stage_bus.write_op;
+        ex_stage_bus.rd_src     <= id_stage_bus.rd_src;
         ex_stage_bus.rd_address <= id_stage_bus.rd_address;
-        ex_stage_bus.rd_write <= id_stage_bus.rd_write;
+        ex_stage_bus.rd_write   <= id_stage_bus.rd_write;
     end
 
     // Memory Stage
@@ -102,12 +102,12 @@ module Top #(
     assign button_bus.col_in    = button_col_in;
     assign button_row_out       = button_bus.row_out;
     always_ff @(posedge clk) begin
-        ex_stage_bus.rs2_data <= id_stage_bus.rs2_data;
-        ex_stage_bus.read_op <= id_stage_bus.read_op;
-        ex_stage_bus.write_op <= id_stage_bus.write_op;
-        ex_stage_bus.rd_src <= id_stage_bus.rd_src;
+        ex_stage_bus.rs2_data   <= id_stage_bus.rs2_data;
+        ex_stage_bus.read_op    <= id_stage_bus.read_op;
+        ex_stage_bus.write_op   <= id_stage_bus.write_op;
+        ex_stage_bus.rd_src     <= id_stage_bus.rd_src;
         ex_stage_bus.rd_address <= id_stage_bus.rd_address;
-        ex_stage_bus.rd_write <= id_stage_bus.rd_write;
+        ex_stage_bus.rd_write   <= id_stage_bus.rd_write;
     end
 
     // Writeback Stage

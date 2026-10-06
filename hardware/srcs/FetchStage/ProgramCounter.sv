@@ -1,6 +1,6 @@
 `timescale 1ns/1ps
 
-module PC
+module ProgramCounter
     import ControlSignals_pkg::*;
 (
     FetchStageBus.master if_stage_bus,
