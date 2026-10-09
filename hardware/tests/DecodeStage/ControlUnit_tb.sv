@@ -7,36 +7,36 @@ interface ControlUnitTbInterface;
     logic [31:0]                             instruction;
 
     logic [19:0]                             imm_field_value;
-    OtherSignals_pkg::InstructionFormat      instruction_format;
+    InstFormat      instruction_format;
     logic [4:0]                              rs1_address;
     logic [4:0]                              rs2_address;
 
     logic [1:0]                              alu_operand;
-    ControlSignals_pkg::ALUOp                alu_op;
-    OtherSignals_pkg::JmpOp                  jmp_op;
-    ControlSignals_pkg::ReadOp               read_op;
-    ControlSignals_pkg::WriteOp              write_op;
-    ControlSignals_pkg::rdSrc                rd_src;
+    ALUOp                alu_op;
+    JmpOp                  jmp_op;
+    ReadOp               read_op;
+    WriteOp              write_op;
+    rdSrc                rd_src;
     logic [4:0]                              rd_address;
-    ControlSignals_pkg::rdWrite              rd_write;
+    rdWrite              rd_write;
 endinterface
 
 program ControlUnitTbProgram (
     output logic [31:0]                            instruction,
 
     input logic [19:0]                             imm_field_value,
-    input OtherSignals_pkg::InstructionFormat      instruction_format,
+    input InstFormat      instruction_format,
     input logic [4:0]                              rs1_address,
     input logic [4:0]                              rs2_address,
 
     input logic [1:0]                              alu_operand,
-    input ControlSignals_pkg::ALUOp                alu_op,
-    input OtherSignals_pkg::JmpOp                  jmp_op,
-    input ControlSignals_pkg::ReadOp               read_op,
-    input ControlSignals_pkg::WriteOp              write_op,
-    input ControlSignals_pkg::rdSrc                rd_src,
+    input ALUOp                alu_op,
+    input JmpOp                  jmp_op,
+    input ReadOp               read_op,
+    input WriteOp              write_op,
+    input rdSrc                rd_src,
     input logic [4:0]                              rd_address,
-    input ControlSignals_pkg::rdWrite              rd_write
+    input rdWrite              rd_write
 );
     logic [6:0] possible_opcodes [8:0] = {
         7'b0110011,

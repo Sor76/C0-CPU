@@ -2,16 +2,21 @@
 
 module RegisterFileMux
     import ControlSignals_pkg::*;
+    import Types_pkg::*;
 (
-    WritebackStageBus.master wb_stage_bus,
-    MemoryStageBus.slave mem_stage_bus
+    input   Word    alu_result,
+    input   Word    next_address,
+    input   Word    extended_device_data,
+    input   rdSrc   rd_src,
+
+    output  Word    rd_write_data
 );
     always_comb begin
-        case (mem_stage_bus.rd_src)
-            RDSRC_ALU_RESULT:       wb_stage_bus.rd_write_data = mem_stage_bus.alu_result;
-            RDSRC_NEXT_ADDRESS:     wb_stage_bus.rd_write_data = mem_stage_bus.next_address;
-            RDSRC_DEVICE_READ_DATA: wb_stage_bus.rd_write_data = wb_stage_bus.device_extended_data;
-            default:                wb_stage_bus.rd_write_data = '0;
+        case (rd_src)
+            RDSRC_ALU_RESULT:       rd_write_data = alu_result;
+            RDSRC_NEXT_ADDRESS:     rd_write_data = next_address;
+            RDSRC_DEVICE_READ_DATA: rd_write_data = extended_device_data;
+            default:                rd_write_data = '0;
         endcase
     end
 endmodule   

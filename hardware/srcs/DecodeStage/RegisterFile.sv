@@ -2,37 +2,48 @@
 
 module RegisterFile
     import ControlSignals_pkg::*;
+    import Types_pkg::*;
 (
-    DecodeStageBus.master id_stage_bus,
-    WritebackStageBus.slave wb_stage_bus
+    input   logic   clk,
+    input   logic   rst_n,
+
+    input   RegAddr rs1_addr,
+    input   RegAddr rs2_addr,
+
+    input   RegAddr rd_addr,
+    input   rdWrite rd_write,
+    input   Word    rd_write_data,
+    
+    output  Word    rs1_data,
+    output  Word    rs2_data
 );
     logic [31:0] register_array [31:0] = '{default: 0};
 
     initial begin
-        id_stage_bus.rs1_data = '0;
-        id_stage_bus.rs2_data = '0;
+        rs1_data = '0;
+        rs2_data = '0;
     end
 
     // Helper functions
     function bit rd_write_check;
-        return wb_stage_bus.rd_write == RD_WRITE && wb_stage_bus.rd_address != 5'b00000;
+        return rd_write == RD_WRITE && rd_addr != RegAddr'('0);
     endfunction
-    function bit address_collide (input logic [31:0] read_address);
-        return rd_write_check() && wb_stage_bus.rd_address == read_address;
+    function bit address_collide (input logic [31:0] read_addr);
+        return rd_write_check() && rd_addr == read_addr;
     endfunction
 
     // rd writing logic / reset
-    always_ff @(posedge id_stage_bus.clk or negedge id_stage_bus.rst_n) begin
-        if (!id_stage_bus.rst_n) begin
+    always_ff @(posedge clk) begin
+        if (!rst_n) begin
             register_array <= '{default: 0};
         end else if (rd_write_check()) begin
-            register_array[wb_stage_bus.rd_address] <= wb_stage_bus.rd_write_data;
+            register_array[rd_addr] <= rd_write_data;
         end
     end
 
     // rs reading logic
-    always_ff @(posedge id_stage_bus.clk) begin
-        id_stage_bus.rs1_data <= address_collide(id_stage_bus.rs1_address) ? wb_stage_bus.rd_write_data : register_array[id_stage_bus.rs1_address];
-        id_stage_bus.rs2_data <= address_collide(id_stage_bus.rs2_address) ? wb_stage_bus.rd_write_data : register_array[id_stage_bus.rs2_address];
+    always_ff @(posedge clk) begin
+        rs1_data <= address_collide(rs1_addr) ? rd_write_data : register_array[rs1_addr];
+        rs2_data <= address_collide(rs2_addr) ? rd_write_data : register_array[rs2_addr];
     end
 endmodule

@@ -1,10 +1,14 @@
 `timescale 1ns/1ps
 
-module InstructionMemoryController #(
+module InstructionMemoryController
+    import Types_pkg::*;
+#(
     parameter int       ADDRESS_WIDTH   = 16, // In bit
     parameter string    PROGRAM_NAME    = "program.mem"
 ) (
-    FetchStageBus.master if_stage_bus
+    input   logic   clk,
+    input   Word    selected_address,
+    output  Word    instruction
 );
     // Using Byte addressable memory for instruction (1 address = 1 byte)
     // Total instruction count = 2 ** ADDRESS_WIDTH / 4
@@ -40,12 +44,12 @@ module InstructionMemoryController #(
 
     initial begin
         $readmemh(PROGRAM_NAME, instruction_memory_block);
-        if_stage_bus.instruction = instruction_memory_block[0];
+        instruction = '0;
     end
 
-    always_ff @(posedge if_stage_bus.clk) begin
+    always_ff @(posedge clk) begin
         // Use selected_address instead of PC's current address to combat the synchronous read of BRAM.
         // Convert the little-endian in to big-endian instruction because I already designs most of the processor to be big-endian before knowing the little-endian thing. lol
-        if_stage_bus.instruction <= {<<8{instruction_memory_block[if_stage_bus.selected_address +:4]}};
+        instruction <= {<<8{instruction_memory_block[selected_address +:4]}};
     end
 endmodule

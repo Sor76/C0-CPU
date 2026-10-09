@@ -2,23 +2,26 @@
 
 module ALU
     import ControlSignals_pkg::*;
+    import Types_pkg::*;
 (
-    ExecuteStageBus.master ex_stage_bus,
-    DecodeStageBus.slave id_stage_bus
+    input   ALUOp   alu_op,
+    input   Word    operand_1,
+    input   Word    operand_2,
+    output  Word    alu_result
 );
     always_comb begin
-        case (id_stage_bus.alu_op)
-            ADD: ex_stage_bus.alu_result = ex_stage_bus.operand_1 + ex_stage_bus.operand_2;
-            SUB: ex_stage_bus.alu_result = ex_stage_bus.operand_1 - ex_stage_bus.operand_2;
-            SLL: ex_stage_bus.alu_result = ex_stage_bus.operand_1 << ex_stage_bus.operand_2;
-            SLT: ex_stage_bus.alu_result = $signed(ex_stage_bus.operand_1) < $signed(ex_stage_bus.operand_2);
-            SLTU: ex_stage_bus.alu_result = $unsigned(ex_stage_bus.operand_1) < $unsigned(ex_stage_bus.operand_2);
-            XOR: ex_stage_bus.alu_result = ex_stage_bus.operand_1 ^ ex_stage_bus.operand_2;
-            SRL: ex_stage_bus.alu_result = ex_stage_bus.operand_1 >> ex_stage_bus.operand_2;
-            SRA: ex_stage_bus.alu_result = ex_stage_bus.operand_1 >>> ex_stage_bus.operand_2;
-            OR: ex_stage_bus.alu_result = ex_stage_bus.operand_1 | ex_stage_bus.operand_2;
-            AND: ex_stage_bus.alu_result = ex_stage_bus.operand_1 & ex_stage_bus.operand_2;
-            default: ex_stage_bus.alu_result = '0;
+        case (alu_op)
+            ADD:        alu_result = operand_1 + operand_2;
+            SUB:        alu_result = operand_1 - operand_2;
+            SLL:        alu_result = operand_1 << operand_2;
+            SLT:        alu_result = $signed(operand_1) < $signed(operand_2);
+            SLTU:       alu_result = $unsigned(operand_1) < $unsigned(operand_2);
+            XOR:        alu_result = operand_1 ^ operand_2;
+            SRL:        alu_result = operand_1 >> operand_2;
+            SRA:        alu_result = operand_1 >>> operand_2;
+            OR:         alu_result = operand_1 | operand_2;
+            AND:        alu_result = operand_1 & operand_2;
+            default:    alu_result = '0;
         endcase
     end
 endmodule

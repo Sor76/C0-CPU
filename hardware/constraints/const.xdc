@@ -1,4 +1,5 @@
 set_property -dict { PACKAGE_PIN U18    IOSTANDARD LVCMOS33 } [get_ports { clk }];
+create_clock -period 20.0 -name sys_clk [get_ports clk];
 
 # Dummy pins, the real one is TBD
 set_property -dict { PACKAGE_PIN N15    IOSTANDARD LVCMOS33 } [get_ports { rst_n }];
@@ -26,4 +27,4 @@ set_property -dict { PACKAGE_PIN L17    IOSTANDARD LVCMOS33 } [get_ports { butto
 set_property -dict { PACKAGE_PIN L16    IOSTANDARD LVCMOS33 } [get_ports { button_row_out[4] }];
 
 
-set_property -dict { PACKAGE_PIN M14    IOSTANDARD LVCMOS33 } [get_ports { test_led }];
+# set_property -dict { PACKAGE_PIN M14    IOSTANDARD LVCMOS33 } [get_ports { test_led }];

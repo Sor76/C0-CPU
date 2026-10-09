@@ -2,11 +2,20 @@
 
 module LCDController
     import ControlSignals_pkg::*;
-#(
-    parameter int DEVICE_SELECT_NUMBER = 1
-) (
-    MemoryStageBus.device   device_bus,
-    LCDDeviceBus.master     lcd_bus
+    import Types_pkg::*;
+(
+    input   logic         clk,
+    input   logic         rst_n,
+
+    input   logic        device_select,
+    input   Word         write_data,
+    input   WriteOp      validated_write_op,
+
+    output  Word         data_out,
+
+    output  logic [7:0]  lcd_write_data,
+    output  logic        lcd_rs,
+    output  logic        lcd_e
 );
     // The most barebone form it could be.
     // The write_data contains both data, rs and e signal for the LCD.
@@ -25,30 +34,30 @@ module LCDController
     // or any libraries. So, barebone it is.
     
     // Read operation
-    assign device_bus.lcd_read_data = '0;
+    assign data_out = '0;
 
     // Write operation / Reset
-    always_ff @(posedge device_bus.clk or negedge device_bus.rst_n) begin
-        if (!device_bus.rst_n) begin
-            lcd_bus.write_data <= '0;
-            lcd_bus.rs <= 0;
-            lcd_bus.e <= 0;
-        end else if (device_bus.device_select[DEVICE_SELECT_NUMBER] && device_bus.write_op != NO_WRITE_OP) begin 
-            case (device_bus.write_op)
+    always_ff @(posedge clk) begin
+        if (!rst_n) begin
+            lcd_write_data  <= '0;
+            lcd_rs          <= 0;
+            lcd_e           <= 0;
+        end else if (device_select && validated_write_op != NO_WRITE_OP) begin 
+            case (validated_write_op)
                 WRITE_OP_1_BYTE: begin
-                    lcd_bus.write_data <= unsigned'(device_bus.write_data[3:0]);
-                    lcd_bus.rs <= device_bus.write_data[4];
-                    lcd_bus.e <= device_bus.write_data[5];
+                    lcd_write_data  <= $unsigned(write_data[3:0]);
+                    lcd_rs          <= write_data[4];
+                    lcd_e           <= write_data[5];
                 end
                 WRITE_OP_2_BYTES, WRITE_OP_4_BYTES: begin
-                    lcd_bus.write_data <= device_bus.write_data[7:0];
-                    lcd_bus.rs <= device_bus.write_data[8];
-                    lcd_bus.e <= device_bus.write_data[9];
+                    lcd_write_data  <= write_data[7:0];
+                    lcd_rs          <= write_data[8];
+                    lcd_e           <= write_data[9];
                 end
                 default: begin
-                    lcd_bus.write_data <= '0;
-                    lcd_bus.rs <= '0;
-                    lcd_bus.e <= '0;
+                    lcd_write_data  <= '0;
+                    lcd_rs          <= '0;
+                    lcd_e           <= '0;
                 end
             endcase
         end

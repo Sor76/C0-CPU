@@ -2,25 +2,27 @@
 
 module AddressDecoder
     import ControlSignals_pkg::*;
+    import Types_pkg::*;
 #(
     parameter int DEVICE_COUNTS = 3 // Data Memory + LCD Controller + Button Controller
 ) (
-    MemoryStageBus.master   mem_stage_bus,
-    ExecuteStageBus.slave   ex_stage_bus
+    input   Word                                alu_result,
+    input   ReadOp                              read_op,
+    input   WriteOp                             write_op,
+
+    output  logic                               device_select [DEVICE_COUNTS-1:0],
+    output  logic [31-$clog2(DEVICE_COUNTS):0]  device_address,
+    output  ReadOp                              validated_read_op,
+    output  WriteOp                             validated_write_op,
+    output  DeviceDataSrc                       device_data_src
 );
     // Behavior of the processor try to read and write at the same time.
-    ReadOp validated_read_op;
-    WriteOp validated_write_op;
-    assign validated_read_op = (ex_stage_bus.read_op != NO_READ_OP && ex_stage_bus.write_op != NO_WRITE_OP) ? NO_READ_OP : ex_stage_bus.read_op;
-    assign validated_write_op = (ex_stage_bus.read_op != NO_READ_OP && ex_stage_bus.write_op != NO_WRITE_OP) ? NO_WRITE_OP : ex_stage_bus.write_op;
+    assign validated_read_op = (read_op != NO_READ_OP && write_op != NO_WRITE_OP) ? NO_READ_OP : read_op;
+    assign validated_write_op = (read_op != NO_READ_OP && write_op != NO_WRITE_OP) ? NO_WRITE_OP : write_op;
 
     always_comb begin
-        mem_stage_bus.device_select     = {>>{'0 | (1'b1 << ex_stage_bus.alu_result[31:32-$clog2(DEVICE_COUNTS)])}};
-        mem_stage_bus.address           = ex_stage_bus.alu_result[31-$clog2(DEVICE_COUNTS):0];
-        mem_stage_bus.write_data        = ex_stage_bus.rs2_data;
-        mem_stage_bus.read_op           = validated_read_op;
-        mem_stage_bus.write_op          = validated_write_op;
-
-        mem_stage_bus.device_data_src   = DeviceDataSrc'(ex_stage_bus.alu_result[31:32-$clog2(DEVICE_COUNTS)]);
+        device_select     = {>>{'0 | (1'b1 << alu_result[31:32-$clog2(DEVICE_COUNTS)])}};
+        device_address    = alu_result[31-$clog2(DEVICE_COUNTS):0];
+        device_data_src   = DeviceDataSrc'(alu_result[31:32-$clog2(DEVICE_COUNTS)]);
     end
 endmodule

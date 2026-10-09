@@ -2,24 +2,31 @@
 
 module ProgramCounter
     import ControlSignals_pkg::*;
+    import Types_pkg::*;
 (
-    FetchStageBus.master if_stage_bus,
-    WritebackStageBus.slave wb_stage_bus
+    input   logic   clk,
+    input   logic   rst_n,
+
+    input   PCSrc   pc_src,
+    input   Word    alu_result,
+
+    output  Word    address,
+    output  Word    selected_address
 );
-    initial if_stage_bus.address = '0;
+    initial address = '0;
 
     // Address selcting
     always_comb begin
-        case (wb_stage_bus.pc_src)
-            PCSRC_NEXT_ADDRESS:         if_stage_bus.selected_address = if_stage_bus.address + 4;
-            PCSRC_JUMP_ADDRESS:         if_stage_bus.selected_address = wb_stage_bus.alu_result;
-            PCSRC_JUMP_JALR_ADDRESS:    if_stage_bus.selected_address = wb_stage_bus.alu_result[31:1] << 1'b1;
-            default:                    if_stage_bus.selected_address = if_stage_bus.address;
+        case (pc_src)
+            PCSRC_NEXT_ADDRESS:         selected_address = address + 4;
+            PCSRC_JUMP_ADDRESS:         selected_address = alu_result;
+            PCSRC_JUMP_JALR_ADDRESS:    selected_address = alu_result[31:1] << 1'b1;
+            default:                    selected_address = '0;
         endcase
     end
 
     // Updating address register
-    always_ff @(posedge if_stage_bus.clk or negedge if_stage_bus.rst_n) begin
-        if_stage_bus.address <= (!if_stage_bus.rst_n) ? '0 : if_stage_bus.selected_address;
+    always_ff @(posedge clk) begin
+        address <= (!rst_n) ? '0 : selected_address;
     end
 endmodule

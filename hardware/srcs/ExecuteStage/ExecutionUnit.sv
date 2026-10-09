@@ -3,30 +3,49 @@
 module ExecutionUnit
     import ControlSignals_pkg::*;
     import OtherSignals_pkg::*;
+    import Types_pkg::*;
 (
-    ExecuteStageBus.master ex_stage_bus,
-    DecodeStageBus.slave id_stage_bus
-);
-    assign ex_stage_bus.next_address = id_stage_bus.current_address + 4;
+    input   Word        extended_imm,
+    input   Word        rs2_data,
+    input   Word        address,
+    input   Word        rs1_data,
 
+    input   logic [1:0] alu_operand,
+    input   ALUOp       alu_op,
+    input   ComOp       com_op,
+    input   JmpOp       jmp_op,
+
+    output  PCSrc       pc_src,
+    output  Word        alu_result,
+    output  Word        next_address
+);
+    Word operand_1;
+    Word operand_2;
+
+    assign next_address = address + 4;
     ALU alu (
-        .ex_stage_bus(ex_stage_bus),
-        .id_stage_bus(id_stage_bus)
+        .alu_op(alu_op),
+        .operand_1(operand_1),
+        .operand_2(operand_2),
+        .alu_result(alu_result)
     );
     JmpHandler jmp_handler (
-        .ex_stage_bus(ex_stage_bus),
-        .id_stage_bus(id_stage_bus)
+        .com_op(com_op),
+        .rs1_data(rs1_data),
+        .rs2_data(rs2_data),
+        .jmp_op(jmp_op),
+        .pc_src(pc_src)
     );
 
     // Operand mux
     always_comb begin
-        case (id_stage_bus.alu_operand[0])
-            1'b0: ex_stage_bus.operand_1 = id_stage_bus.rs1_data;
-            1'b1: ex_stage_bus.operand_1 = id_stage_bus.current_address;
+        case (alu_operand[0])
+            1'b0: operand_1 = rs1_data;
+            1'b1: operand_1 = address;
         endcase
-        case (id_stage_bus.alu_operand[1])
-            1'b0: ex_stage_bus.operand_2 = id_stage_bus.rs2_data;
-            1'b1: ex_stage_bus.operand_2 = id_stage_bus.extended_imm;
+        case (alu_operand[1])
+            1'b0: operand_2 = rs2_data;
+            1'b1: operand_2 = extended_imm;
         endcase
     end
 endmodule

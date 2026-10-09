@@ -6,7 +6,7 @@ package OtherSignals_pkg;
         B_TYPE,
         U_TYPE,
         J_TYPE
-    } InstructionFormat;
+    } InstFormat;
     typedef enum logic [2:0] {
         NO_JUMP = 3'b000,
         BRANCH  = 3'b001,

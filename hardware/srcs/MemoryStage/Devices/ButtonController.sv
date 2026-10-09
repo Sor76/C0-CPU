@@ -2,8 +2,8 @@
 
 module ButtonController
     import ControlSignals_pkg::*;
+    import Types_pkg::*;
 #(
-    parameter int DEVICE_SELECT_NUMBER  = 2,
     parameter int BUTTON_ROWS           = 5, // Total rows of the matrix.
     parameter int BUTTON_COLS           = 4, // Total columns of the matrix.
     parameter int TARGET_MS             = 50, // set amount of ms for the value to be the same value before counting as finished bouncing
@@ -11,12 +11,20 @@ module ButtonController
 
     localparam int SYNC_STAGES          = 2
 ) (
-    MemoryStageBus.device   device_bus,
-    ButtonDeviceBus.master  button_bus
+    input   logic   clk,
+    input   logic   rst_n,
+
+    input   logic   device_select,
+    input   ReadOp  validated_read_op,
+
+    output  Word    data_out,
+
+    input   logic   col_in [BUTTON_COLS-1:0],
+    output  logic   row_out [BUTTON_ROWS-1:0]
 );
-    // ButtonController controls the scanning and debounce process of the button matrix, and write the lower right most button into device_bus.button_read_data port.
-    // The device_bus.button_read_data port could have an output of 0 meaning that no button have been pressed, or it currently still under debounce process.
-    // But, if the button have been pressed, the ButtonController will send out the ID of the lower right most button to the device_bus.button_read_data port.
+    // ButtonController controls the scanning and debounce process of the button matrix, and write the lower right most button into data_out port.
+    // The data_out port could have an output of 0 meaning that no button have been pressed, or it currently still under debounce process.
+    // But, if the button have been pressed, the ButtonController will send out the ID of the lower right most button to the data_out port.
     // The ID is calculator by row of the button * BUTTON_COLS + column of the button + 1.
     // 
     // Default matrix layout
@@ -61,30 +69,30 @@ module ButtonController
 
 
     // Row scanning
-    initial button_bus.row_out = '{default: 1};
+    initial row_out = '{default: 1};
     logic [$clog2(BUTTON_ROWS):0] current_row = 0;
-    always_ff @(posedge device_bus.clk or negedge device_bus.rst_n) begin
-        if (!device_bus.rst_n) begin
+    always_ff @(posedge clk) begin
+        if (!rst_n) begin
             current_row <= 0;
-            button_bus.row_out <= '{default: 1};
+            row_out <= '{default: 1};
         end else begin
             if (current_row == BUTTON_ROWS) current_row <= 0;
             else current_row <= current_row + 1;
 
-            button_bus.row_out <= '{default: 1};
-            button_bus.row_out[current_row] <= 1'b0;
+            row_out <= '{default: 1};
+            row_out[current_row] <= 1'b0;
         end
     end
 
 
     // Column synchronization
     logic cols_sync_array [SYNC_STAGES-1:0][BUTTON_COLS-1:0] = '{default: 0};
-    always_ff @(posedge device_bus.clk or negedge device_bus.rst_n) begin
-        if (!device_bus.rst_n) begin
+    always_ff @(posedge clk) begin
+        if (!rst_n) begin
             cols_sync_array <= '{default: 0};
         end else begin
             // Get new input
-            cols_sync_array[0] <= button_bus.col_in;
+            cols_sync_array[0] <= col_in;
 
             // Stage shifting
             for (int stage = 0; stage < SYNC_STAGES - 1; stage = stage + 1) begin
@@ -104,8 +112,8 @@ module ButtonController
         for (int col = 0; col < BUTTON_COLS; col = col + 1) inverted_col[col] = !cols_sync_array[SYNC_STAGES - 1][col];
     endfunction
     logic raw_input_matrix [BUTTON_ROWS-1:0][BUTTON_COLS-1:0] = '{default: 0};
-    always_ff @(posedge device_bus.clk or negedge device_bus.rst_n) begin
-        if (!device_bus.rst_n) begin
+    always_ff @(posedge clk) begin
+        if (!rst_n) begin
             raw_input_matrix <= '{default: 0};
         end else begin
             apply_invert_col_sync(raw_input_matrix[calculate_row(current_row - SYNC_STAGES)]);
@@ -116,8 +124,8 @@ module ButtonController
     // Dividing the clock down to 1000Hz (1ms per cycle)
     localparam CLOCK_PER_MS = CLOCK_RATE / 1000;
     logic [$clog2(CLOCK_PER_MS)-1:0] clk_counter = 1; // Preventing the first clock cycle to look like the first ms is reached.
-    always_ff @(posedge device_bus.clk or negedge device_bus.rst_n) begin
-        if (!device_bus.rst_n) begin
+    always_ff @(posedge clk) begin
+        if (!rst_n) begin
             clk_counter <= 0;
         end else begin
             if (clk_counter >= CLOCK_PER_MS) clk_counter <= 0;
@@ -131,8 +139,8 @@ module ButtonController
     logic [$clog2(TARGET_MS)-1:0] ms_timer_matrix [BUTTON_ROWS-1:0][BUTTON_COLS-1:0] = '{default: 0};
     logic previous_input_matrix [BUTTON_ROWS-1:0][BUTTON_COLS-1:0] = '{default: 0};
     logic debounced_input_matrix [BUTTON_ROWS-1:0][BUTTON_COLS-1:0] = '{default: 0};
-    always_ff  @(posedge device_bus.clk or negedge device_bus.rst_n) begin
-        if (!device_bus.rst_n) begin
+    always_ff  @(posedge clk) begin
+        if (!rst_n) begin
             ms_timer_matrix <= '{default: 0};
             previous_input_matrix <= '{default: 0};
             debounced_input_matrix <= '{default: 0};
@@ -160,19 +168,16 @@ module ButtonController
     end
 
     // Read operation
-    initial device_bus.button_read_data = 0;
-    always @(posedge device_bus.clk) begin
-        if (device_bus.device_select[DEVICE_SELECT_NUMBER] && device_bus.read_op != NO_READ_OP) begin
+    initial data_out = 0;
+    always @(posedge clk) begin
+        if (!rst_n) begin
+            data_out <= 0;
+        end else if (device_select && validated_read_op != NO_READ_OP) begin
             for (int row = 0; row < BUTTON_ROWS; row = row + 1) begin
                 for (int col = 0; col < BUTTON_COLS; col = col + 1) begin
-                    if (debounced_input_matrix[row][col]) device_bus.button_read_data <= row * BUTTON_COLS + col + 1;
+                    if (debounced_input_matrix[row][col]) data_out <= row * BUTTON_COLS + col + 1;
                 end
             end
         end
-    end
-
-    // Output reset
-    always_ff @(negedge device_bus.rst_n) begin
-        device_bus.button_read_data <= 0;
     end
 endmodule

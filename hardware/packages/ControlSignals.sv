@@ -48,9 +48,10 @@ package ControlSignals_pkg;
     } rdWrite;
 
     typedef enum logic[1:0] {
-        PCSRC_NEXT_ADDRESS,     // 00
-        PCSRC_JUMP_ADDRESS,     // 01
-        PCSRC_JUMP_JALR_ADDRESS // 10
+        PCSRC_NEXT_ADDRESS,         // 00
+        PCSRC_JUMP_ADDRESS,         // 01
+        PCSRC_JUMP_JALR_ADDRESS,    // 10
+        PCSRC_NULL                  // Value for resetting the CPU, so that the instruction mem grab the first one not the second.
     } PCSrc;
 
     typedef enum logic [1:0] {
