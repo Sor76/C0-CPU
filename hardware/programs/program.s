@@ -47,7 +47,7 @@ addi zero, zero, 0
 addi zero, zero, 0
 addi zero, zero, 0
 add t6, t5, t3      ; Value more than 9
-jal zero, 20        ; Jump to Data Memory section
+beq zero, zero, 18  ; Jump to Data Memory section. Can't use jal cuz the range is too big.
 addi zero, zero, 0  ; Wait for program counter to jump
 addi zero, zero, 0
 addi zero, zero, 0
@@ -60,12 +60,12 @@ addi zero, zero, 0  ; Inst no. 38
 ; =======================
 ; Writing data to Data Memory for fun
 ; =======================
-sh t6, 0(zero)
+sh t6, 1(zero)
 xori t6, t6, 0xFFF  ; Not operation on the t6
 addi zero, zero, 0  ; Waiting for xor to overwrite t6
 addi zero, zero, 0
 addi zero, zero, 0
-lh t6, 0(zero)      ; Load the original data of t6 back
+lh t6, 1(zero)      ; Load the original data of t6 back
 addi zero, zero, 0  ; Wait for data to arrive at the register file, Inst no. 45
 addi zero, zero, 0  ;
 addi zero, zero, 0  ;
@@ -74,7 +74,7 @@ addi zero, zero, 0  ;
 ; Writing data to LCD (not working)
 ; =======================
 sw t6, 0(t0)
-jal zero, -58       ; Jump back to top of reading Button data section
+beq zero, zero, -58 ; Jump back to top of reading Button data section. Same reason as line 50 for using branch.
 addi zero, zero, 0  ; Wait for program counter to jump
 addi zero, zero, 0
 addi zero, zero, 0

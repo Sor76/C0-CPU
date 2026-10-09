@@ -11,6 +11,11 @@ module Top_tb;
     logic button_col_in [3:0];
     logic button_row_out [4:0];
 
+    // bit test_0 [2:0] = {>>{3'b0 | (1'b1 << 2'b00)}};
+    // bit test_1 [2:0] = {>>{3'b0 | (1'b1 << 2'b01)}};
+    // bit test_2 [2:0] = {>>{3'b0 | (1'b1 << 2'b10)}};
+    // bit test_3 [2:0] = {>>{3'b0 | (1'b1 << 2'b11)}};
+
     Top dut (
         .clk(clk),
         .rst_n(rst_n),
@@ -32,6 +37,11 @@ module Top_tb;
         forever #10ns clk = !clk;
     end
     initial begin
+        // $display("00: %p, %b", test_0, {3'b000 | (1'b1 << 2'b00)});
+        // $display("01: %p, %b", test_1, {3'b000 | (1'b1 << 2'b01)});
+        // $display("10: %p, %b", test_2, {3'b000 | (1'b1 << 2'b10)});
+        // $display("11: %p, %b", test_3, {3'b000 | (1'b1 << 2'b11)});
+
         repeat (2**16+100) begin
             @(negedge clk);
         end

@@ -14,15 +14,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="1,165,730.134 ns"></ZoomStartTime>
-      <ZoomEndTime time="1,165,973.322 ns"></ZoomEndTime>
-      <Cursor1Time time="1,165,901.700 ns"></Cursor1Time>
+      <ZoomStartTime time="1,311,886.666 ns"></ZoomStartTime>
+      <ZoomEndTime time="1,312,886.667 ns"></ZoomEndTime>
+      <Cursor1Time time="1,312,307.858 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="184"></NameColumnWidth>
-      <ValueColumnWidth column_width="121"></ValueColumnWidth>
+      <ValueColumnWidth column_width="113"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="14" />
+   <WVObjectSize size="15" />
    <wvobject fp_name="/Top_tb/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -77,18 +77,30 @@
          <obj_property name="ObjectShortName">bram_read_reg[31:0]</obj_property>
       </wvobject>
    </wvobject>
-   <wvobject fp_name="group103" type="group">
+   <wvobject fp_name="group656" type="group">
       <obj_property name="label">LCD</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <wvobject fp_name="/Top_tb/lcd_write_data" type="array">
+      <wvobject fp_name="/Top_tb/dut/system_bus/lcd_controller/device_select" type="logic">
+         <obj_property name="ElementShortName">device_select</obj_property>
+         <obj_property name="ObjectShortName">device_select</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Top_tb/dut/system_bus/lcd_controller/write_data" type="array">
+         <obj_property name="ElementShortName">write_data[31:0]</obj_property>
+         <obj_property name="ObjectShortName">write_data[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Top_tb/dut/system_bus/lcd_controller/validated_write_op" type="array">
+         <obj_property name="ElementShortName">validated_write_op[1:0]</obj_property>
+         <obj_property name="ObjectShortName">validated_write_op[1:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Top_tb/dut/system_bus/lcd_controller/lcd_write_data" type="array">
          <obj_property name="ElementShortName">lcd_write_data[7:0]</obj_property>
          <obj_property name="ObjectShortName">lcd_write_data[7:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/lcd_rs" type="logic">
+      <wvobject fp_name="/Top_tb/dut/system_bus/lcd_controller/lcd_rs" type="logic">
          <obj_property name="ElementShortName">lcd_rs</obj_property>
          <obj_property name="ObjectShortName">lcd_rs</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/lcd_e" type="logic">
+      <wvobject fp_name="/Top_tb/dut/system_bus/lcd_controller/lcd_e" type="logic">
          <obj_property name="ElementShortName">lcd_e</obj_property>
          <obj_property name="ObjectShortName">lcd_e</obj_property>
       </wvobject>
@@ -108,6 +120,7 @@
    <wvobject fp_name="group97" type="group">
       <obj_property name="label">PC</obj_property>
       <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
       <wvobject fp_name="/Top_tb/dut/program_counter/pc_src" type="array">
          <obj_property name="ElementShortName">pc_src[1:0]</obj_property>
          <obj_property name="ObjectShortName">pc_src[1:0]</obj_property>
@@ -150,14 +163,17 @@
       <wvobject fp_name="/Top_tb/dut/control_unit/rs1_addr" type="array">
          <obj_property name="ElementShortName">rs1_addr[4:0]</obj_property>
          <obj_property name="ObjectShortName">rs1_addr[4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
       </wvobject>
       <wvobject fp_name="/Top_tb/dut/control_unit/rs2_addr" type="array">
          <obj_property name="ElementShortName">rs2_addr[4:0]</obj_property>
          <obj_property name="ObjectShortName">rs2_addr[4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
       </wvobject>
       <wvobject fp_name="/Top_tb/dut/control_unit/rd_addr" type="array">
          <obj_property name="ElementShortName">rd_addr[4:0]</obj_property>
          <obj_property name="ObjectShortName">rd_addr[4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
       </wvobject>
       <wvobject fp_name="/Top_tb/dut/control_unit/alu_operand" type="array">
          <obj_property name="ElementShortName">alu_operand[1:0]</obj_property>
@@ -273,6 +289,27 @@
          <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
       </wvobject>
    </wvobject>
+   <wvobject fp_name="group661" type="group">
+      <obj_property name="label">Address Decoder</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/Top_tb/dut/system_bus/address_decoder/device_select" type="array">
+         <obj_property name="ElementShortName">device_select[2:0]</obj_property>
+         <obj_property name="ObjectShortName">device_select[2:0]</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+      </wvobject>
+      <wvobject fp_name="/Top_tb/dut/system_bus/address_decoder/device_address" type="array">
+         <obj_property name="ElementShortName">device_address[29:0]</obj_property>
+         <obj_property name="ObjectShortName">device_address[29:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Top_tb/dut/system_bus/address_decoder/validated_read_op" type="array">
+         <obj_property name="ElementShortName">validated_read_op[2:0]</obj_property>
+         <obj_property name="ObjectShortName">validated_read_op[2:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Top_tb/dut/system_bus/address_decoder/validated_write_op" type="array">
+         <obj_property name="ElementShortName">validated_write_op[1:0]</obj_property>
+         <obj_property name="ObjectShortName">validated_write_op[1:0]</obj_property>
+      </wvobject>
+   </wvobject>
    <wvobject fp_name="group299" type="group">
       <obj_property name="label">IFID Register</obj_property>
       <obj_property name="DisplayName">label</obj_property>
@@ -291,6 +328,7 @@
       <wvobject fp_name="/Top_tb/dut/id_ex_reg/extended_imm_register" type="array">
          <obj_property name="ElementShortName">extended_imm_register[31:0]</obj_property>
          <obj_property name="ObjectShortName">extended_imm_register[31:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
       </wvobject>
       <wvobject fp_name="/Top_tb/dut/id_ex_reg/rs2_data_register" type="array">
          <obj_property name="ElementShortName">rs2_data_register[31:0]</obj_property>
@@ -303,6 +341,7 @@
       <wvobject fp_name="/Top_tb/dut/id_ex_reg/rs1_data_register" type="array">
          <obj_property name="ElementShortName">rs1_data_register[31:0]</obj_property>
          <obj_property name="ObjectShortName">rs1_data_register[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
       <wvobject fp_name="/Top_tb/dut/id_ex_reg/alu_operand_register" type="array">
          <obj_property name="ElementShortName">alu_operand_register[1:0]</obj_property>
@@ -386,7 +425,6 @@
    <wvobject fp_name="group270" type="group">
       <obj_property name="label">MEMWB Register</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <obj_property name="isExpanded"></obj_property>
       <wvobject fp_name="/Top_tb/dut/mem_wb_reg/pc_src_register" type="array">
          <obj_property name="ElementShortName">pc_src_register[1:0]</obj_property>
          <obj_property name="ObjectShortName">pc_src_register[1:0]</obj_property>

@@ -16,13 +16,11 @@ module AddressDecoder
     output  WriteOp                             validated_write_op,
     output  DeviceDataSrc                       device_data_src
 );
-    // Behavior of the processor try to read and write at the same time.
-    assign validated_read_op = (read_op != NO_READ_OP && write_op != NO_WRITE_OP) ? NO_READ_OP : read_op;
-    assign validated_write_op = (read_op != NO_READ_OP && write_op != NO_WRITE_OP) ? NO_WRITE_OP : write_op;
+    assign device_select        = {>>{{DEVICE_COUNTS{1'b0}} | (1'b1 << alu_result[31:32-$clog2(DEVICE_COUNTS)])}};
+    assign device_address       = alu_result[31-$clog2(DEVICE_COUNTS):0];
+    assign device_data_src      = DeviceDataSrc'(alu_result[31:32-$clog2(DEVICE_COUNTS)]);
 
-    always_comb begin
-        device_select     = {>>{'0 | (1'b1 << alu_result[31:32-$clog2(DEVICE_COUNTS)])}};
-        device_address    = alu_result[31-$clog2(DEVICE_COUNTS):0];
-        device_data_src   = DeviceDataSrc'(alu_result[31:32-$clog2(DEVICE_COUNTS)]);
-    end
+    // Behavior of the processor try to read and write at the same time.
+    assign validated_read_op    = (read_op != NO_READ_OP && write_op != NO_WRITE_OP) ? NO_READ_OP : read_op;
+    assign validated_write_op   = (read_op != NO_READ_OP && write_op != NO_WRITE_OP) ? NO_WRITE_OP : write_op;
 endmodule

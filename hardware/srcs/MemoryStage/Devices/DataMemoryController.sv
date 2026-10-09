@@ -26,19 +26,18 @@ module DataMemoryController
     (* ram_style = "block" *) Word data_memory_block [0:2**ADDRESS_WIDTH - 1] = '{default: 0};
     logic [ADDRESS_WIDTH-1:0]   bram_addr = '0;
     logic                       bram_we = 0;
-    // logic                       bram_re = 0;
     Word                        bram_write_data = '0;
     Word                        bram_read_reg = '0;
     always_ff @(posedge clk) begin
         if (bram_we) begin
             data_memory_block[bram_addr] <= bram_write_data;
         end
-        // bram_read_reg <= (bram_re) ? data_memory_block[bram_addr] : '0;
         bram_read_reg <= data_memory_block[bram_addr];
     end
 
 
     // BRAM Controller part
+    // Reseting sequence
     logic                       is_resetting = 0;
     logic [ADDRESS_WIDTH-1:0]   resetting_counter = '0;
     always_ff @(posedge clk) begin
@@ -55,16 +54,23 @@ module DataMemoryController
         end
     end
 
+    // By itself, the bram_read_reg is already a stage register,
+    // but the data_out, which read data from bram_read_reg, is a comb logic.
+    // So, I've to delay the read_op signal so that the data_out split out data
+    // at the correct clock cycle.
+    ReadOp read_op_delay = NO_READ_OP;
+    always_ff @(posedge clk) read_op_delay <= validated_read_op;
+
+    // Normal sequence
     // Address Decoder already handles the conflicting of read and write operation.
     // Forcing read/write 4-byte at a times. For read operation, the Bit Extender will handle the 1-2 bytes read. For write operation, some byte will be 0.
     always_comb begin
         if (is_resetting) begin
             bram_addr       = resetting_counter;
             bram_we         = 1;
-            // bram_re         = 0;
             bram_write_data = '0;
             data_out        = '0;
-        end else begin
+        end else if (device_select) begin
             bram_addr       = device_address;
             bram_we         = (validated_write_op inside {[WRITE_OP_1_BYTE : WRITE_OP_4_BYTES]}) ? 1 : 0;
 
@@ -75,15 +81,14 @@ module DataMemoryController
                 default:            bram_write_data = '0;
             endcase
             
-            data_out = (validated_read_op inside {[READ_OP_1_U_BYTE : READ_OP_2_BYTES]}) ? {<<8{bram_read_reg}} : '0;
-            // if (validated_read_op inside {[READ_OP_1_U_BYTE : READ_OP_2_BYTES]}) begin
-            //     bram_re = 1;
-            //     data_out = {<<8{bram_read_reg}};
-            // end else begin
-            //     bram_re = 0;
-            //     data_out = '0;
-            // end
+            data_out = (read_op_delay inside {[READ_OP_1_U_BYTE : READ_OP_2_BYTES]}) ? {<<8{bram_read_reg}} : '0;
+        end else begin
+            bram_addr       = '0;
+            bram_we         = 0;
+            bram_write_data = '0;
+            data_out        = '0;
         end
     end
+    
     initial data_out = '0;
 endmodule
