@@ -13,8 +13,6 @@ module ProgramCounter
     output  Word    address,
     output  Word    selected_address
 );
-    initial address = '0;
-
     // Address selcting
     always_comb begin
         case (pc_src)
@@ -26,6 +24,7 @@ module ProgramCounter
     end
 
     // Updating address register
+    initial address = '0;
     always_ff @(posedge clk) begin
         address <= (!rst_n) ? '0 : selected_address;
     end

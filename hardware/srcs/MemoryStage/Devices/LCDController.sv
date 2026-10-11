@@ -37,6 +37,11 @@ module LCDController
     assign data_out = '0;
 
     // Write operation / Reset
+    initial begin
+        lcd_write_data  = '0;
+        lcd_rs          = 0;
+        lcd_e           = 0;
+    end
     always_ff @(posedge clk) begin
         if (!rst_n) begin
             lcd_write_data  <= '0;

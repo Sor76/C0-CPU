@@ -14,247 +14,311 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="1,311,886.666 ns"></ZoomStartTime>
-      <ZoomEndTime time="1,312,886.667 ns"></ZoomEndTime>
-      <Cursor1Time time="1,312,307.858 ns"></Cursor1Time>
+      <ZoomStartTime time="51,000,892.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="51,003,376.001 ns"></ZoomEndTime>
+      <Cursor1Time time="51,001,800.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="184"></NameColumnWidth>
+      <NameColumnWidth column_width="239"></NameColumnWidth>
       <ValueColumnWidth column_width="113"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="15" />
-   <wvobject fp_name="/Top_tb/clk" type="logic">
+   <WVObjectSize size="16" />
+   <wvobject type="logic" fp_name="/Top_tb/clk">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
    </wvobject>
-   <wvobject fp_name="/Top_tb/rst_n" type="logic">
+   <wvobject type="logic" fp_name="/Top_tb/rst_n">
       <obj_property name="ElementShortName">rst_n</obj_property>
       <obj_property name="ObjectShortName">rst_n</obj_property>
    </wvobject>
-   <wvobject fp_name="group109" type="group">
+   <wvobject type="group" fp_name="group109">
       <obj_property name="label">Data Memory</obj_property>
       <obj_property name="DisplayName">label</obj_property>
       <obj_property name="isExpanded"></obj_property>
-      <wvobject fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block[0]" type="array">
-         <obj_property name="DisplayName">label</obj_property>
-         <obj_property name="ElementShortName">[0][31:0]</obj_property>
-         <obj_property name="ObjectShortName">[0][31:0]</obj_property>
-         <obj_property name="Radix">HEXRADIX</obj_property>
-         <obj_property name="label">Memory Cell 0</obj_property>
-      </wvobject>
-      <wvobject fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block[1]" type="array">
-         <obj_property name="DisplayName">label</obj_property>
-         <obj_property name="ElementShortName">[1][31:0]</obj_property>
-         <obj_property name="ObjectShortName">[1][31:0]</obj_property>
-         <obj_property name="label">Memory Cell 1</obj_property>
-      </wvobject>
-      <wvobject fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block[2]" type="array">
-         <obj_property name="DisplayName">label</obj_property>
-         <obj_property name="ElementShortName">[2][31:0]</obj_property>
-         <obj_property name="ObjectShortName">[2][31:0]</obj_property>
-         <obj_property name="label">Memory Cell 2</obj_property>
-      </wvobject>
-      <wvobject fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block[3]" type="array">
-         <obj_property name="DisplayName">label</obj_property>
-         <obj_property name="ElementShortName">[3][31:0]</obj_property>
-         <obj_property name="ObjectShortName">[3][31:0]</obj_property>
-         <obj_property name="label">Memory Cell 3</obj_property>
-      </wvobject>
-      <wvobject fp_name="/Top_tb/dut/system_bus/data_memory_controller/bram_addr" type="array">
-         <obj_property name="ElementShortName">bram_addr[15:0]</obj_property>
-         <obj_property name="ObjectShortName">bram_addr[15:0]</obj_property>
-      </wvobject>
-      <wvobject fp_name="/Top_tb/dut/system_bus/data_memory_controller/bram_we" type="logic">
-         <obj_property name="ElementShortName">bram_we</obj_property>
-         <obj_property name="ObjectShortName">bram_we</obj_property>
-      </wvobject>
-      <wvobject fp_name="/Top_tb/dut/system_bus/data_memory_controller/bram_write_data" type="array">
-         <obj_property name="ElementShortName">bram_write_data[31:0]</obj_property>
-         <obj_property name="ObjectShortName">bram_write_data[31:0]</obj_property>
-      </wvobject>
-      <wvobject fp_name="/Top_tb/dut/system_bus/data_memory_controller/bram_read_reg" type="array">
-         <obj_property name="ElementShortName">bram_read_reg[31:0]</obj_property>
-         <obj_property name="ObjectShortName">bram_read_reg[31:0]</obj_property>
-      </wvobject>
-   </wvobject>
-   <wvobject fp_name="group656" type="group">
-      <obj_property name="label">LCD</obj_property>
-      <obj_property name="DisplayName">label</obj_property>
-      <wvobject fp_name="/Top_tb/dut/system_bus/lcd_controller/device_select" type="logic">
+      <wvobject type="logic" fp_name="/Top_tb/dut/system_bus/data_memory_controller/device_select">
          <obj_property name="ElementShortName">device_select</obj_property>
          <obj_property name="ObjectShortName">device_select</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/system_bus/lcd_controller/write_data" type="array">
+      <wvobject type="group" fp_name="group335">
+         <obj_property name="label">Data</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+         <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block[0]">
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="ElementShortName">[0][31:0]</obj_property>
+            <obj_property name="ObjectShortName">[0][31:0]</obj_property>
+            <obj_property name="Radix">HEXRADIX</obj_property>
+            <obj_property name="label">Memory Cell 0</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block[1]">
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="ElementShortName">[1][31:0]</obj_property>
+            <obj_property name="ObjectShortName">[1][31:0]</obj_property>
+            <obj_property name="label">Memory Cell 1</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block[2]">
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="ElementShortName">[2][31:0]</obj_property>
+            <obj_property name="ObjectShortName">[2][31:0]</obj_property>
+            <obj_property name="label">Memory Cell 2</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block[3]">
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="ElementShortName">[3][31:0]</obj_property>
+            <obj_property name="ObjectShortName">[3][31:0]</obj_property>
+            <obj_property name="label">Memory Cell 3</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject type="group" fp_name="group336">
+         <obj_property name="label">Controlling signal</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+         <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/bram_addr">
+            <obj_property name="ElementShortName">bram_addr[15:0]</obj_property>
+            <obj_property name="ObjectShortName">bram_addr[15:0]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/Top_tb/dut/system_bus/data_memory_controller/bram_we">
+            <obj_property name="ElementShortName">bram_we</obj_property>
+            <obj_property name="ObjectShortName">bram_we</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/bram_write_data">
+            <obj_property name="ElementShortName">bram_write_data[31:0]</obj_property>
+            <obj_property name="ObjectShortName">bram_write_data[31:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/bram_read_reg">
+            <obj_property name="ElementShortName">bram_read_reg[31:0]</obj_property>
+            <obj_property name="ObjectShortName">bram_read_reg[31:0]</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_out">
+         <obj_property name="ElementShortName">data_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">data_out[31:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group656">
+      <obj_property name="label">LCD</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/Top_tb/dut/system_bus/lcd_controller/device_select">
+         <obj_property name="ElementShortName">device_select</obj_property>
+         <obj_property name="ObjectShortName">device_select</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Top_tb/dut/system_bus/lcd_controller/write_data">
          <obj_property name="ElementShortName">write_data[31:0]</obj_property>
          <obj_property name="ObjectShortName">write_data[31:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/system_bus/lcd_controller/validated_write_op" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/system_bus/lcd_controller/validated_write_op">
          <obj_property name="ElementShortName">validated_write_op[1:0]</obj_property>
          <obj_property name="ObjectShortName">validated_write_op[1:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/system_bus/lcd_controller/lcd_write_data" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/system_bus/lcd_controller/lcd_write_data">
          <obj_property name="ElementShortName">lcd_write_data[7:0]</obj_property>
          <obj_property name="ObjectShortName">lcd_write_data[7:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/system_bus/lcd_controller/lcd_rs" type="logic">
+      <wvobject type="logic" fp_name="/Top_tb/dut/system_bus/lcd_controller/lcd_rs">
          <obj_property name="ElementShortName">lcd_rs</obj_property>
          <obj_property name="ObjectShortName">lcd_rs</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/system_bus/lcd_controller/lcd_e" type="logic">
+      <wvobject type="logic" fp_name="/Top_tb/dut/system_bus/lcd_controller/lcd_e">
          <obj_property name="ElementShortName">lcd_e</obj_property>
          <obj_property name="ObjectShortName">lcd_e</obj_property>
       </wvobject>
+      <wvobject type="array" fp_name="/Top_tb/dut/system_bus/lcd_controller/data_out">
+         <obj_property name="ElementShortName">data_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">data_out[31:0]</obj_property>
+      </wvobject>
    </wvobject>
-   <wvobject fp_name="group104" type="group">
+   <wvobject type="group" fp_name="group104">
       <obj_property name="label">Button</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <wvobject fp_name="/Top_tb/button_col_in" type="array">
-         <obj_property name="ElementShortName">button_col_in[3:0]</obj_property>
-         <obj_property name="ObjectShortName">button_col_in[3:0]</obj_property>
+      <wvobject type="logic" fp_name="/Top_tb/dut/system_bus/button_controller/device_select">
+         <obj_property name="ElementShortName">device_select</obj_property>
+         <obj_property name="ObjectShortName">device_select</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/button_row_out" type="array">
-         <obj_property name="ElementShortName">button_row_out[4:0]</obj_property>
-         <obj_property name="ObjectShortName">button_row_out[4:0]</obj_property>
+      <wvobject type="group" fp_name="group262">
+         <obj_property name="label">IO</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <wvobject type="array" fp_name="/Top_tb/button_col_in">
+            <obj_property name="ElementShortName">button_col_in[0:3]</obj_property>
+            <obj_property name="ObjectShortName">button_col_in[0:3]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/Top_tb/button_row_out">
+            <obj_property name="ElementShortName">button_row_out[0:4]</obj_property>
+            <obj_property name="ObjectShortName">button_row_out[0:4]</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject type="group" fp_name="group333">
+         <obj_property name="label">Internal logic</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <wvobject type="array" fp_name="/Top_tb/dut/system_bus/button_controller/cols_sync_array">
+            <obj_property name="ElementShortName">cols_sync_array[0:1][0:3]</obj_property>
+            <obj_property name="ObjectShortName">cols_sync_array[0:1][0:3]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/Top_tb/dut/system_bus/button_controller/current_row">
+            <obj_property name="ElementShortName">current_row[2:0]</obj_property>
+            <obj_property name="ObjectShortName">current_row[2:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/Top_tb/dut/system_bus/button_controller/raw_input_matrix">
+            <obj_property name="ElementShortName">raw_input_matrix[0:4][0:3]</obj_property>
+            <obj_property name="ObjectShortName">raw_input_matrix[0:4][0:3]</obj_property>
+            <obj_property name="Reversed">false</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/Top_tb/dut/system_bus/button_controller/previous_input_matrix">
+            <obj_property name="ElementShortName">previous_input_matrix[0:4][0:3]</obj_property>
+            <obj_property name="ObjectShortName">previous_input_matrix[0:4][0:3]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/Top_tb/dut/system_bus/button_controller/ms_timer_matrix">
+            <obj_property name="ElementShortName">ms_timer_matrix[0:4][0:3][5:0]</obj_property>
+            <obj_property name="ObjectShortName">ms_timer_matrix[0:4][0:3][5:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/Top_tb/dut/system_bus/button_controller/debounced_input_matrix">
+            <obj_property name="ElementShortName">debounced_input_matrix[0:4][0:3]</obj_property>
+            <obj_property name="ObjectShortName">debounced_input_matrix[0:4][0:3]</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject type="array" fp_name="/Top_tb/dut/system_bus/button_controller/data_out">
+         <obj_property name="ElementShortName">data_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">data_out[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
       </wvobject>
    </wvobject>
-   <wvobject fp_name="group97" type="group">
+   <wvobject type="group" fp_name="group97">
       <obj_property name="label">PC</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <obj_property name="isExpanded"></obj_property>
-      <wvobject fp_name="/Top_tb/dut/program_counter/pc_src" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/program_counter/pc_src">
          <obj_property name="ElementShortName">pc_src[1:0]</obj_property>
          <obj_property name="ObjectShortName">pc_src[1:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/program_counter/alu_result" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/program_counter/alu_result">
          <obj_property name="ElementShortName">alu_result[31:0]</obj_property>
          <obj_property name="ObjectShortName">alu_result[31:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/program_counter/address" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/program_counter/address">
          <obj_property name="ElementShortName">address[31:0]</obj_property>
          <obj_property name="ObjectShortName">address[31:0]</obj_property>
          <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/program_counter/selected_address" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/program_counter/selected_address">
          <obj_property name="ElementShortName">selected_address[31:0]</obj_property>
          <obj_property name="ObjectShortName">selected_address[31:0]</obj_property>
          <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
       </wvobject>
    </wvobject>
-   <wvobject fp_name="/Top_tb/dut/instruction_memory_controller/instruction" type="array">
+   <wvobject type="array" fp_name="/Top_tb/dut/instruction_memory_controller/instruction">
       <obj_property name="ElementShortName">instruction[31:0]</obj_property>
       <obj_property name="ObjectShortName">instruction[31:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="group124" type="group">
+   <wvobject type="group" fp_name="group124">
       <obj_property name="label">CU</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <wvobject fp_name="/Top_tb/dut/control_unit/instruction" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/control_unit/instruction">
          <obj_property name="ElementShortName">instruction[31:0]</obj_property>
          <obj_property name="ObjectShortName">instruction[31:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/control_unit/raw_imm" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/control_unit/raw_imm">
          <obj_property name="ElementShortName">raw_imm[19:0]</obj_property>
          <obj_property name="ObjectShortName">raw_imm[19:0]</obj_property>
          <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/control_unit/inst_format" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/control_unit/inst_format">
          <obj_property name="ElementShortName">inst_format[2:0]</obj_property>
          <obj_property name="ObjectShortName">inst_format[2:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/control_unit/rs1_addr" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/control_unit/rs1_addr">
          <obj_property name="ElementShortName">rs1_addr[4:0]</obj_property>
          <obj_property name="ObjectShortName">rs1_addr[4:0]</obj_property>
          <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/control_unit/rs2_addr" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/control_unit/rs2_addr">
          <obj_property name="ElementShortName">rs2_addr[4:0]</obj_property>
          <obj_property name="ObjectShortName">rs2_addr[4:0]</obj_property>
          <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/control_unit/rd_addr" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/control_unit/rd_addr">
          <obj_property name="ElementShortName">rd_addr[4:0]</obj_property>
          <obj_property name="ObjectShortName">rd_addr[4:0]</obj_property>
          <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/control_unit/alu_operand" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/control_unit/alu_operand">
          <obj_property name="ElementShortName">alu_operand[1:0]</obj_property>
          <obj_property name="ObjectShortName">alu_operand[1:0]</obj_property>
          <obj_property name="Radix">BINARYRADIX</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/control_unit/alu_op" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/control_unit/alu_op">
          <obj_property name="ElementShortName">alu_op[3:0]</obj_property>
          <obj_property name="ObjectShortName">alu_op[3:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/control_unit/com_op" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/control_unit/com_op">
          <obj_property name="ElementShortName">com_op[2:0]</obj_property>
          <obj_property name="ObjectShortName">com_op[2:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/control_unit/jmp_op" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/control_unit/jmp_op">
          <obj_property name="ElementShortName">jmp_op[2:0]</obj_property>
          <obj_property name="ObjectShortName">jmp_op[2:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/control_unit/read_op" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/control_unit/read_op">
          <obj_property name="ElementShortName">read_op[2:0]</obj_property>
          <obj_property name="ObjectShortName">read_op[2:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/control_unit/write_op" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/control_unit/write_op">
          <obj_property name="ElementShortName">write_op[1:0]</obj_property>
          <obj_property name="ObjectShortName">write_op[1:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/control_unit/rd_src" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/control_unit/rd_src">
          <obj_property name="ElementShortName">rd_src[1:0]</obj_property>
          <obj_property name="ObjectShortName">rd_src[1:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/control_unit/rd_write" type="other">
+      <wvobject type="other" fp_name="/Top_tb/dut/control_unit/rd_write">
          <obj_property name="ElementShortName">rd_write</obj_property>
          <obj_property name="ObjectShortName">rd_write</obj_property>
       </wvobject>
    </wvobject>
-   <wvobject fp_name="group132" type="group">
+   <wvobject type="group" fp_name="group132">
       <obj_property name="label">Register File</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <wvobject fp_name="/Top_tb/dut/register_file/register_array[31]" type="array">
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[31]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[31][31:0]</obj_property>
          <obj_property name="ObjectShortName">[31][31:0]</obj_property>
          <obj_property name="label">t6 Data Transfer</obj_property>
          <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/register_file/register_array[30]" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[30]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[30][31:0]</obj_property>
          <obj_property name="ObjectShortName">[30][31:0]</obj_property>
          <obj_property name="label">t5 Button Data</obj_property>
          <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/register_file/register_array[29]" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[29]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[29][31:0]</obj_property>
          <obj_property name="ObjectShortName">[29][31:0]</obj_property>
          <obj_property name="label">t4 10 Constant</obj_property>
          <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/register_file/register_array[28]" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[28]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[28][31:0]</obj_property>
          <obj_property name="ObjectShortName">[28][31:0]</obj_property>
          <obj_property name="label">t3 A Symbol</obj_property>
          <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/register_file/register_array[7]" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[7]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[7][31:0]</obj_property>
          <obj_property name="ObjectShortName">[7][31:0]</obj_property>
          <obj_property name="label">t2 0 Symbol</obj_property>
          <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/register_file/register_array[6]" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[6]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[6][31:0]</obj_property>
          <obj_property name="ObjectShortName">[6][31:0]</obj_property>
          <obj_property name="label">t1 Button Addr</obj_property>
          <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/register_file/register_array[5]" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[5]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[5][31:0]</obj_property>
          <obj_property name="ObjectShortName">[5][31:0]</obj_property>
@@ -262,213 +326,216 @@
          <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
    </wvobject>
-   <wvobject fp_name="group102" type="group">
+   <wvobject type="group" fp_name="group102">
       <obj_property name="label">EU</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <wvobject fp_name="/Top_tb/dut/execution_unit/pc_src" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/execution_unit/pc_src">
          <obj_property name="ElementShortName">pc_src[1:0]</obj_property>
          <obj_property name="ObjectShortName">pc_src[1:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/execution_unit/alu_result" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/execution_unit/alu_result">
          <obj_property name="ElementShortName">alu_result[31:0]</obj_property>
          <obj_property name="ObjectShortName">alu_result[31:0]</obj_property>
          <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/execution_unit/next_address" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/execution_unit/next_address">
          <obj_property name="ElementShortName">next_address[31:0]</obj_property>
          <obj_property name="ObjectShortName">next_address[31:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/execution_unit/operand_1" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/execution_unit/operand_1">
          <obj_property name="ElementShortName">operand_1[31:0]</obj_property>
          <obj_property name="ObjectShortName">operand_1[31:0]</obj_property>
          <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/execution_unit/operand_2" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/execution_unit/operand_2">
          <obj_property name="ElementShortName">operand_2[31:0]</obj_property>
          <obj_property name="ObjectShortName">operand_2[31:0]</obj_property>
          <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
       </wvobject>
    </wvobject>
-   <wvobject fp_name="group661" type="group">
+   <wvobject type="group" fp_name="group661">
       <obj_property name="label">Address Decoder</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <wvobject fp_name="/Top_tb/dut/system_bus/address_decoder/device_select" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/system_bus/address_decoder/device_select">
          <obj_property name="ElementShortName">device_select[2:0]</obj_property>
          <obj_property name="ObjectShortName">device_select[2:0]</obj_property>
          <obj_property name="isExpanded"></obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/system_bus/address_decoder/device_address" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/system_bus/address_decoder/device_address">
          <obj_property name="ElementShortName">device_address[29:0]</obj_property>
          <obj_property name="ObjectShortName">device_address[29:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/system_bus/address_decoder/validated_read_op" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/system_bus/address_decoder/validated_read_op">
          <obj_property name="ElementShortName">validated_read_op[2:0]</obj_property>
          <obj_property name="ObjectShortName">validated_read_op[2:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/system_bus/address_decoder/validated_write_op" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/system_bus/address_decoder/validated_write_op">
          <obj_property name="ElementShortName">validated_write_op[1:0]</obj_property>
          <obj_property name="ObjectShortName">validated_write_op[1:0]</obj_property>
       </wvobject>
    </wvobject>
-   <wvobject fp_name="group299" type="group">
+   <wvobject type="group" fp_name="group299">
       <obj_property name="label">IFID Register</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <wvobject fp_name="/Top_tb/dut/if_id_reg/instruction_register" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/if_id_reg/instruction_register">
          <obj_property name="ElementShortName">instruction_register[31:0]</obj_property>
          <obj_property name="ObjectShortName">instruction_register[31:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/if_id_reg/address_register" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/if_id_reg/address_register">
          <obj_property name="ElementShortName">address_register[31:0]</obj_property>
          <obj_property name="ObjectShortName">address_register[31:0]</obj_property>
       </wvobject>
    </wvobject>
-   <wvobject fp_name="group296" type="group">
+   <wvobject type="group" fp_name="group296">
       <obj_property name="label">IDEX Register</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <wvobject fp_name="/Top_tb/dut/id_ex_reg/extended_imm_register" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/id_ex_reg/extended_imm_register">
          <obj_property name="ElementShortName">extended_imm_register[31:0]</obj_property>
          <obj_property name="ObjectShortName">extended_imm_register[31:0]</obj_property>
          <obj_property name="Radix">BINARYRADIX</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/id_ex_reg/rs2_data_register" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/id_ex_reg/rs2_data_register">
          <obj_property name="ElementShortName">rs2_data_register[31:0]</obj_property>
          <obj_property name="ObjectShortName">rs2_data_register[31:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/id_ex_reg/address_register" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/id_ex_reg/address_register">
          <obj_property name="ElementShortName">address_register[31:0]</obj_property>
          <obj_property name="ObjectShortName">address_register[31:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/id_ex_reg/rs1_data_register" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/id_ex_reg/rs1_data_register">
          <obj_property name="ElementShortName">rs1_data_register[31:0]</obj_property>
          <obj_property name="ObjectShortName">rs1_data_register[31:0]</obj_property>
          <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/id_ex_reg/alu_operand_register" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/id_ex_reg/alu_operand_register">
          <obj_property name="ElementShortName">alu_operand_register[1:0]</obj_property>
          <obj_property name="ObjectShortName">alu_operand_register[1:0]</obj_property>
          <obj_property name="Radix">BINARYRADIX</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/id_ex_reg/alu_op_register" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/id_ex_reg/alu_op_register">
          <obj_property name="ElementShortName">alu_op_register[3:0]</obj_property>
          <obj_property name="ObjectShortName">alu_op_register[3:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/id_ex_reg/com_op_register" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/id_ex_reg/com_op_register">
          <obj_property name="ElementShortName">com_op_register[2:0]</obj_property>
          <obj_property name="ObjectShortName">com_op_register[2:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/id_ex_reg/jmp_op_register" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/id_ex_reg/jmp_op_register">
          <obj_property name="ElementShortName">jmp_op_register[2:0]</obj_property>
          <obj_property name="ObjectShortName">jmp_op_register[2:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/id_ex_reg/read_op_register" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/id_ex_reg/read_op_register">
          <obj_property name="ElementShortName">read_op_register[2:0]</obj_property>
          <obj_property name="ObjectShortName">read_op_register[2:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/id_ex_reg/write_op_register" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/id_ex_reg/write_op_register">
          <obj_property name="ElementShortName">write_op_register[1:0]</obj_property>
          <obj_property name="ObjectShortName">write_op_register[1:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/id_ex_reg/rd_src_register" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/id_ex_reg/rd_src_register">
          <obj_property name="ElementShortName">rd_src_register[1:0]</obj_property>
          <obj_property name="ObjectShortName">rd_src_register[1:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/id_ex_reg/rd_addr_register" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/id_ex_reg/rd_addr_register">
          <obj_property name="ElementShortName">rd_addr_register[4:0]</obj_property>
          <obj_property name="ObjectShortName">rd_addr_register[4:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/id_ex_reg/rd_write_register" type="other">
+      <wvobject type="other" fp_name="/Top_tb/dut/id_ex_reg/rd_write_register">
          <obj_property name="ElementShortName">rd_write_register</obj_property>
          <obj_property name="ObjectShortName">rd_write_register</obj_property>
       </wvobject>
    </wvobject>
-   <wvobject fp_name="group282" type="group">
+   <wvobject type="group" fp_name="group282">
       <obj_property name="label">EXMEM Register</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <obj_property name="isExpanded"></obj_property>
-      <wvobject fp_name="/Top_tb/dut/ex_mem_reg/pc_src_register" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/ex_mem_reg/pc_src_register">
          <obj_property name="ElementShortName">pc_src_register[1:0]</obj_property>
          <obj_property name="ObjectShortName">pc_src_register[1:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/ex_mem_reg/alu_result_register" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/ex_mem_reg/alu_result_register">
          <obj_property name="ElementShortName">alu_result_register[31:0]</obj_property>
          <obj_property name="ObjectShortName">alu_result_register[31:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/ex_mem_reg/next_address_register" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/ex_mem_reg/next_address_register">
          <obj_property name="ElementShortName">next_address_register[31:0]</obj_property>
          <obj_property name="ObjectShortName">next_address_register[31:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/ex_mem_reg/rs2_data_register" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/ex_mem_reg/rs2_data_register">
          <obj_property name="ElementShortName">rs2_data_register[31:0]</obj_property>
          <obj_property name="ObjectShortName">rs2_data_register[31:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/ex_mem_reg/read_op_register" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/ex_mem_reg/read_op_register">
          <obj_property name="ElementShortName">read_op_register[2:0]</obj_property>
          <obj_property name="ObjectShortName">read_op_register[2:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/ex_mem_reg/write_op_register" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/ex_mem_reg/write_op_register">
          <obj_property name="ElementShortName">write_op_register[1:0]</obj_property>
          <obj_property name="ObjectShortName">write_op_register[1:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/ex_mem_reg/rd_src_register" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/ex_mem_reg/rd_src_register">
          <obj_property name="ElementShortName">rd_src_register[1:0]</obj_property>
          <obj_property name="ObjectShortName">rd_src_register[1:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/ex_mem_reg/rd_addr_register" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/ex_mem_reg/rd_addr_register">
          <obj_property name="ElementShortName">rd_addr_register[4:0]</obj_property>
          <obj_property name="ObjectShortName">rd_addr_register[4:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/ex_mem_reg/rd_write_register" type="other">
+      <wvobject type="other" fp_name="/Top_tb/dut/ex_mem_reg/rd_write_register">
          <obj_property name="ElementShortName">rd_write_register</obj_property>
          <obj_property name="ObjectShortName">rd_write_register</obj_property>
       </wvobject>
    </wvobject>
-   <wvobject fp_name="group270" type="group">
+   <wvobject type="group" fp_name="group270">
       <obj_property name="label">MEMWB Register</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <wvobject fp_name="/Top_tb/dut/mem_wb_reg/pc_src_register" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/mem_wb_reg/pc_src_register">
          <obj_property name="ElementShortName">pc_src_register[1:0]</obj_property>
          <obj_property name="ObjectShortName">pc_src_register[1:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/mem_wb_reg/alu_result_register" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/mem_wb_reg/alu_result_register">
          <obj_property name="ElementShortName">alu_result_register[31:0]</obj_property>
          <obj_property name="ObjectShortName">alu_result_register[31:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/mem_wb_reg/next_address_register" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/mem_wb_reg/next_address_register">
          <obj_property name="ElementShortName">next_address_register[31:0]</obj_property>
          <obj_property name="ObjectShortName">next_address_register[31:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/mem_wb_reg/validated_read_op_register" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/mem_wb_reg/validated_read_op_register">
          <obj_property name="ElementShortName">validated_read_op_register[2:0]</obj_property>
          <obj_property name="ObjectShortName">validated_read_op_register[2:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/mem_wb_reg/data_mem_read_data_register" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/mem_wb_reg/data_mem_read_data_register">
          <obj_property name="ElementShortName">data_mem_read_data_register[31:0]</obj_property>
          <obj_property name="ObjectShortName">data_mem_read_data_register[31:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/mem_wb_reg/lcd_read_data_register" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/mem_wb_reg/lcd_read_data_register">
          <obj_property name="ElementShortName">lcd_read_data_register[31:0]</obj_property>
          <obj_property name="ObjectShortName">lcd_read_data_register[31:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/mem_wb_reg/button_read_data_register" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/mem_wb_reg/button_read_data_register">
          <obj_property name="ElementShortName">button_read_data_register[31:0]</obj_property>
          <obj_property name="ObjectShortName">button_read_data_register[31:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/mem_wb_reg/device_data_src_register" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/mem_wb_reg/device_data_src_register">
          <obj_property name="ElementShortName">device_data_src_register[1:0]</obj_property>
          <obj_property name="ObjectShortName">device_data_src_register[1:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/mem_wb_reg/rd_src_register" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/mem_wb_reg/rd_src_register">
          <obj_property name="ElementShortName">rd_src_register[1:0]</obj_property>
          <obj_property name="ObjectShortName">rd_src_register[1:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/mem_wb_reg/rd_addr_register" type="array">
+      <wvobject type="array" fp_name="/Top_tb/dut/mem_wb_reg/rd_addr_register">
          <obj_property name="ElementShortName">rd_addr_register[4:0]</obj_property>
          <obj_property name="ObjectShortName">rd_addr_register[4:0]</obj_property>
          <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
       </wvobject>
-      <wvobject fp_name="/Top_tb/dut/mem_wb_reg/rd_write_register" type="other">
+      <wvobject type="other" fp_name="/Top_tb/dut/mem_wb_reg/rd_write_register">
          <obj_property name="ElementShortName">rd_write_register</obj_property>
          <obj_property name="ObjectShortName">rd_write_register</obj_property>
       </wvobject>
+   </wvobject>
+   <wvobject type="array" fp_name="/Top_tb/button_pressing_matrix">
+      <obj_property name="ElementShortName">button_pressing_matrix[0:4][0:3]</obj_property>
+      <obj_property name="ObjectShortName">button_pressing_matrix[0:4][0:3]</obj_property>
    </wvobject>
 </wave_config>

@@ -37,7 +37,7 @@ addi t4, t4, 0xA    ; Value for comparing if Button data is more than 10, Inst n
 ; =======================
 ; Reading Button data
 ; =======================
-lw t5, 0(t1)        ; Load data from Button Controller to t4 register
+lw t5, 0(t1)        ; Load data from Button Controller to t5 register
 addi zero, zero, 0  ; Waiting for the data to arrive
 addi zero, zero, 0
 addi zero, zero, 0

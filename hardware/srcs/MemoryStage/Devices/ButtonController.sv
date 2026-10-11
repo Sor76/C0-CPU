@@ -19,8 +19,8 @@ module ButtonController
 
     output  Word    data_out,
 
-    input   logic   col_in [BUTTON_COLS-1:0],
-    output  logic   row_out [BUTTON_ROWS-1:0]
+    input   logic   col_in [0:BUTTON_COLS-1],
+    output  logic   row_out [0:BUTTON_ROWS-1]
 );
     // ButtonController controls the scanning and debounce process of the button matrix, and write the lower right most button into data_out port.
     // The data_out port could have an output of 0 meaning that no button have been pressed, or it currently still under debounce process.
@@ -69,27 +69,35 @@ module ButtonController
 
 
     // Row scanning
-    initial row_out = '{default: 1};
-    logic [$clog2(BUTTON_ROWS):0] current_row = 0;
+    initial begin
+        row_out = '{default: 1};
+        row_out[0] = 1'b0;
+    end
+    function logic [$clog2(BUTTON_ROWS)-1:0] row_index_rounding(input logic [$clog2(BUTTON_ROWS)-1:0] row_idx);
+        // Rolling back the index if it is out of range.
+        return (row_idx >= BUTTON_ROWS) ? row_idx - BUTTON_ROWS : row_idx;
+    endfunction
+    logic [$clog2(BUTTON_ROWS)-1:0] current_row = '0;
     always_ff @(posedge clk) begin
         if (!rst_n) begin
             current_row <= 0;
             row_out <= '{default: 1};
+            row_out[0] <= 1'b0;
         end else begin
-            if (current_row == BUTTON_ROWS) current_row <= 0;
+            if (current_row == BUTTON_ROWS-1) current_row <= 0;
             else current_row <= current_row + 1;
 
             row_out <= '{default: 1};
-            row_out[current_row] <= 1'b0;
+            row_out[row_index_rounding(current_row + 1)] <= 1'b0;
         end
     end
 
 
     // Column synchronization
-    logic cols_sync_array [SYNC_STAGES-1:0][BUTTON_COLS-1:0] = '{default: 0};
+    logic cols_sync_array [0:SYNC_STAGES-1][0:BUTTON_COLS-1] = '{default: 1};
     always_ff @(posedge clk) begin
         if (!rst_n) begin
-            cols_sync_array <= '{default: 0};
+            cols_sync_array <= '{default: 1};
         end else begin
             // Get new input
             cols_sync_array[0] <= col_in;
@@ -103,20 +111,19 @@ module ButtonController
 
 
     // Raw input matrix
-    function logic [$clog2(BUTTON_ROWS):0] calculate_row(input logic [$clog2(BUTTON_ROWS):0] row_idx);
+    function logic [$clog2(BUTTON_ROWS)-1:0] calculate_row(input logic signed [$clog2(BUTTON_ROWS)-1:0] row_idx);
         // Python's negative indexing.
         // Useful for compenstating the delay of sync stages.
-        return (row_idx < 0) ? BUTTON_ROWS - row_idx : row_idx;
+        return (row_idx < 0) ? BUTTON_ROWS + row_idx : row_idx;
     endfunction
-    function void apply_invert_col_sync(output logic inverted_col [BUTTON_COLS-1:0]);
-        for (int col = 0; col < BUTTON_COLS; col = col + 1) inverted_col[col] = !cols_sync_array[SYNC_STAGES - 1][col];
-    endfunction
-    logic raw_input_matrix [BUTTON_ROWS-1:0][BUTTON_COLS-1:0] = '{default: 0};
+    logic [$clog2(BUTTON_ROWS)-1:0] after_sync_row_idx;
+    logic raw_input_matrix [0:BUTTON_ROWS-1][0:BUTTON_COLS-1] = '{default: 0}; // Already inverted
+    assign after_sync_row_idx = calculate_row($signed(current_row - SYNC_STAGES));
     always_ff @(posedge clk) begin
         if (!rst_n) begin
             raw_input_matrix <= '{default: 0};
         end else begin
-            apply_invert_col_sync(raw_input_matrix[calculate_row(current_row - SYNC_STAGES)]);
+            raw_input_matrix[after_sync_row_idx] <= {<<{~BUTTON_COLS'({<<{cols_sync_array[SYNC_STAGES-1]}})}};
         end
     end
 
@@ -136,9 +143,9 @@ module ButtonController
 
     // Debouncing each button
     // holy nesting
-    logic [$clog2(TARGET_MS)-1:0] ms_timer_matrix [BUTTON_ROWS-1:0][BUTTON_COLS-1:0] = '{default: 0};
-    logic previous_input_matrix [BUTTON_ROWS-1:0][BUTTON_COLS-1:0] = '{default: 0};
-    logic debounced_input_matrix [BUTTON_ROWS-1:0][BUTTON_COLS-1:0] = '{default: 0};
+    logic [$clog2(TARGET_MS)-1:0] ms_timer_matrix [0:BUTTON_ROWS-1][0:BUTTON_COLS-1] = '{default: 0};
+    logic previous_input_matrix [0:BUTTON_ROWS-1][0:BUTTON_COLS-1] = '{default: 0};
+    logic debounced_input_matrix [0:BUTTON_ROWS-1][0:BUTTON_COLS-1] = '{default: 0};
     always_ff  @(posedge clk) begin
         if (!rst_n) begin
             ms_timer_matrix <= '{default: 0};

@@ -24,9 +24,9 @@ module DataMemoryController
 
     // BRAM part
     (* ram_style = "block" *) Word data_memory_block [0:2**ADDRESS_WIDTH - 1] = '{default: 0};
-    logic [ADDRESS_WIDTH-1:0]   bram_addr = '0;
-    logic                       bram_we = 0;
-    Word                        bram_write_data = '0;
+    logic [ADDRESS_WIDTH-1:0]   bram_addr;
+    logic                       bram_we;
+    Word                        bram_write_data;
     Word                        bram_read_reg = '0;
     always_ff @(posedge clk) begin
         if (bram_we) begin
@@ -46,20 +46,13 @@ module DataMemoryController
                 resetting_counter <= '0;
                 is_resetting <= 0;
             end else begin
-                resetting_counter <= resetting_counter + 4;
+                resetting_counter <= resetting_counter + 1;
             end
         end else if (!rst_n) begin
             is_resetting <= 1;
             resetting_counter <= '0;
         end
     end
-
-    // By itself, the bram_read_reg is already a stage register,
-    // but the data_out, which read data from bram_read_reg, is a comb logic.
-    // So, I've to delay the read_op signal so that the data_out split out data
-    // at the correct clock cycle.
-    ReadOp read_op_delay = NO_READ_OP;
-    always_ff @(posedge clk) read_op_delay <= validated_read_op;
 
     // Normal sequence
     // Address Decoder already handles the conflicting of read and write operation.
@@ -70,25 +63,18 @@ module DataMemoryController
             bram_we         = 1;
             bram_write_data = '0;
             data_out        = '0;
-        end else if (device_select) begin
+        end else begin
             bram_addr       = device_address;
-            bram_we         = (validated_write_op inside {[WRITE_OP_1_BYTE : WRITE_OP_4_BYTES]}) ? 1 : 0;
 
+            bram_we         = (validated_write_op inside {[WRITE_OP_1_BYTE : WRITE_OP_4_BYTES]} && device_select) ? 1 : 0;
             case (validated_write_op)
                 WRITE_OP_1_BYTE:    bram_write_data = {write_data[7:0], 24'h0};
                 WRITE_OP_2_BYTES:   bram_write_data = {<<8{16'h0, write_data[15:0]}};
                 WRITE_OP_4_BYTES:   bram_write_data = {<<8{write_data}};
                 default:            bram_write_data = '0;
             endcase
-            
-            data_out = (read_op_delay inside {[READ_OP_1_U_BYTE : READ_OP_2_BYTES]}) ? {<<8{bram_read_reg}} : '0;
-        end else begin
-            bram_addr       = '0;
-            bram_we         = 0;
-            bram_write_data = '0;
-            data_out        = '0;
+
+            data_out = {<<8{bram_read_reg}};
         end
     end
-    
-    initial data_out = '0;
 endmodule

@@ -1,9 +1,9 @@
 `timescale 1ns/1ps
 
-import ControlSignals_pkg::*;
-import OtherSignals_pkg::*;
-
-interface ControlUnitTbInterface;
+interface ControlUnitTbInterface
+    import ControlSignals_pkg::*;
+    import OtherSignals_pkg::*;
+();
     logic [31:0]                             instruction;
 
     logic [19:0]                             imm_field_value;
@@ -21,7 +21,10 @@ interface ControlUnitTbInterface;
     rdWrite              rd_write;
 endinterface
 
-program ControlUnitTbProgram (
+program ControlUnitTbProgram
+    import ControlSignals_pkg::*;
+    import OtherSignals_pkg::*;
+(
     output logic [31:0]                            instruction,
 
     input logic [19:0]                             imm_field_value,

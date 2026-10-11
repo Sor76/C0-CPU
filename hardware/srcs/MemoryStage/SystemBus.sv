@@ -32,8 +32,8 @@ module SystemBus
     output  logic           lcd_rs,
     output  logic           lcd_e,
 
-    input   logic           col_in [BUTTON_COLS-1:0],
-    output  logic           row_out [BUTTON_ROWS-1:0]
+    input   logic           col_in [0:BUTTON_COLS-1],
+    output  logic           row_out [0:BUTTON_ROWS-1]
 );
 
     logic                               device_select [DEVICE_COUNTS-1:0];

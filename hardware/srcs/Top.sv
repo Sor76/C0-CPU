@@ -21,37 +21,18 @@ module Top
     output logic lcd_e,
 
     // Buttons connection (Exclude reset button)
-    input logic button_col_in [BUTTON_COLS-1:0],
-    output logic button_row_out [BUTTON_ROWS-1:0]
+    input logic button_col_in [0:BUTTON_COLS-1],
+    output logic button_row_out [0:BUTTON_ROWS-1]
 );
     // ===================
-    // Fetch Stage
+    // Nets
     // ===================
+    // Fetch
     Word address;
     Word selected_address;
     Word inst;
 
-    ProgramCounter program_counter (
-        .clk(clk),
-        .rst_n(rst_n),
-
-        .pc_src(pc_src_mem_wb_reg),
-        .alu_result(alu_result_mem_wb_reg),
-
-        .address(address),
-        .selected_address(selected_address)
-    );
-    InstructionMemoryController #(
-        .PROGRAM_NAME(PROGRAM_NAME)
-    ) instruction_memory_controller (
-        .clk(clk),
-        .selected_address(selected_address),
-        .instruction(inst)
-    );
-
-    // ===================
-    // Decode Stage
-    // ===================
+    // Decode
     Word                inst_if_id_reg;
 
     logic [19:0]        raw_imm;
@@ -75,6 +56,89 @@ module Top
 
     Word                address_if_id_reg;
 
+    // Execute
+    Word        extended_imm_id_ex_reg;
+    Word        rs2_data_id_ex_reg;
+    Word        address_id_ex_reg;
+    Word        rs1_data_id_ex_reg;
+    logic [1:0] alu_operand_id_ex_reg;
+    ALUOp       alu_op_id_ex_reg;
+    ComOp       com_op_id_ex_reg;
+    JmpOp       jmp_op_id_ex_reg;
+
+    PCSrc       pc_src;
+    Word        alu_result;
+    Word        next_address;
+
+    ReadOp      read_op_id_ex_reg;
+    WriteOp     write_op_id_ex_reg;
+    rdSrc       rd_src_id_ex_reg;
+    RegAddr     rd_addr_id_ex_reg;
+    rdWrite     rd_write_id_ex_reg;
+
+    // Memory
+    Word            alu_result_ex_mem_reg;
+    Word            rs2_data_ex_mem_reg;
+    ReadOp          read_op_ex_mem_reg;
+    WriteOp         write_op_ex_mem_reg;
+
+    Word            data_mem_read_data;
+    Word            lcd_read_data;
+    Word            button_read_data;
+    ReadOp          validated_read_op;
+    DeviceDataSrc   device_data_src;
+
+    PCSrc           pc_src_ex_mem_reg;
+    Word            next_address_ex_mem_reg;
+    rdSrc           rd_src_ex_mem_reg;
+    RegAddr         rd_addr_ex_mem_reg;
+    rdWrite         rd_write_ex_mem_reg;
+
+    // Writeback
+    Word            data_mem_read_data_mem_wb_reg;
+    Word            lcd_read_data_mem_wb_reg;
+    Word            button_read_data_mem_wb_reg;
+    DeviceDataSrc   device_data_src_mem_wb_reg;
+
+    Word            device_data;
+    ReadOp          validated_read_op_mem_wb_reg;
+
+    Word            extended_device_data;
+    Word            alu_result_mem_wb_reg;
+    Word            next_address_mem_wb_reg;
+    rdSrc           rd_src_mem_wb_reg;
+
+    Word            rd_write_data;
+
+    PCSrc           pc_src_mem_wb_reg;
+    RegAddr         rd_addr_mem_wb_reg;
+    rdWrite         rd_write_mem_wb_reg;
+
+    // ===================
+    // Fetch Stage
+    // ===================
+    ProgramCounter program_counter (
+        .clk(clk),
+        .rst_n(rst_n),
+
+        .pc_src(pc_src_mem_wb_reg),
+        .alu_result(alu_result_mem_wb_reg),
+
+        .address(address),
+        .selected_address(selected_address)
+    );
+    InstructionMemoryController #(
+        .ADDRESS_WIDTH(INSTRUCTION_MEM_ADDRESS_WIDTH),
+        .PROGRAM_NAME(PROGRAM_NAME)
+    ) instruction_memory_controller (
+        .clk(clk),
+        .selected_address(selected_address),
+        .instruction(inst)
+    );
+
+    // ===================
+    // Decode Stage
+    // ===================
     ControlUnit control_unit (
         .instruction(inst_if_id_reg),
 
@@ -116,25 +180,6 @@ module Top
     // ===================
     // Execute Stage
     // ===================
-    Word        extended_imm_id_ex_reg;
-    Word        rs2_data_id_ex_reg;
-    Word        address_id_ex_reg;
-    Word        rs1_data_id_ex_reg;
-    logic [1:0] alu_operand_id_ex_reg;
-    ALUOp       alu_op_id_ex_reg;
-    ComOp       com_op_id_ex_reg;
-    JmpOp       jmp_op_id_ex_reg;
-
-    PCSrc       pc_src;
-    Word        alu_result;
-    Word        next_address;
-
-    ReadOp      read_op_id_ex_reg;
-    WriteOp     write_op_id_ex_reg;
-    rdSrc       rd_src_id_ex_reg;
-    RegAddr     rd_addr_id_ex_reg;
-    rdWrite     rd_write_id_ex_reg;
-
     ExecutionUnit execution_unit (
         .extended_imm(extended_imm_id_ex_reg),
         .rs2_data(rs2_data_id_ex_reg),
@@ -154,24 +199,11 @@ module Top
     // ===================
     // Memory Stage
     // ===================
-    Word            alu_result_ex_mem_reg;
-    Word            rs2_data_ex_mem_reg;
-    ReadOp          read_op_ex_mem_reg;
-    WriteOp         write_op_ex_mem_reg;
-
-    Word            data_mem_read_data;
-    Word            lcd_read_data;
-    Word            button_read_data;
-    ReadOp          validated_read_op;
-    DeviceDataSrc   device_data_src;
-
-    PCSrc           pc_src_ex_mem_reg;
-    Word            next_address_ex_mem_reg;
-    rdSrc           rd_src_ex_mem_reg;
-    RegAddr         rd_addr_ex_mem_reg;
-    rdWrite         rd_write_ex_mem_reg;
-
-    SystemBus system_bus (
+    SystemBus #(
+        .DATA_MEM_ADDRESS_WIDTH(DATA_MEM_ADDRESS_WIDTH),
+        .BUTTON_ROWS(BUTTON_ROWS),
+        .BUTTON_COLS(BUTTON_COLS)
+    ) system_bus (
         .clk(clk),
         .rst_n(rst_n),
 
@@ -198,25 +230,6 @@ module Top
     // ===================
     // Writeback Stage
     // ===================
-    Word            data_mem_read_data_mem_wb_reg;
-    Word            lcd_read_data_mem_wb_reg;
-    Word            button_read_data_mem_wb_reg;
-    DeviceDataSrc   device_data_src_mem_wb_reg;
-
-    Word            device_data;
-    ReadOp          validated_read_op_mem_wb_reg;
-
-    Word            extended_device_data;
-    Word            alu_result_mem_wb_reg;
-    Word            next_address_mem_wb_reg;
-    rdSrc           rd_src_mem_wb_reg;
-
-    Word            rd_write_data;
-
-    PCSrc           pc_src_mem_wb_reg;
-    RegAddr         rd_addr_mem_wb_reg;
-    rdWrite         rd_write_mem_wb_reg;
-
     DeviceDataMux device_data_mux (
         .data_mem_read_data(data_mem_read_data_mem_wb_reg),
         .lcd_read_data(lcd_read_data_mem_wb_reg),

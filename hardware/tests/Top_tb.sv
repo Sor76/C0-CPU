@@ -8,13 +8,8 @@ module Top_tb;
     logic lcd_rs;
     logic lcd_e;
 
-    logic button_col_in [3:0];
-    logic button_row_out [4:0];
-
-    // bit test_0 [2:0] = {>>{3'b0 | (1'b1 << 2'b00)}};
-    // bit test_1 [2:0] = {>>{3'b0 | (1'b1 << 2'b01)}};
-    // bit test_2 [2:0] = {>>{3'b0 | (1'b1 << 2'b10)}};
-    // bit test_3 [2:0] = {>>{3'b0 | (1'b1 << 2'b11)}};
+    logic button_col_in [0:3];
+    logic button_row_out [0:4];
 
     Top dut (
         .clk(clk),
@@ -28,6 +23,28 @@ module Top_tb;
         .button_row_out(button_row_out)
     );
 
+    function static int find_zero(input logic array [0:4]);
+        int idx[$] = array.find_index() with (item == 0);
+        return (idx.size() == 0) ? -1 : idx[0];
+    endfunction
+    logic button_pressing_matrix [0:4][0:3] = '{
+        '{0, 1, 1, 1},
+        '{1, 0, 1, 1},
+        '{1, 1, 0, 1},
+        '{1, 1, 1, 0},
+        '{1, 1, 1, 1}
+    };
+    int idx;
+    logic [3:0] col_packed;
+    logic [4:0] row_packed;
+    always_comb begin
+        idx = find_zero(button_row_out);        
+        button_col_in = button_pressing_matrix[idx];        
+        col_packed = {>>{button_col_in}};
+        row_packed = {>>{button_row_out}};
+        $display("out: %b, in: %b, idx: %d, test: %p", row_packed, col_packed, idx, button_pressing_matrix[0]);
+    end
+
     initial begin
         clk = 0;
         rst_n = 1;
@@ -37,11 +54,6 @@ module Top_tb;
         forever #10ns clk = !clk;
     end
     initial begin
-        // $display("00: %p, %b", test_0, {3'b000 | (1'b1 << 2'b00)});
-        // $display("01: %p, %b", test_1, {3'b000 | (1'b1 << 2'b01)});
-        // $display("10: %p, %b", test_2, {3'b000 | (1'b1 << 2'b10)});
-        // $display("11: %p, %b", test_3, {3'b000 | (1'b1 << 2'b11)});
-
         repeat (2**16+100) begin
             @(negedge clk);
         end
