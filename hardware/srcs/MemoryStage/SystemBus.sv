@@ -61,9 +61,8 @@ module SystemBus
         .rst_n(rst_n),
 
         .device_select(device_select[DATA_MEM_DEVICE_SELECT_NUM]),
-        .device_address(device_address[31-DATA_MEM_ADDRESS_WIDTH:0]),
+        .device_address(device_address[DATA_MEM_ADDRESS_WIDTH-1:0]),
         .write_data(rs2_data),
-        .validated_read_op(validated_read_op),
         .validated_write_op(validated_write_op),
 
         .data_out(data_mem_read_data)
@@ -90,7 +89,6 @@ module SystemBus
         .rst_n(rst_n),
 
         .device_select(device_select[BUTTON_DEVICE_SELECT_NUMBER]),
-        .validated_read_op(validated_read_op),
 
         .data_out(button_read_data),
 

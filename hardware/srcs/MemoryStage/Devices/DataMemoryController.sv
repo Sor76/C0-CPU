@@ -12,7 +12,6 @@ module DataMemoryController
     input  logic                        device_select,
     input  logic [ADDRESS_WIDTH-1:0]    device_address,
     input  Word                         write_data,
-    input  ReadOp                       validated_read_op,
     input  WriteOp                      validated_write_op,
 
     output Word                         data_out

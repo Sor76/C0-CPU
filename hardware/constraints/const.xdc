@@ -25,8 +25,3 @@ set_property -dict {PACKAGE_PIN H20 IOSTANDARD LVCMOS33} [get_ports {button_row_
 set_property -dict {PACKAGE_PIN J20 IOSTANDARD LVCMOS33} [get_ports {button_row_out[2]}]
 set_property -dict {PACKAGE_PIN L17 IOSTANDARD LVCMOS33} [get_ports {button_row_out[3]}]
 set_property -dict {PACKAGE_PIN L16 IOSTANDARD LVCMOS33} [get_ports {button_row_out[4]}]
-
-
-# set_property -dict { PACKAGE_PIN M14    IOSTANDARD LVCMOS33 } [get_ports { test_led }];
-
-# set_property DONT_TOUCH true [get_cells -hierarchical -filter {NAME !~ "*data_memory_controller*"}]

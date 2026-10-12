@@ -15,7 +15,6 @@ module ButtonController
     input   logic   rst_n,
 
     input   logic   device_select,
-    input   ReadOp  validated_read_op,
 
     output  Word    data_out,
 
@@ -179,7 +178,7 @@ module ButtonController
     always @(posedge clk) begin
         if (!rst_n) begin
             data_out <= 0;
-        end else if (device_select && validated_read_op != NO_READ_OP) begin
+        end else if (device_select) begin
             for (int row = 0; row < BUTTON_ROWS; row = row + 1) begin
                 for (int col = 0; col < BUTTON_COLS; col = col + 1) begin
                     if (debounced_input_matrix[row][col]) data_out <= row * BUTTON_COLS + col + 1;

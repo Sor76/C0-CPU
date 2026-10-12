@@ -5,12 +5,12 @@ module Top
     import OtherSignals_pkg::*;
     import Types_pkg::*;
 #(
-    localparam int      INSTRUCTION_MEM_ADDRESS_WIDTH   = 16,
+    localparam int      INSTRUCTION_MEM_ADDRESS_WIDTH   = 15,               // 2**15 (~32K) x 1 = 32KiB Byte addressable instruction memory
     localparam string   PROGRAM_NAME                    = "program.mem",
-    localparam int      DATA_MEM_ADDRESS_WIDTH          = 16,
+    localparam int      DATA_MEM_ADDRESS_WIDTH          = 15,               // 2**15 (~32K) x 4 = 128KiB Word addressable data memory
 
-    localparam int      BUTTON_ROWS                 = 5,
-    localparam int      BUTTON_COLS                 = 4
+    localparam int      BUTTON_ROWS                     = 5,
+    localparam int      BUTTON_COLS                     = 4
 ) (
     input logic clk,
     input logic rst_n, // Reset button
