@@ -1,5 +1,5 @@
 # Generating Project
-Open up Vivado do. In the bottom, there should be Tcl Console opened already. In the Console, `cd` in to this directory (run `cd PATH_TO_REPO/C0-CPU/hardware`) then run `source ./C0_vivado.tcl`. The project should be generated automatically and open up for you.
+Open up Vivado. In the bottom, there should be Tcl Console opened already. In the Console, `cd` in to this directory (run `cd PATH_TO_REPO/C0-CPU/hardware`) then run `source ./C0_vivado.tcl`. The project should be generated automatically and open up for you.
 
 By default, the generated project will use `xc7z020clg400-2` as the chip, so don't forget to change the chip to match your part. The same for the `const.xdc` file in constraints directory.
 
