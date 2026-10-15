@@ -38,6 +38,8 @@ List for storing the changes made mid-way when writing the FPGA code. All the di
     - Status: Unchecked
 21. `BGE` and `BGEU` is greater or equal, not just greater. bruh
     - Status: Unchecked
+22. `SLL`, `SRL` and `SRA` only use the lower 5-bits of the second operand.
+    - Status: Unchecked
 
 
 High chance of having to re-evaluate most of the unit (probably all for safety lol).

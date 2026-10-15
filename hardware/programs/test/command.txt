@@ -1,0 +1,5 @@
+riscv32-unknown-elf-as -mlittle-endian -mno-relax -march=rv32i -mabi=ilp32 ../program.s -o test.o
+
+riscv32-unknown-elf-as -march=rv32i -mabi=ilp32 -mlittle-endian ./test.s -o test.o
+riscv32-unknown-elf-objcopy -O binary --only-section=.text test.o test.bin
+hexdump -v -e '4/1 "%02x " "\n"' test.bin > test.mem

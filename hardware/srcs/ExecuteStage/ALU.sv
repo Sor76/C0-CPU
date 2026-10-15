@@ -13,12 +13,12 @@ module ALU
         case (alu_op)
             ADD:        alu_result = operand_1 + operand_2;
             SUB:        alu_result = operand_1 - operand_2;
-            SLL:        alu_result = operand_1 << operand_2;
+            SLL:        alu_result = operand_1 << operand_2[4:0];
             SLT:        alu_result = $signed(operand_1) < $signed(operand_2);
             SLTU:       alu_result = $unsigned(operand_1) < $unsigned(operand_2);
             XOR:        alu_result = operand_1 ^ operand_2;
-            SRL:        alu_result = operand_1 >> operand_2;
-            SRA:        alu_result = operand_1 >>> operand_2;
+            SRL:        alu_result = operand_1 >> operand_2[4:0];
+            SRA:        alu_result = operand_1 >>> operand_2[4:0];
             OR:         alu_result = operand_1 | operand_2;
             AND:        alu_result = operand_1 & operand_2;
             default:    alu_result = '0;

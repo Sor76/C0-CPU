@@ -14,13 +14,13 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="51,000,892.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="51,003,376.001 ns"></ZoomEndTime>
-      <Cursor1Time time="51,001,800.000 ns"></Cursor1Time>
+      <ZoomStartTime time="0.000000 us"></ZoomStartTime>
+      <ZoomEndTime time="1,312.720000 us"></ZoomEndTime>
+      <Cursor1Time time="1,165.810000 us"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="239"></NameColumnWidth>
-      <ValueColumnWidth column_width="113"></ValueColumnWidth>
+      <ValueColumnWidth column_width="101"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="16" />
    <wvobject type="logic" fp_name="/Top_tb/clk">
@@ -44,29 +44,24 @@
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="isExpanded"></obj_property>
          <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block[0]">
-            <obj_property name="DisplayName">label</obj_property>
             <obj_property name="ElementShortName">[0][31:0]</obj_property>
             <obj_property name="ObjectShortName">[0][31:0]</obj_property>
             <obj_property name="Radix">HEXRADIX</obj_property>
-            <obj_property name="label">Memory Cell 0</obj_property>
          </wvobject>
          <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block[1]">
-            <obj_property name="DisplayName">label</obj_property>
             <obj_property name="ElementShortName">[1][31:0]</obj_property>
             <obj_property name="ObjectShortName">[1][31:0]</obj_property>
-            <obj_property name="label">Memory Cell 1</obj_property>
+            <obj_property name="Radix">HEXRADIX</obj_property>
          </wvobject>
          <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block[2]">
-            <obj_property name="DisplayName">label</obj_property>
             <obj_property name="ElementShortName">[2][31:0]</obj_property>
             <obj_property name="ObjectShortName">[2][31:0]</obj_property>
-            <obj_property name="label">Memory Cell 2</obj_property>
+            <obj_property name="Radix">HEXRADIX</obj_property>
          </wvobject>
          <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block[3]">
-            <obj_property name="DisplayName">label</obj_property>
             <obj_property name="ElementShortName">[3][31:0]</obj_property>
             <obj_property name="ObjectShortName">[3][31:0]</obj_property>
-            <obj_property name="label">Memory Cell 3</obj_property>
+            <obj_property name="Radix">HEXRADIX</obj_property>
          </wvobject>
       </wvobject>
       <wvobject type="group" fp_name="group336">
@@ -74,8 +69,8 @@
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="isExpanded"></obj_property>
          <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/bram_addr">
-            <obj_property name="ElementShortName">bram_addr[15:0]</obj_property>
-            <obj_property name="ObjectShortName">bram_addr[15:0]</obj_property>
+            <obj_property name="ElementShortName">bram_addr[14:0]</obj_property>
+            <obj_property name="ObjectShortName">bram_addr[14:0]</obj_property>
          </wvobject>
          <wvobject type="logic" fp_name="/Top_tb/dut/system_bus/data_memory_controller/bram_we">
             <obj_property name="ElementShortName">bram_we</obj_property>
@@ -98,6 +93,7 @@
    <wvobject type="group" fp_name="group656">
       <obj_property name="label">LCD</obj_property>
       <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
       <wvobject type="logic" fp_name="/Top_tb/dut/system_bus/lcd_controller/device_select">
          <obj_property name="ElementShortName">device_select</obj_property>
          <obj_property name="ObjectShortName">device_select</obj_property>
@@ -184,6 +180,7 @@
    <wvobject type="group" fp_name="group97">
       <obj_property name="label">PC</obj_property>
       <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
       <wvobject type="array" fp_name="/Top_tb/dut/program_counter/pc_src">
          <obj_property name="ElementShortName">pc_src[1:0]</obj_property>
          <obj_property name="ObjectShortName">pc_src[1:0]</obj_property>
@@ -210,6 +207,7 @@
    <wvobject type="group" fp_name="group124">
       <obj_property name="label">CU</obj_property>
       <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
       <wvobject type="array" fp_name="/Top_tb/dut/control_unit/instruction">
          <obj_property name="ElementShortName">instruction[31:0]</obj_property>
          <obj_property name="ObjectShortName">instruction[31:0]</obj_property>
@@ -275,7 +273,6 @@
    <wvobject type="group" fp_name="group132">
       <obj_property name="label">Register File</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <obj_property name="isExpanded"></obj_property>
       <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[31]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[31][31:0]</obj_property>
@@ -323,12 +320,13 @@
          <obj_property name="ElementShortName">[5][31:0]</obj_property>
          <obj_property name="ObjectShortName">[5][31:0]</obj_property>
          <obj_property name="label">t0 LCD Addr</obj_property>
-         <obj_property name="Radix">HEXRADIX</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
       </wvobject>
    </wvobject>
    <wvobject type="group" fp_name="group102">
       <obj_property name="label">EU</obj_property>
       <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
       <wvobject type="array" fp_name="/Top_tb/dut/execution_unit/pc_src">
          <obj_property name="ElementShortName">pc_src[1:0]</obj_property>
          <obj_property name="ObjectShortName">pc_src[1:0]</obj_property>

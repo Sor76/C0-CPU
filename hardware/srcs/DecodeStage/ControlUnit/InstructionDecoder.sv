@@ -63,7 +63,7 @@ module InstructionDecoder
             end
             7'b0110111, 7'b0010111: begin
                 // U-type
-                raw_imm      = {instruction[31], instruction[19:12], instruction[20], instruction[30:21]};
+                raw_imm      = instruction[31:12];
                 inst_format  = U_TYPE;
                 rs1_addr     = RegAddr'('0);
                 rs2_addr     = RegAddr'('0);
@@ -73,7 +73,7 @@ module InstructionDecoder
             end
             7'b1101111: begin
                 // J-type
-                raw_imm      = instruction[31:12];
+                raw_imm      = {instruction[31], instruction[19:12], instruction[20], instruction[30:21]};
                 inst_format  = J_TYPE;
                 rs1_addr     = RegAddr'('0);
                 rs2_addr     = RegAddr'('0);
