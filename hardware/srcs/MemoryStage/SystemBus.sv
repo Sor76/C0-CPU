@@ -8,10 +8,10 @@ module SystemBus
     parameter   int BUTTON_ROWS                 = 5,
     parameter   int BUTTON_COLS                 = 4,
 
-    localparam  int DEVICE_COUNTS               = 3,
-    localparam  int DATA_MEM_DEVICE_SELECT_NUM  = 0,
-    localparam  int LCD_DEVICE_SELECT_NUM       = 1,
-    localparam  int BUTTON_DEVICE_SELECT_NUMBER = 2
+    localparam  int DEVICE_COUNTS               = 4, // +1 (Instruction Memory gnu toolchain want eveything in the same address space)
+    localparam  int DATA_MEM_DEVICE_SELECT_NUM  = 1,
+    localparam  int LCD_DEVICE_SELECT_NUM       = 2,
+    localparam  int BUTTON_DEVICE_SELECT_NUMBER = 3
 ) (
     input   logic           clk,
     input   logic           rst_n,
@@ -40,7 +40,9 @@ module SystemBus
     logic [31-$clog2(DEVICE_COUNTS):0]  device_address;
     WriteOp                             validated_write_op;
 
-    AddressDecoder address_decoder (
+    AddressDecoder #(
+        .DEVICE_COUNTS(DEVICE_COUNTS)
+    ) address_decoder (
         .alu_result(alu_result),
         .read_op(read_op),
         .write_op(write_op),
@@ -61,7 +63,7 @@ module SystemBus
         .rst_n(rst_n),
 
         .device_select(device_select[DATA_MEM_DEVICE_SELECT_NUM]),
-        .device_address(device_address[DATA_MEM_ADDRESS_WIDTH-1:0]),
+        .device_address(device_address[DATA_MEM_ADDRESS_WIDTH+1:2]), // Illusion of byte addressable memory
         .write_data(rs2_data),
         .validated_write_op(validated_write_op),
 

@@ -1,27 +1,35 @@
 set_property -dict {PACKAGE_PIN U18 IOSTANDARD LVCMOS33} [get_ports clk]
 create_clock -period 20.000 -name sys_clk [get_ports clk]
 
-# Dummy pins, the real one is TBD
-set_property -dict {PACKAGE_PIN N15 IOSTANDARD LVCMOS33} [get_ports rst_n]
+set_property -dict {PACKAGE_PIN C20 IOSTANDARD LVCMOS33} [get_ports rst_n]
 
-set_property -dict {PACKAGE_PIN F17 IOSTANDARD LVCMOS33} [get_ports {lcd_write_data[0]}]
-set_property -dict {PACKAGE_PIN F16 IOSTANDARD LVCMOS33} [get_ports {lcd_write_data[1]}]
-set_property -dict {PACKAGE_PIN F20 IOSTANDARD LVCMOS33} [get_ports {lcd_write_data[2]}]
-set_property -dict {PACKAGE_PIN F19 IOSTANDARD LVCMOS33} [get_ports {lcd_write_data[3]}]
-set_property -dict {PACKAGE_PIN G20 IOSTANDARD LVCMOS33} [get_ports {lcd_write_data[4]}]
-set_property -dict {PACKAGE_PIN H18 IOSTANDARD LVCMOS33} [get_ports {lcd_write_data[5]}]
-set_property -dict {PACKAGE_PIN J18 IOSTANDARD LVCMOS33} [get_ports {lcd_write_data[6]}]
-set_property -dict {PACKAGE_PIN L20 IOSTANDARD LVCMOS33} [get_ports {lcd_write_data[7]}]
-set_property -dict {PACKAGE_PIN L19 IOSTANDARD LVCMOS33} [get_ports lcd_rs]
-set_property -dict {PACKAGE_PIN M20 IOSTANDARD LVCMOS33} [get_ports lcd_e]
+# LCD
+set_property -dict {PACKAGE_PIN A20 IOSTANDARD LVCMOS33} [get_ports {lcd_write_data[0]}]
+set_property -dict {PACKAGE_PIN T12 IOSTANDARD LVCMOS33} [get_ports {lcd_write_data[1]}]
+set_property -dict {PACKAGE_PIN T10 IOSTANDARD LVCMOS33} [get_ports {lcd_write_data[2]}]
+set_property -dict {PACKAGE_PIN V12 IOSTANDARD LVCMOS33} [get_ports {lcd_write_data[3]}]
+set_property -dict {PACKAGE_PIN U12 IOSTANDARD LVCMOS33} [get_ports {lcd_write_data[4]}]
+set_property -dict {PACKAGE_PIN U13 IOSTANDARD LVCMOS33} [get_ports {lcd_write_data[5]}]
+set_property -dict {PACKAGE_PIN W13 IOSTANDARD LVCMOS33} [get_ports {lcd_write_data[6]}]
+set_property -dict {PACKAGE_PIN V13 IOSTANDARD LVCMOS33} [get_ports {lcd_write_data[7]}]
+set_property -dict {PACKAGE_PIN B19 IOSTANDARD LVCMOS33} [get_ports lcd_rs]
+set_property -dict {PACKAGE_PIN T11 IOSTANDARD LVCMOS33} [get_ports lcd_e]
 
-set_property -dict {PACKAGE_PIN M19 IOSTANDARD LVCMOS33} [get_ports {button_col_in[0]}]
-set_property -dict {PACKAGE_PIN K18 IOSTANDARD LVCMOS33} [get_ports {button_col_in[1]}]
-set_property -dict {PACKAGE_PIN K17 IOSTANDARD LVCMOS33} [get_ports {button_col_in[2]}]
-set_property -dict {PACKAGE_PIN J19 IOSTANDARD LVCMOS33} [get_ports {button_col_in[3]}]
+# Button Matrix
+set_property -dict {PACKAGE_PIN G18 IOSTANDARD LVCMOS33} [get_ports {button_col_in[0]}]
+set_property -dict {PACKAGE_PIN E19 IOSTANDARD LVCMOS33} [get_ports {button_col_in[1]}]
+set_property -dict {PACKAGE_PIN D20 IOSTANDARD LVCMOS33} [get_ports {button_col_in[2]}]
+set_property -dict {PACKAGE_PIN M18 IOSTANDARD LVCMOS33} [get_ports {button_col_in[3]}]
 
-set_property -dict {PACKAGE_PIN K19 IOSTANDARD LVCMOS33} [get_ports {button_row_out[0]}]
-set_property -dict {PACKAGE_PIN H20 IOSTANDARD LVCMOS33} [get_ports {button_row_out[1]}]
-set_property -dict {PACKAGE_PIN J20 IOSTANDARD LVCMOS33} [get_ports {button_row_out[2]}]
-set_property -dict {PACKAGE_PIN L17 IOSTANDARD LVCMOS33} [get_ports {button_row_out[3]}]
-set_property -dict {PACKAGE_PIN L16 IOSTANDARD LVCMOS33} [get_ports {button_row_out[4]}]
+set_property -dict {PACKAGE_PIN H20 IOSTANDARD LVCMOS33} [get_ports {button_row_out[0]}]
+set_property -dict {PACKAGE_PIN J19 IOSTANDARD LVCMOS33} [get_ports {button_row_out[1]}]
+set_property -dict {PACKAGE_PIN K18 IOSTANDARD LVCMOS33} [get_ports {button_row_out[2]}]
+set_property -dict {PACKAGE_PIN L20 IOSTANDARD LVCMOS33} [get_ports {button_row_out[3]}]
+set_property -dict {PACKAGE_PIN H18 IOSTANDARD LVCMOS33} [get_ports {button_row_out[4]}]
+
+# Debug LEDs
+set_property -dict {PACKAGE_PIN M14 IOSTANDARD LVCMOS33} [get_ports {debug_led[0]}]
+set_property -dict {PACKAGE_PIN M15 IOSTANDARD LVCMOS33} [get_ports {debug_led[1]}]
+set_property -dict {PACKAGE_PIN K16 IOSTANDARD LVCMOS33} [get_ports {debug_led[2]}]
+set_property -dict {PACKAGE_PIN J16 IOSTANDARD LVCMOS33} [get_ports {debug_led[3]}]
+

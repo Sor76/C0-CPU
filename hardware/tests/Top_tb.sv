@@ -28,10 +28,10 @@ module Top_tb;
         return (idx.size() == 0) ? -1 : idx[0];
     endfunction
     logic button_pressing_matrix [0:4][0:3] = '{
-        '{0, 1, 1, 1},
-        '{1, 0, 1, 1},
-        '{1, 1, 0, 1},
-        '{1, 1, 1, 0},
+        '{1, 1, 1, 1},
+        '{1, 1, 1, 1},
+        '{1, 1, 1, 1},
+        '{1, 1, 1, 1},
         '{1, 1, 1, 1}
     };
     int idx;
@@ -48,15 +48,26 @@ module Top_tb;
     initial begin
         clk = 0;
         rst_n = 1;
-
         button_col_in = '{default: 0};
-
         forever #10ns clk = !clk;
     end
+
+    // int row;
+    // int col;
+    // initial begin
+    //     forever #75ms begin
+    //         button_pressing_matrix = '{default: 1};
+
+    //         assert (std::randomize(row) with {row inside {[0:4]};} && std::randomize(row) with {row inside {[0:3]};})
+    //         else   $fatal(1, "Unable to randomize row/col value.");
+
+    //         button_pressing_matrix[row][col] = 0;
+    //     end
+    // end
     initial begin
-        repeat (2**16+100) begin
-            @(negedge clk);
-        end
-        $finish;
+        #75ms
+        button_pressing_matrix[2][1] = 0;
+        #75ms
+        button_pressing_matrix = '{default: 1};
     end
 endmodule

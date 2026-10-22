@@ -178,7 +178,8 @@ module ButtonController
     always @(posedge clk) begin
         if (!rst_n) begin
             data_out <= 0;
-        end else if (device_select) begin
+        end else begin
+            data_out <= 0;
             for (int row = 0; row < BUTTON_ROWS; row = row + 1) begin
                 for (int col = 0; col < BUTTON_COLS; col = col + 1) begin
                     if (debounced_input_matrix[row][col]) data_out <= row * BUTTON_COLS + col + 1;

@@ -6,7 +6,8 @@ module Top
     import Types_pkg::*;
 #(
     localparam int      INSTRUCTION_MEM_ADDRESS_WIDTH   = 15,               // 2**15 (~32K) x 1 = 32KiB Byte addressable instruction memory
-    localparam string   PROGRAM_NAME                    = "program.mem",
+    localparam string   PROGRAM_NAME                    = "calculator.mem",
+    
     localparam int      DATA_MEM_ADDRESS_WIDTH          = 15,               // 2**15 (~32K) x 4 = 128KiB Word addressable data memory
 
     localparam int      BUTTON_ROWS                     = 5,
@@ -22,8 +23,18 @@ module Top
 
     // Buttons connection (Exclude reset button)
     input logic button_col_in [0:BUTTON_COLS-1],
-    output logic button_row_out [0:BUTTON_ROWS-1]
+    output logic button_row_out [0:BUTTON_ROWS-1],
+
+    output logic [3:0] debug_led
 );
+    // Debugging stuff
+    assign debug_led[0] = !rst_n;
+    logic [2:0] clk_counter = 0;
+    always_ff @(posedge clk) begin
+        clk_counter <= clk_counter + 1;
+        debug_led[3:1] <= ~clk_counter;
+    end
+
     // ===================
     // Nets
     // ===================

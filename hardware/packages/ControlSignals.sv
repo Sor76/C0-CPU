@@ -54,8 +54,9 @@ package ControlSignals_pkg;
         PCSRC_NULL                  // Value for resetting the CPU, so that the instruction mem grab the first one not the second.
     } PCSrc;
 
-    typedef enum logic [1:0] {
+    typedef enum logic [2:0] {
         // Peripheral enum values must match the ID of each peripheral.
+        DEVICE_DATA_SRC_INST_MEM,           // Unused
         DEVICE_DATA_SRC_DATA_MEM,
         DEVICE_DATA_SRC_LCD_CONTROLLER,
         DEVICE_DATA_SRC_BUTTON_CONTROLLER,
