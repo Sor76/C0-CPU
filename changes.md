@@ -22,23 +22,23 @@ List for storing the changes made mid-way when writing the FPGA code. All the di
     - Status: Unchecked
 11. Address Decoder now handles the conflict behavior from the `ReadOp` and `WriteOp` trying to interact with the target at the same time. It is more efficient to let the Address Decoder handles this.
     - Status: Unchecked
-13. Add new Bits Extension Unit for handling signed/unsigned extending for the `ReadOp` operation that doesn't read the full word.
+12. Add new Bits Extension Unit for handling signed/unsigned extending for the `ReadOp` operation that doesn't read the full word.
     - Status: Unchecked
-14. Removed the big Peripheral Controller and leave out the controller for each peripheral.
+13. Removed the big Peripheral Controller and leave out the controller for each peripheral.
     - Status: Unchecked
-15. Unified the bus for communication between the processor, the Data Memory and the Peripherals into one bus (separate the data line from each device). When there is a read/write request from the processor, the Address Decoder now uses a few MSB bits (probably only 2, but the number goes up and down according to the peripheral counts) for generating a device_select signal to, ofc, selecting a device. The remaining LSB bits are also passed to the target device for accessing their internal contents like data at specific data memory address.
+14. Unified the bus for communication between the processor, the Data Memory and the Peripherals into one bus (separate the data line from each device). When there is a read/write request from the processor, the Address Decoder now uses a few MSB bits (probably only 2, but the number goes up and down according to the peripheral counts) for generating a device_select signal to, ofc, selecting a device. The remaining LSB bits are also passed to the target device for accessing their internal contents like data at specific data memory address.
     - Status: Unchecked
-16. `DeviceDataSrc` Control Signal now separates `PERIPHERAL` into `LCD_CONTROLLER` and `BUTTON_CONTROLLER` due to removal of the Peripheral Controller, and added value for reading from none. And, expand the size to 2-bits
+15. `DeviceDataSrc` Control Signal now separates `PERIPHERAL` into `LCD_CONTROLLER` and `BUTTON_CONTROLLER` due to removal of the Peripheral Controller, and added value for reading from none. And, expand the size to 2-bits
     - Status: Unchecked
-17. Renamed Data Memory to Data Memory Controller, and switch to word addressable memory instead of byte addressable memory with terrible approach for preventing delay from accessing multiple byte. It works for now, at least.
+16. Renamed Data Memory to Data Memory Controller, and switch to word addressable memory instead of byte addressable memory with terrible approach for preventing delay from accessing multiple byte. It works for now, at least.
     - Status: Unchecked
-19. Renamed Instruction Memory to Instruction Memory Controller, but remains with byte addressable memory.
+17. Renamed Instruction Memory to Instruction Memory Controller, but remains with byte addressable memory.
     - Status: Unchecked
-20. Major changes to MEM and WB stage due to BRAM implementation on Data Memory Controller, which cause the read operation have a delay of 1 clock cycle. Read operation mux and bit extender for that data are now moved to WB to accommodate for the delay of the Data Memory Controller. Result of read operation from LCD, button matrix, `DeviceDataSrc` and `ReadOp` are now part of MEM/WB interstage register.
+18. Major changes to MEM and WB stage due to BRAM implementation on Data Memory Controller, which cause the read operation have a delay of 1 clock cycle. Read operation mux and bit extender for that data are now moved to WB to accommodate for the delay of the Data Memory Controller. Result of read operation from LCD, button matrix, `DeviceDataSrc` and `ReadOp` are now part of MEM/WB interstage register.
     - Status: Unchecked
-21. `BGE` and `BGEU` is greater or equal, not just greater. bruh
+19. `BGE` and `BGEU` is greater or equal, not just greater. bruh
     - Status: Unchecked
-22. `SLL`, `SRL` and `SRA` only use the lower 5-bits of the second operand.
+20. `SLL`, `SRL` and `SRA` only use the lower 5-bits of the second operand.
     - Status: Unchecked
 
 

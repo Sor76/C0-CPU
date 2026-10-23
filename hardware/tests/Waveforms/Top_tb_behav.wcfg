@@ -14,13 +14,13 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="38.643950000 ms"></ZoomStartTime>
-      <ZoomEndTime time="66.723950001 ms"></ZoomEndTime>
-      <Cursor1Time time="53.703950000 ms"></Cursor1Time>
+      <ZoomStartTime time="590,320.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="593,140.001 ns"></ZoomEndTime>
+      <Cursor1Time time="590,790.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="227"></NameColumnWidth>
-      <ValueColumnWidth column_width="61"></ValueColumnWidth>
+      <NameColumnWidth column_width="191"></NameColumnWidth>
+      <ValueColumnWidth column_width="91"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="15" />
    <wvobject type="logic" fp_name="/Top_tb/clk">
@@ -140,7 +140,6 @@
    <wvobject type="group" fp_name="group104">
       <obj_property name="label">Button</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <obj_property name="isExpanded"></obj_property>
       <wvobject type="logic" fp_name="/Top_tb/dut/system_bus/button_controller/device_select">
          <obj_property name="ElementShortName">device_select</obj_property>
          <obj_property name="ObjectShortName">device_select</obj_property>
@@ -283,6 +282,7 @@
    <wvobject type="group" fp_name="group132">
       <obj_property name="label">Register File</obj_property>
       <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
       <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[31]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[31][31:0]</obj_property>
@@ -414,7 +414,7 @@
          <obj_property name="ElementShortName">[10][31:0]</obj_property>
          <obj_property name="ObjectShortName">[10][31:0]</obj_property>
          <obj_property name="label">a0 x10</obj_property>
-         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[9]">
          <obj_property name="DisplayName">label</obj_property>
@@ -548,7 +548,6 @@
    <wvobject type="group" fp_name="group296">
       <obj_property name="label">IDEX Register</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <obj_property name="isExpanded"></obj_property>
       <wvobject type="array" fp_name="/Top_tb/dut/id_ex_reg/extended_imm_register">
          <obj_property name="ElementShortName">extended_imm_register[31:0]</obj_property>
          <obj_property name="ObjectShortName">extended_imm_register[31:0]</obj_property>
