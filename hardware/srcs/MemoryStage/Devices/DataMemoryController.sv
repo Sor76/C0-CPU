@@ -12,6 +12,7 @@ module DataMemoryController
     input  logic                        device_select,
     input  logic [ADDRESS_WIDTH-1:0]    device_address,
     input  Word                         write_data,
+    input  ReadOp                       validated_read_op,
     input  WriteOp                      validated_write_op,
 
     output Word                         data_out
@@ -22,26 +23,36 @@ module DataMemoryController
     // At the cost of breaking RISC-V specification (must support unalign memory access) and horrible space efficiency.
 
     // BRAM part
-    (* ram_style = "block" *) Word data_memory_block [0:2**ADDRESS_WIDTH - 1] = '{default: 0};
-    logic [ADDRESS_WIDTH-1:0]   bram_addr;
-    logic                       bram_we;
-    Word                        bram_write_data;
-    Word                        bram_read_reg = '0;
+    (* ram_style = "block" *) Byte data_memory_block_1 [0:2**(ADDRESS_WIDTH >> 2) - 1] = '{default: 0};
+    (* ram_style = "block" *) Byte data_memory_block_2 [0:2**(ADDRESS_WIDTH >> 2) - 1] = '{default: 0};
+    (* ram_style = "block" *) Byte data_memory_block_3 [0:2**(ADDRESS_WIDTH >> 2) - 1] = '{default: 0};
+    (* ram_style = "block" *) Byte data_memory_block_4 [0:2**(ADDRESS_WIDTH >> 2) - 1] = '{default: 0};
+
+    logic [ADDRESS_WIDTH-1:0] block_addr [0:3];
+    logic block_we [0:3];
+    Byte block_write_data [0:3];
+    Byte block_out [0:3];
+    
     always_ff @(posedge clk) begin
-        if (bram_we) begin
-            data_memory_block[bram_addr] <= bram_write_data;
-        end
-        bram_read_reg <= data_memory_block[bram_addr];
+        if (block_we[0]) data_memory_block_1[block_addr[0]] <= block_write_data[0];
+        if (block_we[1]) data_memory_block_2[block_addr[1]] <= block_write_data[1];
+        if (block_we[2]) data_memory_block_3[block_addr[2]] <= block_write_data[2];
+        if (block_we[3]) data_memory_block_4[block_addr[3]] <= block_write_data[3];
+
+        block_out[0] <= data_memory_block_1[block_addr[0]];
+        block_out[1] <= data_memory_block_2[block_addr[1]];
+        block_out[2] <= data_memory_block_3[block_addr[2]];
+        block_out[3] <= data_memory_block_4[block_addr[3]];
     end
 
 
     // BRAM Controller part
     // Reseting sequence
     logic                       is_resetting = 0;
-    logic [ADDRESS_WIDTH-1:0]   resetting_counter = '0;
+    logic [(ADDRESS_WIDTH >> 2)-1:0]   resetting_counter = '0;
     always_ff @(posedge clk) begin
         if (is_resetting) begin
-            if (resetting_counter == 2**ADDRESS_WIDTH-1) begin
+            if (resetting_counter == 2**(ADDRESS_WIDTH >> 2)-1) begin
                 resetting_counter <= '0;
                 is_resetting <= 0;
             end else begin
@@ -58,11 +69,26 @@ module DataMemoryController
     // Forcing read/write 4-byte at a times. For read operation, the Bit Extender will handle the 1-2 bytes read. For write operation, some byte will be 0.
     always_comb begin
         if (is_resetting) begin
-            bram_addr       = resetting_counter;
-            bram_we         = 1;
-            bram_write_data = '0;
+            block_addr = '{default: resetting_counter};
+            block_we = '{default: 1};
+            block_write_data = '{default: 0};
             data_out        = '0;
         end else begin
+            // Address handling
+
+            case (validated_write_op)
+                WRITE_OP_1_BYTE:    bram_write_data = {write_data[7:0], 24'h0};
+                WRITE_OP_2_BYTES:   bram_write_data = {<<8{16'h0, write_data[15:0]}};
+                WRITE_OP_4_BYTES:   bram_write_data = {<<8{write_data}};
+                default:            bram_write_data = '0;
+            endcase
+            case (validated_read_op[1:0])
+                2'b00:    bram_write_data = {write_data[7:0], 24'h0};
+                2'b01:   bram_write_data = {<<8{16'h0, write_data[15:0]}};
+                2'b10:   bram_write_data = {<<8{write_data}};
+                default:            bram_write_data = '0;
+            endcase
+
             bram_addr       = device_address;
 
             bram_we         = (validated_write_op inside {[WRITE_OP_1_BYTE : WRITE_OP_4_BYTES]} && device_select) ? 1 : 0;
