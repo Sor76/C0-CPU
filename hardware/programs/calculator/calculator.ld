@@ -2,8 +2,8 @@ ENTRY(_start)
 
 MEMORY
 {
-    ROM     (rx)    : ORIGIN = 0x00000000, LENGTH = 32K
-    RAM     (rw)    : ORIGIN = 0x40000000, LENGTH = 128K
+    ROM     (rx)    : ORIGIN = 0x00000000, LENGTH = 256K
+    RAM     (rw)    : ORIGIN = 0x40000000, LENGTH = 256K
     LCD     (w)     : ORIGIN = 0x80000000, LENGTH = 4
     BUTTON  (r)     : ORIGIN = 0xC0000000, LENGTH = 4
 }
@@ -29,21 +29,21 @@ SECTIONS
 
     .data :
     {
-        . = ALIGN(4);
+        . = ALIGN(1);
         _sdata = .;
         *(.data)
         *(.data*)
-        . = ALIGN(4);
+        . = ALIGN(1);
 
         _edata = .;
     } > RAM AT > ROM
 
     .bss :
     {
-        . = ALIGN(4);
+        . = ALIGN(1);
         *(.bss)
         *(.bss*)
-        . = ALIGN(4);
+        . = ALIGN(1);
     } > RAM
 
     .stack :

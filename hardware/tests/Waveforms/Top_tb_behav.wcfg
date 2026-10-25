@@ -14,13 +14,13 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="590,320.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="593,140.001 ns"></ZoomEndTime>
-      <Cursor1Time time="590,790.000 ns"></Cursor1Time>
+      <ZoomStartTime time="0.000000000 ms"></ZoomStartTime>
+      <ZoomEndTime time="10.001000001 ms"></ZoomEndTime>
+      <Cursor1Time time="2.454535162 ms"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="191"></NameColumnWidth>
-      <ValueColumnWidth column_width="91"></ValueColumnWidth>
+      <ValueColumnWidth column_width="79"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="15" />
    <wvobject type="logic" fp_name="/Top_tb/clk">
@@ -34,68 +34,334 @@
    <wvobject type="group" fp_name="group109">
       <obj_property name="label">Data Memory</obj_property>
       <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
       <wvobject type="logic" fp_name="/Top_tb/dut/system_bus/data_memory_controller/device_select">
          <obj_property name="ElementShortName">device_select</obj_property>
          <obj_property name="ObjectShortName">device_select</obj_property>
       </wvobject>
-      <wvobject type="group" fp_name="group2185">
+      <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/device_address">
+         <obj_property name="ElementShortName">device_address[17:0]</obj_property>
+         <obj_property name="ObjectShortName">device_address[17:0]</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+      </wvobject>
+      <wvobject type="group" fp_name="group493">
          <obj_property name="label">Stack</obj_property>
          <obj_property name="DisplayName">label</obj_property>
-         <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block[248]">
-            <obj_property name="ElementShortName">[248][31:0]</obj_property>
-            <obj_property name="ObjectShortName">[248][31:0]</obj_property>
+         <wvobject type="vbus" fp_name="vbus492">
+            <obj_property name="label">Stack 10</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_4[247]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[247][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[247][7:0]</obj_property>
+               <obj_property name="label">Stack 10 Block 4</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_3[247]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[247][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[247][7:0]</obj_property>
+               <obj_property name="label">Stack 10 Block 3</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_2[247]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[247][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[247][7:0]</obj_property>
+               <obj_property name="label">Stack 10 Block 2</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_1[247]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[247][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[247][7:0]</obj_property>
+               <obj_property name="label">Stack 10 Block 1</obj_property>
+            </wvobject>
          </wvobject>
-         <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block[249]">
-            <obj_property name="ElementShortName">[249][31:0]</obj_property>
-            <obj_property name="ObjectShortName">[249][31:0]</obj_property>
+         <wvobject type="vbus" fp_name="vbus491">
+            <obj_property name="label">Stack 9</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_4[248]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[248][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[248][7:0]</obj_property>
+               <obj_property name="label">Stack 9 Block 4</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_3[248]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[248][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[248][7:0]</obj_property>
+               <obj_property name="label">Stack 9 Block 3</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_2[248]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[248][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[248][7:0]</obj_property>
+               <obj_property name="label">Stack 9 Block 2</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_1[248]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[248][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[248][7:0]</obj_property>
+               <obj_property name="label">Stack 9 Block 1</obj_property>
+            </wvobject>
          </wvobject>
-         <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block[250]">
-            <obj_property name="ElementShortName">[250][31:0]</obj_property>
-            <obj_property name="ObjectShortName">[250][31:0]</obj_property>
+         <wvobject type="vbus" fp_name="vbus490">
+            <obj_property name="label">Stack 8</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_4[249]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[249][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[249][7:0]</obj_property>
+               <obj_property name="label">Stack 8 Block 4</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_3[249]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[249][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[249][7:0]</obj_property>
+               <obj_property name="label">Stack 8 Block 3</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_2[249]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[249][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[249][7:0]</obj_property>
+               <obj_property name="label">Stack 8 Block 2</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_1[249]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[249][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[249][7:0]</obj_property>
+               <obj_property name="label">Stack 8 Block 1</obj_property>
+            </wvobject>
          </wvobject>
-         <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block[251]">
-            <obj_property name="ElementShortName">[251][31:0]</obj_property>
-            <obj_property name="ObjectShortName">[251][31:0]</obj_property>
+         <wvobject type="vbus" fp_name="vbus489">
+            <obj_property name="label">Stack 7</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_4[250]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[250][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[250][7:0]</obj_property>
+               <obj_property name="label">Stack 7 Block 4</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_3[250]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[250][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[250][7:0]</obj_property>
+               <obj_property name="label">Stack 7 Block 3</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_2[250]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[250][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[250][7:0]</obj_property>
+               <obj_property name="label">Stack 7 Block 2</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_1[250]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[250][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[250][7:0]</obj_property>
+               <obj_property name="label">Stack 7 Block 1</obj_property>
+            </wvobject>
          </wvobject>
-         <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block[252]">
-            <obj_property name="ElementShortName">[252][31:0]</obj_property>
-            <obj_property name="ObjectShortName">[252][31:0]</obj_property>
+         <wvobject type="vbus" fp_name="vbus487">
+            <obj_property name="label">Stack 6</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_4[251]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[251][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[251][7:0]</obj_property>
+               <obj_property name="label">Stack 6 Block 4</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_3[251]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[251][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[251][7:0]</obj_property>
+               <obj_property name="label">Stack 6 Block 3</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_2[251]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[251][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[251][7:0]</obj_property>
+               <obj_property name="label">Stack 6 Block 2</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_1[251]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[251][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[251][7:0]</obj_property>
+               <obj_property name="label">Stack 6 Block 1</obj_property>
+            </wvobject>
          </wvobject>
-         <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block[253]">
-            <obj_property name="ElementShortName">[253][31:0]</obj_property>
-            <obj_property name="ObjectShortName">[253][31:0]</obj_property>
+         <wvobject type="vbus" fp_name="vbus486">
+            <obj_property name="label">Stack 5</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_4[252]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[252][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[252][7:0]</obj_property>
+               <obj_property name="label">Stack 5 Block 4</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_3[252]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[252][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[252][7:0]</obj_property>
+               <obj_property name="label">Stack 5 Block 3</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_2[252]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[252][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[252][7:0]</obj_property>
+               <obj_property name="label">Stack 5 Block 2</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_1[252]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[252][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[252][7:0]</obj_property>
+               <obj_property name="label">Stack 5 Block 1</obj_property>
+            </wvobject>
          </wvobject>
-         <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block[254]">
-            <obj_property name="ElementShortName">[254][31:0]</obj_property>
-            <obj_property name="ObjectShortName">[254][31:0]</obj_property>
+         <wvobject type="vbus" fp_name="vbus485">
+            <obj_property name="label">Stack 4</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_4[253]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[253][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[253][7:0]</obj_property>
+               <obj_property name="label">Stack 4 Block 4</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_3[253]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[253][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[253][7:0]</obj_property>
+               <obj_property name="label">Stack 4 Block 3</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_2[253]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[253][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[253][7:0]</obj_property>
+               <obj_property name="label">Stack 4 Block 2</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_1[253]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[253][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[253][7:0]</obj_property>
+               <obj_property name="label">Stack 4 Block 1</obj_property>
+            </wvobject>
          </wvobject>
-         <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block[255]">
-            <obj_property name="ElementShortName">[255][31:0]</obj_property>
-            <obj_property name="ObjectShortName">[255][31:0]</obj_property>
+         <wvobject type="vbus" fp_name="vbus484">
+            <obj_property name="label">Stack 3</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_4[254]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[254][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[254][7:0]</obj_property>
+               <obj_property name="label">Stack 3 Block 4</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_3[254]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[254][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[254][7:0]</obj_property>
+               <obj_property name="label">Stack 3 Block 3</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_2[254]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[254][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[254][7:0]</obj_property>
+               <obj_property name="label">Stack 3 Block 2</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_1[254]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[254][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[254][7:0]</obj_property>
+               <obj_property name="label">Stack 3 Block 1</obj_property>
+            </wvobject>
+         </wvobject>
+         <wvobject type="vbus" fp_name="vbus483">
+            <obj_property name="label">Stack 2</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_1[255]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[255][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[255][7:0]</obj_property>
+               <obj_property name="label">Stack 2 Block 1</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_2[255]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[255][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[255][7:0]</obj_property>
+               <obj_property name="label">Stack 2 Block 2</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_3[255]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[255][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[255][7:0]</obj_property>
+               <obj_property name="label">Stack 2 Block 3</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_4[255]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[255][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[255][7:0]</obj_property>
+               <obj_property name="label">Stack 2 Block 4</obj_property>
+            </wvobject>
+         </wvobject>
+         <wvobject type="vbus" fp_name="vbus482">
+            <obj_property name="label">Stack 1</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_4[256]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[256][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[256][7:0]</obj_property>
+               <obj_property name="label">Stack 1 Block 4</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_3[256]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[256][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[256][7:0]</obj_property>
+               <obj_property name="label">Stack 1 Block 3</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_2[256]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[256][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[256][7:0]</obj_property>
+               <obj_property name="label">Stack 1 Block 2</obj_property>
+            </wvobject>
+            <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_memory_block_1[256]">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">[256][7:0]</obj_property>
+               <obj_property name="ObjectShortName">[256][7:0]</obj_property>
+               <obj_property name="label">Stack 1 Block 1</obj_property>
+            </wvobject>
          </wvobject>
       </wvobject>
-      <wvobject type="group" fp_name="group336">
-         <obj_property name="label">Controlling signal</obj_property>
-         <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/block_addr">
+         <obj_property name="ElementShortName">block_addr[0:3][17:0]</obj_property>
+         <obj_property name="ObjectShortName">block_addr[0:3][17:0]</obj_property>
          <obj_property name="isExpanded"></obj_property>
-         <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/bram_addr">
-            <obj_property name="ElementShortName">bram_addr[14:0]</obj_property>
-            <obj_property name="ObjectShortName">bram_addr[14:0]</obj_property>
-            <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-         </wvobject>
-         <wvobject type="logic" fp_name="/Top_tb/dut/system_bus/data_memory_controller/bram_we">
-            <obj_property name="ElementShortName">bram_we</obj_property>
-            <obj_property name="ObjectShortName">bram_we</obj_property>
-         </wvobject>
-         <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/bram_write_data">
-            <obj_property name="ElementShortName">bram_write_data[31:0]</obj_property>
-            <obj_property name="ObjectShortName">bram_write_data[31:0]</obj_property>
-            <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-         </wvobject>
-         <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/bram_read_reg">
-            <obj_property name="ElementShortName">bram_read_reg[31:0]</obj_property>
-            <obj_property name="ObjectShortName">bram_read_reg[31:0]</obj_property>
-         </wvobject>
+      </wvobject>
+      <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/validated_write_op">
+         <obj_property name="ElementShortName">validated_write_op[1:0]</obj_property>
+         <obj_property name="ObjectShortName">validated_write_op[1:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/write_data">
+         <obj_property name="ElementShortName">write_data[31:0]</obj_property>
+         <obj_property name="ObjectShortName">write_data[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/block_write_data">
+         <obj_property name="ElementShortName">block_write_data[0:3][7:0]</obj_property>
+         <obj_property name="ObjectShortName">block_write_data[0:3][7:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/block_we">
+         <obj_property name="ElementShortName">block_we[0:3]</obj_property>
+         <obj_property name="ObjectShortName">block_we[0:3]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/block_out">
+         <obj_property name="ElementShortName">block_out[0:3][7:0]</obj_property>
+         <obj_property name="ObjectShortName">block_out[0:3][7:0]</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/data_out">
          <obj_property name="ElementShortName">data_out[31:0]</obj_property>
@@ -282,7 +548,6 @@
    <wvobject type="group" fp_name="group132">
       <obj_property name="label">Register File</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <obj_property name="isExpanded"></obj_property>
       <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[31]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[31][31:0]</obj_property>
@@ -414,7 +679,7 @@
          <obj_property name="ElementShortName">[10][31:0]</obj_property>
          <obj_property name="ObjectShortName">[10][31:0]</obj_property>
          <obj_property name="label">a0 x10</obj_property>
-         <obj_property name="Radix">HEXRADIX</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[9]">
          <obj_property name="DisplayName">label</obj_property>
@@ -607,7 +872,6 @@
    <wvobject type="group" fp_name="group282">
       <obj_property name="label">EXMEM Register</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <obj_property name="isExpanded"></obj_property>
       <wvobject type="array" fp_name="/Top_tb/dut/ex_mem_reg/pc_src_register">
          <obj_property name="ElementShortName">pc_src_register[1:0]</obj_property>
          <obj_property name="ObjectShortName">pc_src_register[1:0]</obj_property>
@@ -649,6 +913,7 @@
    <wvobject type="group" fp_name="group270">
       <obj_property name="label">MEMWB Register</obj_property>
       <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
       <wvobject type="array" fp_name="/Top_tb/dut/mem_wb_reg/pc_src_register">
          <obj_property name="ElementShortName">pc_src_register[1:0]</obj_property>
          <obj_property name="ObjectShortName">pc_src_register[1:0]</obj_property>
