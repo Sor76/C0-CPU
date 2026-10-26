@@ -12,7 +12,6 @@ module DataMemoryController
     input  logic                        device_select,
     input  logic [ADDRESS_WIDTH-1:0]    device_address,
     input  Word                         write_data,
-    input  ReadOp                       validated_read_op,
     input  WriteOp                      validated_write_op,
 
     output Word                         data_out
@@ -23,15 +22,15 @@ module DataMemoryController
     // At the cost of breaking RISC-V specification (must support unalign memory access) and horrible space efficiency.
 
     // BRAM part
-    (* ram_style = "block" *) Byte data_memory_block_1 [0:2**(ADDRESS_WIDTH >> 2) - 1] = '{default: 0};
-    (* ram_style = "block" *) Byte data_memory_block_2 [0:2**(ADDRESS_WIDTH >> 2) - 1] = '{default: 0};
-    (* ram_style = "block" *) Byte data_memory_block_3 [0:2**(ADDRESS_WIDTH >> 2) - 1] = '{default: 0};
-    (* ram_style = "block" *) Byte data_memory_block_4 [0:2**(ADDRESS_WIDTH >> 2) - 1] = '{default: 0};
-
-    logic [ADDRESS_WIDTH-1:0] block_addr [0:3];
-    logic block_we [0:3];
-    Byte block_write_data [0:3];
-    Byte block_out [0:3];
+    // Lower block index = the more "MSB" it would be (for 4  byte alignment).
+    (* ram_style = "block" *) Byte data_memory_block_1 [0:2**(ADDRESS_WIDTH - 2) - 1] = '{default: 0};
+    (* ram_style = "block" *) Byte data_memory_block_2 [0:2**(ADDRESS_WIDTH - 2) - 1] = '{default: 0};
+    (* ram_style = "block" *) Byte data_memory_block_3 [0:2**(ADDRESS_WIDTH - 2) - 1] = '{default: 0};
+    (* ram_style = "block" *) Byte data_memory_block_4 [0:2**(ADDRESS_WIDTH - 2) - 1] = '{default: 0};
+    logic [ADDRESS_WIDTH-1:0]   block_addr          [0:3];
+    logic                       block_we            [0:3];
+    Byte                        block_write_data    [0:3];
+    Byte                        block_out           [0:3];
     
     always_ff @(posedge clk) begin
         if (block_we[0]) data_memory_block_1[block_addr[0]] <= block_write_data[0];
@@ -46,13 +45,12 @@ module DataMemoryController
     end
 
 
-    // BRAM Controller part
-    // Reseting sequence
-    logic                       is_resetting = 0;
-    logic [(ADDRESS_WIDTH >> 2)-1:0]   resetting_counter = '0;
+    // BRAM resetting part
+    logic                           is_resetting        = 0;
+    logic [(ADDRESS_WIDTH - 2)-1:0] resetting_counter   = '0;
     always_ff @(posedge clk) begin
         if (is_resetting) begin
-            if (resetting_counter == 2**(ADDRESS_WIDTH >> 2)-1) begin
+            if (resetting_counter == 2**(ADDRESS_WIDTH - 2)-1) begin
                 resetting_counter <= '0;
                 is_resetting <= 0;
             end else begin
@@ -64,42 +62,64 @@ module DataMemoryController
         end
     end
 
-    // Normal sequence
+    // BRAM Normal operation part
     // Address Decoder already handles the conflicting of read and write operation.
-    // Forcing read/write 4-byte at a times. For read operation, the Bit Extender will handle the 1-2 bytes read. For write operation, some byte will be 0.
+    initial data_out = '0;
     always_comb begin
         if (is_resetting) begin
-            block_addr = '{default: resetting_counter};
-            block_we = '{default: 1};
-            block_write_data = '{default: 0};
-            data_out        = '0;
+            block_addr          = '{default: resetting_counter};
+            block_we            = '{default: 1};
+            block_write_data    = '{default: 0};
+            data_out            = '0;
         end else begin
-            // Address handling
+            // Missalign address handling
+            block_addr[0] = device_address[ADDRESS_WIDTH-1:2];
+            block_addr[1] = (device_address[1:0] > 2) ? device_address[ADDRESS_WIDTH-1:2] + 1 : device_address[ADDRESS_WIDTH-1:2];
+            block_addr[2] = (device_address[1:0] > 1) ? device_address[ADDRESS_WIDTH-1:2] + 1 : device_address[ADDRESS_WIDTH-1:2];
+            block_addr[3] = (device_address[1:0] > 0) ? device_address[ADDRESS_WIDTH-1:2] + 1 : device_address[ADDRESS_WIDTH-1:2];
 
-            case (validated_write_op)
-                WRITE_OP_1_BYTE:    bram_write_data = {write_data[7:0], 24'h0};
-                WRITE_OP_2_BYTES:   bram_write_data = {<<8{16'h0, write_data[15:0]}};
-                WRITE_OP_4_BYTES:   bram_write_data = {<<8{write_data}};
-                default:            bram_write_data = '0;
+            // Writing
+            if (device_select) begin
+                // Creating one write data line
+                // Convert big endian into little endian for storing
+                case (device_address[1:0])
+                    2'b00:      block_write_data = {write_data[7:0],    write_data[15:8],   write_data[23:16],  write_data[31:24]};
+                    2'b01:      block_write_data = {write_data[31:24],  write_data[7:0],    write_data[15:8],   write_data[23:16]};
+                    2'b10:      block_write_data = {write_data[23:16],  write_data[31:24],  write_data[7:0],    write_data[15:8]};
+                    2'b11:      block_write_data = {write_data[15:8],   write_data[23:16],  write_data[31:24],  write_data[7:0]};
+                    default:    block_write_data = '{default: 0};
+                endcase
+
+                // Masking the write dat aline
+                // 00 = 1, 0, 0, 0
+                // 01 = 0, 1, 0, 0
+                // 10 = 0, 0, 1, 0
+                // 11 = 0, 0, 0, 1
+
+                // 00 = 1, 1, 0, 0
+                // 01 = 0, 1, 1, 0
+                // 10 = 0, 0, 1, 1
+                // 11 = 1, 0, 0, 1
+                case (validated_write_op)
+                    WRITE_OP_1_BYTE:    block_we = {<<{4'b1000 >> device_address[1:0]}};
+                    WRITE_OP_2_BYTES:   block_we = {<<{4'b1000 >> device_address[1:0] | (device_address[1:0] == 2'b11) ? 4'b1000 : 4'b0000}};
+                    WRITE_OP_4_BYTES:   block_we = '{default: 1};
+                    default:            block_we = '{default: 0};
+                endcase
+            end else begin
+                block_write_data    = '{default: 0};
+                block_we            = '{default: 0};
+            end
+
+            // Reading
+            // Convert little endian into big endian for internal processing
+            case (device_address[1:0])
+                2'b00:      data_out = {block_out[3], block_out[2], block_out[1], block_out[0]};
+                2'b01:      data_out = {block_out[0], block_out[3], block_out[2], block_out[1]};
+                2'b10:      data_out = {block_out[1], block_out[0], block_out[3], block_out[2]};
+                2'b11:      data_out = {block_out[2], block_out[1], block_out[0], block_out[3]};
+                default:    data_out = '0;
             endcase
-            case (validated_read_op[1:0])
-                2'b00:    bram_write_data = {write_data[7:0], 24'h0};
-                2'b01:   bram_write_data = {<<8{16'h0, write_data[15:0]}};
-                2'b10:   bram_write_data = {<<8{write_data}};
-                default:            bram_write_data = '0;
-            endcase
-
-            bram_addr       = device_address;
-
-            bram_we         = (validated_write_op inside {[WRITE_OP_1_BYTE : WRITE_OP_4_BYTES]} && device_select) ? 1 : 0;
-            case (validated_write_op)
-                WRITE_OP_1_BYTE:    bram_write_data = {write_data[7:0], 24'h0};
-                WRITE_OP_2_BYTES:   bram_write_data = {<<8{16'h0, write_data[15:0]}};
-                WRITE_OP_4_BYTES:   bram_write_data = {<<8{write_data}};
-                default:            bram_write_data = '0;
-            endcase
-
-            data_out = {<<8{bram_read_reg}};
         end
     end
 endmodule

@@ -41,8 +41,10 @@ _start:
     BAD_LA sp, _stack_top
     BAD_LA s0, _lcd_origin
     BAD_LA s1, _button_origin
-    jal ra, wait_ram_reset
-    NOP_SEQ
+    wait_ram_reset:
+        li a0, 65536
+        jal ra, counter
+        NOP_SEQ
 
     jal ra, set_up_lcd
     NOP_SEQ
@@ -68,16 +70,6 @@ counter:
     2:
         ret
         NOP_SEQ
-
-wait_ram_reset:
-    li a0, 32768
-    PUSH ra
-    jal ra, counter
-    NOP_SEQ
-    POP ra
-    NOP_SEQ
-    ret
-    NOP_SEQ
 
 write_lcd:
     # a0 = 65536 (for delay between stage)
@@ -152,7 +144,7 @@ main_loop:
     # Read button / new value validation
     1:
         POP t1
-        lw t0, 0(s1)
+        lbu t0, 0(s1)
         NOP_SEQ
         PUSH t0
 

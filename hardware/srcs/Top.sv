@@ -5,10 +5,10 @@ module Top
     import OtherSignals_pkg::*;
     import Types_pkg::*;
 #(
-    localparam int      INSTRUCTION_MEM_ADDRESS_WIDTH   = 15,               // 2**15 (~32K) x 1 = 32KiB Byte addressable instruction memory
+    localparam int      INSTRUCTION_MEM_ADDRESS_WIDTH   = 18,               // 2**18 (~256K) x 1 = 256KiB Byte addressable instruction memory
     localparam string   PROGRAM_NAME                    = "calculator.mem",
     
-    localparam int      DATA_MEM_ADDRESS_WIDTH          = 15,               // 2**15 (~32K) x 4 = 128KiB Word addressable data memory
+    localparam int      DATA_MEM_ADDRESS_WIDTH          = 18,               // 2**15 (~256K) x 1 = 256KiB Byte addressable data memory
 
     localparam int      BUTTON_ROWS                     = 5,
     localparam int      BUTTON_COLS                     = 4,

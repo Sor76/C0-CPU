@@ -30,9 +30,9 @@ List for storing the changes made mid-way when writing the FPGA code. All the di
     - Status: Unchecked
 15. `DeviceDataSrc` Control Signal now separates `PERIPHERAL` into `LCD_CONTROLLER` and `BUTTON_CONTROLLER` due to removal of the Peripheral Controller, and added value for reading from none. And, expand the size to 2-bits
     - Status: Unchecked
-16. Renamed Data Memory to Data Memory Controller, and switch to word addressable memory instead of byte addressable memory with terrible approach for preventing delay from accessing multiple byte. It works for now, at least.
+16. Renamed Data Memory to Data Memory Controller.
     - Status: Unchecked
-17. Renamed Instruction Memory to Instruction Memory Controller, but remains with byte addressable memory.
+17. Renamed Instruction Memory to Instruction Memory Controller.
     - Status: Unchecked
 18. Major changes to MEM and WB stage due to BRAM implementation on Data Memory Controller, which cause the read operation have a delay of 1 clock cycle. Read operation mux and bit extender for that data are now moved to WB to accommodate for the delay of the Data Memory Controller. Result of read operation from LCD, button matrix, `DeviceDataSrc` and `ReadOp` are now part of MEM/WB interstage register.
     - Status: Unchecked
