@@ -14,6 +14,7 @@ module MEMWBReg
     input   Word            data_mem_read_data,
     input   Word            lcd_read_data,
     input   Word            button_read_data,
+    input   Word            direct_button_read_data,
     input   DeviceDataSrc   device_data_src,
     input   rdSrc           rd_src,
     input   RegAddr         rd_addr,
@@ -26,6 +27,7 @@ module MEMWBReg
     output  Word            data_mem_read_data_register,
     output  Word            lcd_read_data_register,
     output  Word            button_read_data_register,
+    output  Word            direct_button_read_data_register,
     output  DeviceDataSrc   device_data_src_register,
     output  rdSrc           rd_src_register,
     output  RegAddr         rd_addr_register,
@@ -34,6 +36,7 @@ module MEMWBReg
     assign data_mem_read_data_register = data_mem_read_data;
     assign lcd_read_data_register      = lcd_read_data;
     assign button_read_data_register   = button_read_data;
+    assign direct_button_read_data_register = direct_button_read_data;
     initial begin
         pc_src_register             = PCSRC_NULL;
         alu_result_register         = '0;

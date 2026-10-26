@@ -7,11 +7,13 @@ module SystemBus
     parameter   int DATA_MEM_ADDRESS_WIDTH      = 16,
     parameter   int BUTTON_ROWS                 = 5,
     parameter   int BUTTON_COLS                 = 4,
+    parameter   int DIRECT_BUTTON_COUNT         = 5,
 
-    localparam  int DEVICE_COUNTS               = 4, // +1 (Instruction Memory gnu toolchain want eveything in the same address space)
+    localparam  int DEVICE_COUNTS               = 5, // +1 (Instruction Memory gnu toolchain want eveything in the same address space)
     localparam  int DATA_MEM_DEVICE_SELECT_NUM  = 1,
     localparam  int LCD_DEVICE_SELECT_NUM       = 2,
-    localparam  int BUTTON_DEVICE_SELECT_NUMBER = 3
+    localparam  int BUTTON_DEVICE_SELECT_NUMBER = 3,
+    localparam  int DIRECT_BUTTON_DEVICE_SELECT_NUMBER = 4
 ) (
     input   logic           clk,
     input   logic           rst_n,
@@ -24,6 +26,7 @@ module SystemBus
     output  Word            data_mem_read_data,
     output  Word            lcd_read_data,
     output  Word            button_read_data,
+    output  Word            direct_button_read_data,
 
     output  ReadOp          validated_read_op,
     output  DeviceDataSrc   device_data_src,
@@ -33,7 +36,9 @@ module SystemBus
     output  logic           lcd_e,
 
     input   logic           col_in [0:BUTTON_COLS-1],
-    output  logic           row_out [0:BUTTON_ROWS-1]
+    output  logic           row_out [0:BUTTON_ROWS-1],
+
+    input   logic [DIRECT_BUTTON_COUNT-1:0] direct_button_in
 );
 
     logic                               device_select [DEVICE_COUNTS-1:0];
@@ -96,5 +101,17 @@ module SystemBus
 
         .col_in(col_in),
         .row_out(row_out)
+    );
+    DirectButtonController #(
+        .BUTTON_COUNT(DIRECT_BUTTON_COUNT)
+    ) direct_button_controller (
+        .clk(clk),
+        .rst_n(rst_n),
+
+        .device_select(device_select[DIRECT_BUTTON_DEVICE_SELECT_NUMBER]),
+
+        .data_out(direct_button_read_data),
+
+        .button_in(direct_button_in)
     );
 endmodule

@@ -60,6 +60,7 @@ package ControlSignals_pkg;
         DEVICE_DATA_SRC_DATA_MEM,
         DEVICE_DATA_SRC_LCD_CONTROLLER,
         DEVICE_DATA_SRC_BUTTON_CONTROLLER,
+        DEVICE_DATA_SRC_DIRECT_BUTTON_CONTROLLER,
         DEVICE_DATA_SRC_NONE
     } DeviceDataSrc;
 endpackage

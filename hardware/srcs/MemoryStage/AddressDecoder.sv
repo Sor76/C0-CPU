@@ -4,7 +4,7 @@ module AddressDecoder
     import ControlSignals_pkg::*;
     import Types_pkg::*;
 #(
-    parameter int DEVICE_COUNTS = 3 // Data Memory + LCD Controller + Button Controller
+    parameter int DEVICE_COUNTS = 5 // Data Memory + LCD Controller + Button Controller
 ) (
     input   Word                                alu_result,
     input   ReadOp                              read_op,

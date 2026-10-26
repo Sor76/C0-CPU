@@ -11,7 +11,9 @@ module Top
     localparam int      DATA_MEM_ADDRESS_WIDTH          = 15,               // 2**15 (~32K) x 4 = 128KiB Word addressable data memory
 
     localparam int      BUTTON_ROWS                     = 5,
-    localparam int      BUTTON_COLS                     = 4
+    localparam int      BUTTON_COLS                     = 4,
+
+    localparam int      DIRECT_BUTTON_COUNT             = 5
 ) (
     input logic clk,
     input logic rst_n, // Reset button
@@ -24,6 +26,9 @@ module Top
     // Buttons connection (Exclude reset button)
     input logic button_col_in [0:BUTTON_COLS-1],
     output logic button_row_out [0:BUTTON_ROWS-1],
+
+    // Direct Button
+    input logic [DIRECT_BUTTON_COUNT-1:0] direct_button_in,
 
     output logic [3:0] debug_led
 );
@@ -96,6 +101,7 @@ module Top
     Word            data_mem_read_data;
     Word            lcd_read_data;
     Word            button_read_data;
+    Word            direct_button_read_data;
     ReadOp          validated_read_op;
     DeviceDataSrc   device_data_src;
 
@@ -109,6 +115,7 @@ module Top
     Word            data_mem_read_data_mem_wb_reg;
     Word            lcd_read_data_mem_wb_reg;
     Word            button_read_data_mem_wb_reg;
+    Word            direct_button_read_data_mem_wb_reg;
     DeviceDataSrc   device_data_src_mem_wb_reg;
 
     Word            device_data;
@@ -213,7 +220,8 @@ module Top
     SystemBus #(
         .DATA_MEM_ADDRESS_WIDTH(DATA_MEM_ADDRESS_WIDTH),
         .BUTTON_ROWS(BUTTON_ROWS),
-        .BUTTON_COLS(BUTTON_COLS)
+        .BUTTON_COLS(BUTTON_COLS),
+        .DIRECT_BUTTON_COUNT(DIRECT_BUTTON_COUNT) 
     ) system_bus (
         .clk(clk),
         .rst_n(rst_n),
@@ -226,6 +234,7 @@ module Top
         .data_mem_read_data(data_mem_read_data),
         .lcd_read_data(lcd_read_data),
         .button_read_data(button_read_data),
+        .direct_button_read_data(direct_button_read_data),
 
         .validated_read_op(validated_read_op),
         .device_data_src(device_data_src),
@@ -235,7 +244,9 @@ module Top
         .lcd_e(lcd_e),
 
         .col_in(button_col_in),
-        .row_out(button_row_out)
+        .row_out(button_row_out),
+
+        .direct_button_in(direct_button_in)
     );
 
     // ===================
@@ -245,6 +256,7 @@ module Top
         .data_mem_read_data(data_mem_read_data_mem_wb_reg),
         .lcd_read_data(lcd_read_data_mem_wb_reg),
         .button_read_data(button_read_data_mem_wb_reg),
+        .direct_button_read_data(direct_button_read_data_mem_wb_reg),
         .device_data_src(device_data_src_mem_wb_reg),
 
         .device_data(device_data)
@@ -340,6 +352,7 @@ module Top
         .data_mem_read_data(data_mem_read_data),
         .lcd_read_data(lcd_read_data),
         .button_read_data(button_read_data),
+        .direct_button_read_data(direct_button_read_data),
         .device_data_src(device_data_src),
         .rd_src(rd_src_ex_mem_reg),
         .rd_addr(rd_addr_ex_mem_reg),
@@ -352,6 +365,7 @@ module Top
         .data_mem_read_data_register(data_mem_read_data_mem_wb_reg),
         .lcd_read_data_register(lcd_read_data_mem_wb_reg),
         .button_read_data_register(button_read_data_mem_wb_reg),
+        .direct_button_read_data_register(direct_button_read_data_mem_wb_reg),
         .device_data_src_register(device_data_src_mem_wb_reg),
         .rd_src_register(rd_src_mem_wb_reg),
         .rd_addr_register(rd_addr_mem_wb_reg),
