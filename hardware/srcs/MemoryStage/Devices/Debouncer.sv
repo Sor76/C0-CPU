@@ -21,10 +21,11 @@ module Debouncer #(
 
     logic [1:0]                         sync;
     logic                               level;      // Synchronized input, converted to active high.
-    logic [$clog2(TARGET_MS+1)-1:0]     ms_timer;
+    logic [$clog2(TARGET_MS+1)-1:0]     ms_timer = 0;
 
     assign level = ACTIVE_LOW ? ~sync[1] : sync[1];
 
+    initial pressed = ~ACTIVE_LOW;
     always_ff @(posedge clk) begin
         if (!rst_n) begin
             sync        <= ACTIVE_LOW ? 2'b11 : 2'b00;  // Idle level, so reset doesn't look like a press.

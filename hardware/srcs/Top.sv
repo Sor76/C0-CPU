@@ -5,10 +5,10 @@ module Top
     import OtherSignals_pkg::*;
     import Types_pkg::*;
 #(
-    localparam int      INSTRUCTION_MEM_ADDRESS_WIDTH   = 18,               // 2**18 (~256K) x 1 = 256KiB Byte addressable instruction memory
-    localparam string   PROGRAM_NAME                    = "calculator.mem",
+    localparam int      INSTRUCTION_MEM_ADDRESS_WIDTH   = 15,               // 2**15 (~32K) x 1 = 32KiB Byte addressable instruction memory
+    localparam string   PROGRAM_NAME                    = "DirectButtonTest.mem",
     
-    localparam int      DATA_MEM_ADDRESS_WIDTH          = 18,               // 2**15 (~256K) x 1 = 256KiB Byte addressable data memory
+    localparam int      DATA_MEM_ADDRESS_WIDTH          = 13,               // 2**13 (~8K) x 1 = 8KiB Byte addressable data memory
 
     localparam int      BUTTON_ROWS                     = 5,
     localparam int      BUTTON_COLS                     = 4,
@@ -16,7 +16,7 @@ module Top
     localparam int      DIRECT_BUTTON_COUNT             = 5
 ) (
     input logic clk,
-    input logic rst_n, // Reset button
+    // input logic rst_n, // Reset button
 
     // LCD connection
     output logic [7:0] lcd_write_data,
@@ -24,21 +24,24 @@ module Top
     output logic lcd_e,
 
     // Buttons connection (Exclude reset button)
-    input logic button_col_in [0:BUTTON_COLS-1],
-    output logic button_row_out [0:BUTTON_ROWS-1],
+    // input logic button_col_in [0:BUTTON_COLS-1],
+    // output logic button_row_out [0:BUTTON_ROWS-1],
 
     // Direct Button
-    input logic [DIRECT_BUTTON_COUNT-1:0] direct_button_in,
-
-    output logic [3:0] debug_led
+    input logic [DIRECT_BUTTON_COUNT-1:0] direct_button_in
 );
     // Debugging stuff
-    assign debug_led[0] = !rst_n;
-    logic [2:0] clk_counter = 0;
-    always_ff @(posedge clk) begin
-        clk_counter <= clk_counter + 1;
-        debug_led[3:1] <= ~clk_counter;
-    end
+    // assign debug_led[0] = !rst_n;
+    // logic [2:0] clk_counter = 0;
+    // always_ff @(posedge clk) begin
+    //     clk_counter <= clk_counter + 1;
+    //     debug_led[3:1] <= ~clk_counter;
+    // end
+
+    // Fake IO
+    logic rst_n = 1;
+    logic button_col_in [0:BUTTON_COLS-1] = '{default: 1}; 
+    logic button_row_out [0:BUTTON_ROWS-1];
 
     // ===================
     // Nets

@@ -15,33 +15,28 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0.000000000 ms"></ZoomStartTime>
-      <ZoomEndTime time="10.001000001 ms"></ZoomEndTime>
-      <Cursor1Time time="2.454535162 ms"></Cursor1Time>
+      <ZoomEndTime time="200.001000000 ms"></ZoomEndTime>
+      <Cursor1Time time="200.001000000 ms"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="191"></NameColumnWidth>
-      <ValueColumnWidth column_width="79"></ValueColumnWidth>
+      <ValueColumnWidth column_width="75"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="15" />
+   <WVObjectSize size="16" />
    <wvobject type="logic" fp_name="/Top_tb/clk">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/Top_tb/rst_n">
-      <obj_property name="ElementShortName">rst_n</obj_property>
-      <obj_property name="ObjectShortName">rst_n</obj_property>
-   </wvobject>
    <wvobject type="group" fp_name="group109">
       <obj_property name="label">Data Memory</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <obj_property name="isExpanded"></obj_property>
       <wvobject type="logic" fp_name="/Top_tb/dut/system_bus/data_memory_controller/device_select">
          <obj_property name="ElementShortName">device_select</obj_property>
          <obj_property name="ObjectShortName">device_select</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/device_address">
-         <obj_property name="ElementShortName">device_address[17:0]</obj_property>
-         <obj_property name="ObjectShortName">device_address[17:0]</obj_property>
+         <obj_property name="ElementShortName">device_address[12:0]</obj_property>
+         <obj_property name="ObjectShortName">device_address[12:0]</obj_property>
          <obj_property name="isExpanded"></obj_property>
       </wvobject>
       <wvobject type="group" fp_name="group493">
@@ -339,8 +334,8 @@
          </wvobject>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/block_addr">
-         <obj_property name="ElementShortName">block_addr[0:3][17:0]</obj_property>
-         <obj_property name="ObjectShortName">block_addr[0:3][17:0]</obj_property>
+         <obj_property name="ElementShortName">block_addr[0:3][12:0]</obj_property>
+         <obj_property name="ObjectShortName">block_addr[0:3][12:0]</obj_property>
          <obj_property name="isExpanded"></obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/system_bus/data_memory_controller/validated_write_op">
@@ -372,7 +367,6 @@
    <wvobject type="group" fp_name="group656">
       <obj_property name="label">LCD</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <obj_property name="isExpanded"></obj_property>
       <wvobject type="logic" fp_name="/Top_tb/dut/system_bus/lcd_controller/device_select">
          <obj_property name="ElementShortName">device_select</obj_property>
          <obj_property name="ObjectShortName">device_select</obj_property>
@@ -413,14 +407,6 @@
       <wvobject type="group" fp_name="group262">
          <obj_property name="label">IO</obj_property>
          <obj_property name="DisplayName">label</obj_property>
-         <wvobject type="array" fp_name="/Top_tb/button_col_in">
-            <obj_property name="ElementShortName">button_col_in[0:3]</obj_property>
-            <obj_property name="ObjectShortName">button_col_in[0:3]</obj_property>
-         </wvobject>
-         <wvobject type="array" fp_name="/Top_tb/button_row_out">
-            <obj_property name="ElementShortName">button_row_out[0:4]</obj_property>
-            <obj_property name="ObjectShortName">button_row_out[0:4]</obj_property>
-         </wvobject>
       </wvobject>
       <wvobject type="group" fp_name="group333">
          <obj_property name="label">Internal logic</obj_property>
@@ -778,13 +764,13 @@
       <obj_property name="label">Address Decoder</obj_property>
       <obj_property name="DisplayName">label</obj_property>
       <wvobject type="array" fp_name="/Top_tb/dut/system_bus/address_decoder/device_select">
-         <obj_property name="ElementShortName">device_select[3:0]</obj_property>
-         <obj_property name="ObjectShortName">device_select[3:0]</obj_property>
+         <obj_property name="ElementShortName">device_select[4:0]</obj_property>
+         <obj_property name="ObjectShortName">device_select[4:0]</obj_property>
          <obj_property name="isExpanded"></obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/system_bus/address_decoder/device_address">
-         <obj_property name="ElementShortName">device_address[29:0]</obj_property>
-         <obj_property name="ObjectShortName">device_address[29:0]</obj_property>
+         <obj_property name="ElementShortName">device_address[28:0]</obj_property>
+         <obj_property name="ObjectShortName">device_address[28:0]</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/system_bus/address_decoder/validated_read_op">
          <obj_property name="ElementShortName">validated_read_op[2:0]</obj_property>
@@ -798,7 +784,6 @@
    <wvobject type="group" fp_name="group299">
       <obj_property name="label">IFID Register</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <obj_property name="isExpanded"></obj_property>
       <wvobject type="array" fp_name="/Top_tb/dut/if_id_reg/instruction_register">
          <obj_property name="ElementShortName">instruction_register[31:0]</obj_property>
          <obj_property name="ObjectShortName">instruction_register[31:0]</obj_property>
@@ -913,7 +898,6 @@
    <wvobject type="group" fp_name="group270">
       <obj_property name="label">MEMWB Register</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <obj_property name="isExpanded"></obj_property>
       <wvobject type="array" fp_name="/Top_tb/dut/mem_wb_reg/pc_src_register">
          <obj_property name="ElementShortName">pc_src_register[1:0]</obj_property>
          <obj_property name="ObjectShortName">pc_src_register[1:0]</obj_property>
@@ -960,8 +944,51 @@
          <obj_property name="ObjectShortName">rd_write_register</obj_property>
       </wvobject>
    </wvobject>
-   <wvobject type="array" fp_name="/Top_tb/button_pressing_matrix">
-      <obj_property name="ElementShortName">button_pressing_matrix[0:4][0:3]</obj_property>
-      <obj_property name="ObjectShortName">button_pressing_matrix[0:4][0:3]</obj_property>
+   <wvobject type="group" fp_name="group414">
+      <obj_property name="label">Direct Button Controller</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="logic" fp_name="/Top_tb/dut/system_bus/direct_button_controller/tick_1ms">
+         <obj_property name="ElementShortName">tick_1ms</obj_property>
+         <obj_property name="ObjectShortName">tick_1ms</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Top_tb/dut/system_bus/direct_button_controller/clk_counter">
+         <obj_property name="ElementShortName">clk_counter[15:0]</obj_property>
+         <obj_property name="ObjectShortName">clk_counter[15:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Top_tb/dut/system_bus/direct_button_controller/button_in">
+         <obj_property name="ElementShortName">button_in[4:0]</obj_property>
+         <obj_property name="ObjectShortName">button_in[4:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Top_tb/dut/system_bus/direct_button_controller/pressed">
+         <obj_property name="ElementShortName">pressed[4:0]</obj_property>
+         <obj_property name="ObjectShortName">pressed[4:0]</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Top_tb/dut/system_bus/direct_button_controller/data_out">
+         <obj_property name="ElementShortName">data_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">data_out[31:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="array" fp_name="/Top_tb/direct_button_in">
+      <obj_property name="ElementShortName">direct_button_in[4:0]</obj_property>
+      <obj_property name="ObjectShortName">direct_button_in[4:0]</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+   </wvobject>
+   <wvobject type="group" fp_name="group422">
+      <obj_property name="label">Debouncer 0</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/Top_tb/dut/system_bus/direct_button_controller/\g_debouncer[0].debouncer /tick_1ms">
+         <obj_property name="ElementShortName">tick_1ms</obj_property>
+         <obj_property name="ObjectShortName">tick_1ms</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Top_tb/dut/system_bus/direct_button_controller/\g_debouncer[0].debouncer /ms_timer">
+         <obj_property name="ElementShortName">ms_timer[4:0]</obj_property>
+         <obj_property name="ObjectShortName">ms_timer[4:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/Top_tb/dut/system_bus/direct_button_controller/\g_debouncer[0].debouncer /pressed">
+         <obj_property name="ElementShortName">pressed</obj_property>
+         <obj_property name="ObjectShortName">pressed</obj_property>
+      </wvobject>
    </wvobject>
 </wave_config>

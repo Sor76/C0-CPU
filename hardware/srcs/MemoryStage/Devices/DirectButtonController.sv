@@ -6,7 +6,7 @@ module DirectButtonController
     parameter int BUTTON_COUNT  = 5,            // Number of buttons wired directly to pins (1 - 32).
     parameter int TARGET_MS     = 20,           // Debounce time in ms.
     parameter int CLOCK_RATE    = 50_000_000,
-    parameter bit ACTIVE_LOW    = 1             // 1 = pull-up button (pressed = 0).
+    parameter bit ACTIVE_LOW    = 0             // 1 = pull-up button (pressed = 0).
 ) (
     input   logic                       clk,
     input   logic                       rst_n,
@@ -21,8 +21,8 @@ module DirectButtonController
 
     // Dividing the clock down to 1000Hz (1 ms per pulse)
     localparam int CLOCK_PER_MS = CLOCK_RATE / 1000;
-    logic [$clog2(CLOCK_PER_MS)-1:0] clk_counter;
-    logic tick_1ms;
+    logic [$clog2(CLOCK_PER_MS)-1:0] clk_counter = '0;
+    logic tick_1ms = 0;
     always_ff @(posedge clk) begin
         if (!rst_n) begin
             clk_counter <= '0;
