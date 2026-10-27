@@ -1,8 +1,8 @@
-set_property -dict {PACKAGE_PIN U18 IOSTANDARD LVCMOS33} [get_ports clk]
+set_property -dict {PACKAGE_PIN H11 IOSTANDARD LVCMOS33} [get_ports clk]
 create_clock -period 20.000 -name sys_clk [get_ports clk]
 
-# set_property -dict {PACKAGE_PIN C20 IOSTANDARD LVCMOS33} [get_ports rst_n]
-set_property -dict {PACKAGE_PIN R17 IOSTANDARD LVCMOS33} [get_ports rst_n]
+# # set_property -dict {PACKAGE_PIN C20 IOSTANDARD LVCMOS33} [get_ports rst_n]
+# set_property -dict {PACKAGE_PIN R17 IOSTANDARD LVCMOS33} [get_ports rst_n]
 
 # LCD
 set_property -dict {PACKAGE_PIN M4 IOSTANDARD LVCMOS33} [get_ports {lcd_write_data[0]}]
