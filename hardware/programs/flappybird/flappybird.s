@@ -150,10 +150,12 @@ main_loop:
     #
     # s8 = Top pipe y
     # s9 = Pipe x
-
+    # s10 = Min top pipe y
+    # s11 = Max top pipe y
+    #
     # t4 = Current button value
     # t5 = Last button value
-    # t6 = Previous bird y
+    # t6 = Previous bird y / pop out last pipe x
 
     mv t5, zero
     mv t6, s2
@@ -167,8 +169,12 @@ main_loop:
 
     li s8, 55
     li s9, 279
+    li s10, 10
+    li s11, 120
 
     PUSH t5
+    NOP_SEQ
+    PUSH s9
 
     begin:
         # Draw background
@@ -203,9 +209,49 @@ main_loop:
             NOP_SEQ
 
             # Overwrite previous pipe
+            # Top Pipe
+            PEEK t6
+            NOP_SEQ
+            mv a0, t6
+            mv a1, zero
+            li a2, 0b00111
+            addi a3, t6, 20
+            mv a4, s8
+            NOP_SEQ
+            jal ra, draw_box
+            NOP_SEQ
 
+            # Bottom Pipe
+            POP t6
+            NOP_SEQ
+            mv a0, t6
+            addi a1, s8, 50
+            li a2, 0b00111
+            addi a3, t6, 20
+            li a4, 179
+            NOP_SEQ
+            jal ra, draw_box
+            NOP_SEQ
 
             # Draw pipe
+            # Top Pipe
+            mv a0, s9
+            mv a1, zero
+            li a2, 0b00100
+            addi a3, s9, 20
+            mv a4, s8
+            NOP_SEQ
+            jal ra, draw_box
+            NOP_SEQ
+            # Bottom Pipe
+            mv a0, s9
+            addi a1, s8, 50
+            li a2, 0b00100
+            addi a3, s9, 20
+            li a4, 179
+            NOP_SEQ
+            jal ra, draw_box
+            NOP_SEQ
 
             # Check if button is newly pressed.
             # If newly press go to rise_velocity_update.
@@ -222,25 +268,29 @@ main_loop:
             # Update velocity
             rise_velocity_update:
                 mv s3, s5
-                j update_position
+                j update_bird_position
                 NOP_SEQ
 
             fall_velocity_update:
-                bge s3, s4, update_position                 # Check if velocity reach it minimum yet. If so, don't update velocity.
+                bge s3, s4, update_bird_position            # Check if velocity reach it minimum yet. If so, don't update velocity.
                 NOP_SEQ
                 addi s3, s3, 1
                 NOP_SEQ
 
-            update_position:
+            update_bird_position:
                 mv t6, s2                                   # Update previous bird y position.
-                add s2, s2, s3                              # Update first
+                add s2, s2, s3                              # Update y with velocity directly
                 NOP_SEQ
                 bge s2, s7, game_over_pause                 # Check if the bird is out of border. If so, game over.
                 NOP_SEQ
                 ble s2, s6, game_over_pause
                 NOP_SEQ
 
-                NOP_SEQ
+                # Check if the bird is hitting the pipe
+
+            # Update pipe position
+            PUSH s9                                         # Record current position. t6 will pop this out when overwritting.
+            addi s9, s9, -5
 
             # Pause for roughly 42 miliseconds per each frame
             li a0, 2097152
