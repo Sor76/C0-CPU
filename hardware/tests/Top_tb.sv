@@ -2,52 +2,26 @@
 
 module Top_tb;
     logic clk;
-    // logic rst_n;
-
-    logic [7:0] lcd_write_data;
-    logic lcd_rs;
-    logic lcd_e;
 
     logic [4:0] direct_button_in = '1;
 
-    // logic button_col_in [0:3];
-    // logic button_row_out [0:4];
+    logic [8:0] vga_x;
+    logic [7:0] vga_y;
+    logic [4:0] vga_rgb;
+    logic       vga_parity;
+    logic       vga_strobe;
 
     Top dut (
         .clk(clk),
-        // .rst_n(rst_n),
 
-        .lcd_write_data(lcd_write_data),
-        .lcd_rs(lcd_rs),
-        .lcd_e(lcd_e),
+        .direct_button_in(direct_button_in),
 
-        .direct_button_in(direct_button_in)
-        
-        // .button_col_in(button_col_in),
-        // .button_row_out(button_row_out)
+        .vga_x(vga_x),
+        .vga_y(vga_y),
+        .vga_rgb(vga_rgb),
+        .vga_parity(vga_parity),
+        .vga_strobe(vga_strobe)
     );
-
-    // function static int find_zero(input logic array [0:4]);
-    //     int idx[$] = array.find_index() with (item == 0);
-    //     return (idx.size() == 0) ? -1 : idx[0];
-    // endfunction
-    // logic button_pressing_matrix [0:4][0:3] = '{
-    //     '{1, 1, 1, 1},
-    //     '{1, 1, 1, 1},
-    //     '{1, 1, 1, 1},
-    //     '{1, 1, 1, 1},
-    //     '{1, 1, 1, 1}
-    // };
-    // int idx;
-    // logic [3:0] col_packed;
-    // logic [4:0] row_packed;
-    // always_comb begin
-    //     idx = find_zero(button_row_out);        
-    //     button_col_in = button_pressing_matrix[idx];        
-    //     col_packed = {>>{button_col_in}};
-    //     row_packed = {>>{button_row_out}};
-    //     $display("out: %b, in: %b, idx: %d, test: %p", row_packed, col_packed, idx, button_pressing_matrix[0]);
-    // end
 
     initial begin
         clk = 0;
@@ -55,19 +29,6 @@ module Top_tb;
         // button_col_in = '{default: 0};
         forever #10ns clk = !clk;
     end
-
-    // int row;
-    // int col;
-    // initial begin
-    //     forever #75ms begin
-    //         button_pressing_matrix = '{default: 1};
-
-    //         assert (std::randomize(row) with {row inside {[0:4]};} && std::randomize(row) with {row inside {[0:3]};})
-    //         else   $fatal(1, "Unable to randomize row/col value.");
-
-    //         button_pressing_matrix[row][col] = 0;
-    //     end
-    // end
 
     initial begin
         #25ms
@@ -88,9 +49,5 @@ module Top_tb;
 
         #25ms
         direct_button_in = '0;
-
-
-        // #75ms
-        // button_pressing_matrix = '{default: 1};
     end
 endmodule

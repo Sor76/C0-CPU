@@ -6,7 +6,7 @@ module Top
     import Types_pkg::*;
 #(
     localparam int      INSTRUCTION_MEM_ADDRESS_WIDTH   = 15,               // 2**15 (~32K) x 1 = 32KiB Byte addressable instruction memory
-    localparam string   PROGRAM_NAME                    = "DirectButtonTest.mem",
+    localparam string   PROGRAM_NAME                    = "flappybird.mem",
     
     localparam int      DATA_MEM_ADDRESS_WIDTH          = 13,               // 2**13 (~8K) x 1 = 8KiB Byte addressable data memory
 
@@ -19,16 +19,22 @@ module Top
     // input logic rst_n, // Reset button
 
     // LCD connection
-    output logic [7:0] lcd_write_data,
-    output logic lcd_rs,
-    output logic lcd_e,
+    // output logic [7:0] lcd_write_data,
+    // output logic lcd_rs,
+    // output logic lcd_e,
 
     // Buttons connection (Exclude reset button)
     // input logic button_col_in [0:BUTTON_COLS-1],
     // output logic button_row_out [0:BUTTON_ROWS-1],
 
     // Direct Button
-    input logic [DIRECT_BUTTON_COUNT-1:0] direct_button_in
+    input logic [DIRECT_BUTTON_COUNT-1:0] direct_button_in,
+
+    output  logic [8:0] vga_x,
+    output  logic [7:0] vga_y,
+    output  logic [4:0] vga_rgb,
+    output  logic       vga_parity,
+    output  logic       vga_strobe
 );
     // Debugging stuff
     // assign debug_led[0] = !rst_n;
@@ -40,6 +46,9 @@ module Top
 
     // Fake IO
     logic rst_n = 1;
+    logic [7:0] lcd_write_data;
+    logic lcd_rs;
+    logic lcd_e;
     logic button_col_in [0:BUTTON_COLS-1] = '{default: 1}; 
     logic button_row_out [0:BUTTON_ROWS-1];
 
@@ -105,6 +114,7 @@ module Top
     Word            lcd_read_data;
     Word            button_read_data;
     Word            direct_button_read_data;
+    Word            vga_read_data;
     ReadOp          validated_read_op;
     DeviceDataSrc   device_data_src;
 
@@ -119,6 +129,7 @@ module Top
     Word            lcd_read_data_mem_wb_reg;
     Word            button_read_data_mem_wb_reg;
     Word            direct_button_read_data_mem_wb_reg;
+    Word            vga_read_data_mem_wb_reg;
     DeviceDataSrc   device_data_src_mem_wb_reg;
 
     Word            device_data;
@@ -238,6 +249,7 @@ module Top
         .lcd_read_data(lcd_read_data),
         .button_read_data(button_read_data),
         .direct_button_read_data(direct_button_read_data),
+        .vga_read_data(vga_read_data),
 
         .validated_read_op(validated_read_op),
         .device_data_src(device_data_src),
@@ -249,7 +261,13 @@ module Top
         .col_in(button_col_in),
         .row_out(button_row_out),
 
-        .direct_button_in(direct_button_in)
+        .direct_button_in(direct_button_in),
+
+        .vga_x(vga_x),
+        .vga_y(vga_y),
+        .vga_rgb(vga_rgb),
+        .vga_parity(vga_parity),
+        .vga_strobe(vga_strobe)
     );
 
     // ===================
@@ -260,6 +278,7 @@ module Top
         .lcd_read_data(lcd_read_data_mem_wb_reg),
         .button_read_data(button_read_data_mem_wb_reg),
         .direct_button_read_data(direct_button_read_data_mem_wb_reg),
+        .vga_read_data(vga_read_data_mem_wb_reg),
         .device_data_src(device_data_src_mem_wb_reg),
 
         .device_data(device_data)
@@ -356,6 +375,7 @@ module Top
         .lcd_read_data(lcd_read_data),
         .button_read_data(button_read_data),
         .direct_button_read_data(direct_button_read_data),
+        .vga_read_data(vga_read_data),
         .device_data_src(device_data_src),
         .rd_src(rd_src_ex_mem_reg),
         .rd_addr(rd_addr_ex_mem_reg),
@@ -369,6 +389,7 @@ module Top
         .lcd_read_data_register(lcd_read_data_mem_wb_reg),
         .button_read_data_register(button_read_data_mem_wb_reg),
         .direct_button_read_data_register(direct_button_read_data_mem_wb_reg),
+        .vga_read_data_register(vga_read_data_mem_wb_reg),
         .device_data_src_register(device_data_src_mem_wb_reg),
         .rd_src_register(rd_src_mem_wb_reg),
         .rd_addr_register(rd_addr_mem_wb_reg),

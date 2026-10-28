@@ -14,15 +14,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0.000000000 ms"></ZoomStartTime>
-      <ZoomEndTime time="200.001000000 ms"></ZoomEndTime>
-      <Cursor1Time time="200.001000000 ms"></Cursor1Time>
+      <ZoomStartTime time="6.905745019 ms"></ZoomStartTime>
+      <ZoomEndTime time="238.620050997 ms"></ZoomEndTime>
+      <Cursor1Time time="186.986326693 ms"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="191"></NameColumnWidth>
-      <ValueColumnWidth column_width="75"></ValueColumnWidth>
+      <NameColumnWidth column_width="177"></NameColumnWidth>
+      <ValueColumnWidth column_width="61"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="16" />
+   <WVObjectSize size="22" />
    <wvobject type="logic" fp_name="/Top_tb/clk">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -444,6 +444,45 @@
          <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
    </wvobject>
+   <wvobject type="group" fp_name="group419">
+      <obj_property name="label">VGA</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="logic" fp_name="/Top_tb/dut/system_bus/vga_controller/device_select">
+         <obj_property name="ElementShortName">device_select</obj_property>
+         <obj_property name="ObjectShortName">device_select</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Top_tb/dut/system_bus/vga_controller/write_data">
+         <obj_property name="ElementShortName">write_data[31:0]</obj_property>
+         <obj_property name="ObjectShortName">write_data[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Top_tb/dut/system_bus/vga_controller/validated_write_op">
+         <obj_property name="ElementShortName">validated_write_op[1:0]</obj_property>
+         <obj_property name="ObjectShortName">validated_write_op[1:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Top_tb/dut/system_bus/vga_controller/vga_x">
+         <obj_property name="ElementShortName">vga_x[8:0]</obj_property>
+         <obj_property name="ObjectShortName">vga_x[8:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Top_tb/dut/system_bus/vga_controller/vga_y">
+         <obj_property name="ElementShortName">vga_y[7:0]</obj_property>
+         <obj_property name="ObjectShortName">vga_y[7:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Top_tb/dut/system_bus/vga_controller/vga_rgb">
+         <obj_property name="ElementShortName">vga_rgb[4:0]</obj_property>
+         <obj_property name="ObjectShortName">vga_rgb[4:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/Top_tb/dut/system_bus/vga_controller/vga_parity">
+         <obj_property name="ElementShortName">vga_parity</obj_property>
+         <obj_property name="ObjectShortName">vga_parity</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/Top_tb/dut/system_bus/vga_controller/vga_strobe">
+         <obj_property name="ElementShortName">vga_strobe</obj_property>
+         <obj_property name="ObjectShortName">vga_strobe</obj_property>
+      </wvobject>
+   </wvobject>
    <wvobject type="group" fp_name="group97">
       <obj_property name="label">PC</obj_property>
       <obj_property name="DisplayName">label</obj_property>
@@ -534,131 +573,153 @@
    <wvobject type="group" fp_name="group132">
       <obj_property name="label">Register File</obj_property>
       <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
       <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[31]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[31][31:0]</obj_property>
          <obj_property name="ObjectShortName">[31][31:0]</obj_property>
          <obj_property name="label">t6 x31</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[30]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[30][31:0]</obj_property>
          <obj_property name="ObjectShortName">[30][31:0]</obj_property>
          <obj_property name="label">t5 x30</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[29]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[29][31:0]</obj_property>
          <obj_property name="ObjectShortName">[29][31:0]</obj_property>
          <obj_property name="label">t4 x29</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[28]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[28][31:0]</obj_property>
          <obj_property name="ObjectShortName">[28][31:0]</obj_property>
          <obj_property name="label">t3 x28</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[27]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[27][31:0]</obj_property>
          <obj_property name="ObjectShortName">[27][31:0]</obj_property>
          <obj_property name="label">s11 x27</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[26]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[26][31:0]</obj_property>
          <obj_property name="ObjectShortName">[26][31:0]</obj_property>
          <obj_property name="label">s10 x26</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[25]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[25][31:0]</obj_property>
          <obj_property name="ObjectShortName">[25][31:0]</obj_property>
          <obj_property name="label">s9 x25</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[24]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[24][31:0]</obj_property>
          <obj_property name="ObjectShortName">[24][31:0]</obj_property>
          <obj_property name="label">s8 x24</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[23]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[23][31:0]</obj_property>
          <obj_property name="ObjectShortName">[23][31:0]</obj_property>
          <obj_property name="label">s7 x23</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[22]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[22][31:0]</obj_property>
          <obj_property name="ObjectShortName">[22][31:0]</obj_property>
          <obj_property name="label">s6 x22</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[21]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[21][31:0]</obj_property>
          <obj_property name="ObjectShortName">[21][31:0]</obj_property>
          <obj_property name="label">s5 x21</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[20]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[20][31:0]</obj_property>
          <obj_property name="ObjectShortName">[20][31:0]</obj_property>
          <obj_property name="label">s4 x20</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[19]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[19][31:0]</obj_property>
          <obj_property name="ObjectShortName">[19][31:0]</obj_property>
          <obj_property name="label">s3 x19</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[18]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[18][31:0]</obj_property>
          <obj_property name="ObjectShortName">[18][31:0]</obj_property>
          <obj_property name="label">s2 x18</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[17]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[17][31:0]</obj_property>
          <obj_property name="ObjectShortName">[17][31:0]</obj_property>
          <obj_property name="label">a7 x17</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[16]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[16][31:0]</obj_property>
          <obj_property name="ObjectShortName">[16][31:0]</obj_property>
          <obj_property name="label">a6 x16</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[15]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[15][31:0]</obj_property>
          <obj_property name="ObjectShortName">[15][31:0]</obj_property>
          <obj_property name="label">a5 x15</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[14]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[14][31:0]</obj_property>
          <obj_property name="ObjectShortName">[14][31:0]</obj_property>
          <obj_property name="label">a4 x14</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[13]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[13][31:0]</obj_property>
          <obj_property name="ObjectShortName">[13][31:0]</obj_property>
          <obj_property name="label">a3 x13</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[12]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[12][31:0]</obj_property>
          <obj_property name="ObjectShortName">[12][31:0]</obj_property>
          <obj_property name="label">a2 x12</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[11]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[11][31:0]</obj_property>
          <obj_property name="ObjectShortName">[11][31:0]</obj_property>
          <obj_property name="label">a1 x11</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[10]">
          <obj_property name="DisplayName">label</obj_property>
@@ -666,25 +727,29 @@
          <obj_property name="ObjectShortName">[10][31:0]</obj_property>
          <obj_property name="label">a0 x10</obj_property>
          <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         <obj_property name="CustomSignalColor">#00FF00</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[9]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[9][31:0]</obj_property>
          <obj_property name="ObjectShortName">[9][31:0]</obj_property>
          <obj_property name="label">s1 x9</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[8]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[8][31:0]</obj_property>
          <obj_property name="ObjectShortName">[8][31:0]</obj_property>
          <obj_property name="label">s0 / fp x8</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[7]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[7][31:0]</obj_property>
          <obj_property name="ObjectShortName">[7][31:0]</obj_property>
          <obj_property name="label">t2 x7</obj_property>
-         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[6]">
          <obj_property name="DisplayName">label</obj_property>
@@ -698,19 +763,21 @@
          <obj_property name="ElementShortName">[5][31:0]</obj_property>
          <obj_property name="ObjectShortName">[5][31:0]</obj_property>
          <obj_property name="label">t0 x5</obj_property>
-         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[4]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[4][31:0]</obj_property>
          <obj_property name="ObjectShortName">[4][31:0]</obj_property>
          <obj_property name="label">tp x4</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[3]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[3][31:0]</obj_property>
          <obj_property name="ObjectShortName">[3][31:0]</obj_property>
          <obj_property name="label">gp x3</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[2]">
          <obj_property name="DisplayName">label</obj_property>
@@ -724,13 +791,14 @@
          <obj_property name="ElementShortName">[1][31:0]</obj_property>
          <obj_property name="ObjectShortName">[1][31:0]</obj_property>
          <obj_property name="label">ra x1</obj_property>
-         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/register_file/register_array[0]">
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="ElementShortName">[0][31:0]</obj_property>
          <obj_property name="ObjectShortName">[0][31:0]</obj_property>
          <obj_property name="label">zero x0</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
    </wvobject>
    <wvobject type="group" fp_name="group102">
@@ -764,9 +832,8 @@
       <obj_property name="label">Address Decoder</obj_property>
       <obj_property name="DisplayName">label</obj_property>
       <wvobject type="array" fp_name="/Top_tb/dut/system_bus/address_decoder/device_select">
-         <obj_property name="ElementShortName">device_select[4:0]</obj_property>
-         <obj_property name="ObjectShortName">device_select[4:0]</obj_property>
-         <obj_property name="isExpanded"></obj_property>
+         <obj_property name="ElementShortName">device_select[5:0]</obj_property>
+         <obj_property name="ObjectShortName">device_select[5:0]</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/Top_tb/dut/system_bus/address_decoder/device_address">
          <obj_property name="ElementShortName">device_address[28:0]</obj_property>
@@ -784,6 +851,7 @@
    <wvobject type="group" fp_name="group299">
       <obj_property name="label">IFID Register</obj_property>
       <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
       <wvobject type="array" fp_name="/Top_tb/dut/if_id_reg/instruction_register">
          <obj_property name="ElementShortName">instruction_register[31:0]</obj_property>
          <obj_property name="ObjectShortName">instruction_register[31:0]</obj_property>
@@ -947,7 +1015,6 @@
    <wvobject type="group" fp_name="group414">
       <obj_property name="label">Direct Button Controller</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <obj_property name="isExpanded"></obj_property>
       <wvobject type="logic" fp_name="/Top_tb/dut/system_bus/direct_button_controller/tick_1ms">
          <obj_property name="ElementShortName">tick_1ms</obj_property>
          <obj_property name="ObjectShortName">tick_1ms</obj_property>
@@ -973,7 +1040,6 @@
    <wvobject type="array" fp_name="/Top_tb/direct_button_in">
       <obj_property name="ElementShortName">direct_button_in[4:0]</obj_property>
       <obj_property name="ObjectShortName">direct_button_in[4:0]</obj_property>
-      <obj_property name="isExpanded"></obj_property>
    </wvobject>
    <wvobject type="group" fp_name="group422">
       <obj_property name="label">Debouncer 0</obj_property>
@@ -990,5 +1056,25 @@
          <obj_property name="ElementShortName">pressed</obj_property>
          <obj_property name="ObjectShortName">pressed</obj_property>
       </wvobject>
+   </wvobject>
+   <wvobject type="array" fp_name="/Top_tb/vga_x">
+      <obj_property name="ElementShortName">vga_x[8:0]</obj_property>
+      <obj_property name="ObjectShortName">vga_x[8:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/Top_tb/vga_y">
+      <obj_property name="ElementShortName">vga_y[7:0]</obj_property>
+      <obj_property name="ObjectShortName">vga_y[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/Top_tb/vga_rgb">
+      <obj_property name="ElementShortName">vga_rgb[4:0]</obj_property>
+      <obj_property name="ObjectShortName">vga_rgb[4:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/Top_tb/vga_parity">
+      <obj_property name="ElementShortName">vga_parity</obj_property>
+      <obj_property name="ObjectShortName">vga_parity</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/Top_tb/vga_strobe">
+      <obj_property name="ElementShortName">vga_strobe</obj_property>
+      <obj_property name="ObjectShortName">vga_strobe</obj_property>
    </wvobject>
 </wave_config>

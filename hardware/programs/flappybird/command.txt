@@ -1,0 +1,3 @@
+riscv32-unknown-elf-gcc -march=rv32i -mabi=ilp32 -nostdlib -nostartfiles -mno-relax -T flappybird.ld flappybird.s -o flappybird.elf
+riscv32-unknown-elf-objcopy -O binary flappybird.elf flappybird.bin
+hexdump -v -e '4/1 "%02x " "\n"' flappybird.bin > flappybird.mem
