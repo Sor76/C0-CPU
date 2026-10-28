@@ -30,14 +30,6 @@
     addi \rd, \rd, %pcrel_lo(1b)
 .endm
 
-.macro WRITE_TO_VGA_IMM x, y, rgb
-    addi a2, zero, /rgb
-    addi a1, zero, /y
-    addi a0, zero, /x
-    jal ra, write_lcd
-    NOP_SEQ
-.endm
-
 _start:
     wait_ram_reset:
         li a0, 4096
@@ -145,28 +137,208 @@ write_vga:
     NOP_SEQ
 
 main_loop:
+    # Using register
     # s0 = button origin
+    # s1 = vga origin
     # s2 = current bird y position
-    # s3 = pipe x position
-    # s4 = pipe hole height
+    # s3 = Current bird y velocity
+    # s4 = Min bird y velocity
+    # s5 = Max bird y velocity
+    # s6 = Min bird y
+    # s7 = Max bird y
+
+    # t4 = Current button value
+    # t5 = Last button value
+    # t6 = Previous bird y
 
     li s2, 80
+    li s3, 0
+    li s4, -5
+    li s5, 5
+    li s6, 19
+    li s7, 160
 
-    jal ra, clear_screen_loop
-    NOP_SEQ
-    jal ra, draw_bird
-    NOP_SEQ
+    mv t4, zero
+    mv t5, zero
+    mv t6, s2
+
+    begin:
+        # Draw background
+        li a0, 0
+        li a1, 0
+        li a2, 0b00111
+        li a3, 319
+        li a4, 179
+        NOP_SEQ
+        jal ra, draw_box
+        NOP_SEQ
+
+        update_loop:
+            # Overwrite previous bird
+            li a0, 75
+            mv a1, t6
+            li a2, 0b00111
+            li a3, 85
+            addi a4, t6, 10
+            NOP_SEQ
+            jal ra, draw_box
+            NOP_SEQ
+
+            # Draw bird
+            li a0, 75
+            mv a1, s2
+            li a2, 0b11100
+            li a3, 85
+            addi a4, s2, 10
+            NOP_SEQ
+            jal ra, draw_box
+            NOP_SEQ
+
+            # Check if button is newly pressed
+
+            # Update velocity
+            ble s3, s4, update_position         # Check if velocity reach it minimum yet. If so, don't update.
+            NOP_SEQ
+            add s3, s3, 1
+            NOP_SEQ
+
+            update_position:
+                mv t6, s2                       # Update previous bird y position.
+                add s2, s2, s3                  # Update first
+                NOP_SEQ
+                bge s2, s7, game_over_pause     # Check if the bird is out of border. If so, game over.
+                ble s2, s6, game_over_pause
+                NOP_SEQ
+
+                NOP_SEQ
+
+            # Pause for roughly 300 miliseconds per each frame
+            li a0, 16777216
+            jal ra, counter
+            NOP_SEQ
+
+            j update_loop
+            NOP_SEQ
+
+        game_over_pause:
+            # Pause for roughly 1 sec
+            li a0, 67108864
+            jal ra, counter
+            NOP_SEQ
+
+            # Draw red background
+            li a0, 0
+            li a1, 0
+            li a2, 0b11000
+            li a3, 319
+            li a4, 179
+            NOP_SEQ
+            jal ra, draw_box
+            NOP_SEQ
+
+            # LOL TEXT
+            # First L
+            li a0, 10
+            li a1, 10
+            li a2, 0b00000
+            li a3, 20
+            li a4, 169
+            NOP_SEQ
+            jal ra, draw_box
+            NOP_SEQ
+
+            li a0, 20
+            li a1, 159
+            li a2, 0b00000
+            li a3, 80
+            li a4, 169
+            NOP_SEQ
+            jal ra, draw_box
+            NOP_SEQ
+
+            # O
+            li a0, 100
+            li a1, 10
+            li a2, 0b00000
+            li a3, 110
+            li a4, 169
+            NOP_SEQ
+            jal ra, draw_box
+            NOP_SEQ
+
+            li a0, 110
+            li a1, 10
+            li a2, 0b00000
+            li a3, 209
+            li a4, 20
+            NOP_SEQ
+            jal ra, draw_box
+            NOP_SEQ
+
+            li a0, 110
+            li a1, 159
+            li a2, 0b00000
+            li a3, 209
+            li a4, 169
+            NOP_SEQ
+            jal ra, draw_box
+            NOP_SEQ
+
+            li a0, 209
+            li a1, 10
+            li a2, 0b00000
+            li a3, 219
+            li a4, 169
+            NOP_SEQ
+            jal ra, draw_box
+            NOP_SEQ
+
+            # Last L
+            li a0, 239
+            li a1, 10
+            li a2, 0b00000
+            li a3, 249
+            li a4, 169
+            NOP_SEQ
+            jal ra, draw_box
+            NOP_SEQ
+
+            li a0, 249
+            li a1, 159
+            li a2, 0b00000
+            li a3, 309
+            li a4, 169
+            NOP_SEQ
+            jal ra, draw_box
+            NOP_SEQ
+
+            j exit_loop
+            NOP_SEQ
 
     j exit_loop
     NOP_SEQ
 
-    clear_screen_loop:
+    draw_box:
+        # Input arguments
+        # a0 = start x
+        # a1 = start y
+        # a2 = colour
+        # a3 = max x
+        # a4 = max y
+        #
+        # Using registers for processing
+        # a0 = current x
+        # a1 = current y
+        # a2 = colour
+        # t4 = start x
+        # t5 = max x
+        # t6 = max y
+
         PUSH ra
-        li a0, 0                        # Current pixel x
-        li a1, 0                        # Current pixel y
-        li a2, 0b00111                  # cyan
-        li t5, 319                      # Max x
-        li t6, 180                      # Max y (need + 1)
+
+        mv t4, a0
+        mv t5, a3
+        addi t6, a4, 1                  # +1 quirk
 
         # Draw a pixel
         1:
@@ -184,50 +356,7 @@ main_loop:
         # Start a new line
         bne a0, t5, 2f
         NOP_SEQ
-        mv a0, zero
-        addi a1, a1, 1
-        j 3f
-        NOP_SEQ
-
-        # Should be on the same line
-        2:
-            addi a0, a0, 1
-            NOP_SEQ
-
-        # Check if finish drawing the entire screen
-        3:
-            bne a1, t6, 1b
-            NOP_SEQ
-            POP ra
-            NOP_SEQ
-            ret
-            NOP_SEQ
-
-    draw_bird:
-        PUSH ra
-        li a0, 75                       # Current x pixel cordinate
-        mv a1, s2                       # Current y pixel cordinate
-        li a2, 0b11100                  # Orange ?
-        li t5, 85                       # Max x
-        addi t6, s2, 11                 # Max y
-
-        # Draw a pixel
-        1:
-            PUSH a0
-            NOP_SEQ
-            PUSH a1
-
-            jal ra, write_vga
-            NOP_SEQ
-            POP a1
-            NOP_SEQ
-            POP a0
-            NOP_SEQ
-
-        # Start a new line
-        bne a0, t5, 2f
-        NOP_SEQ
-        addi a0, zero, 75
+        mv a0, t4
         addi a1, a1, 1
         j 3f
         NOP_SEQ
