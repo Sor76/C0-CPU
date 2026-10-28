@@ -153,8 +153,8 @@ main_loop:
     # s10 = Min top pipe y
     # s11 = Max top pipe y
     #
-    # t4 = Current button value
-    # t5 = Last button value
+    # t4 = Current button value / temp bird left side x value for pipe hitting check
+    # t5 = Last button value / temp bird right side x value for pipe hitting check
     # t6 = Previous bird y / pop out last pipe x / immediate load for max x (10) for pipe
 
     mv t5, zero
@@ -263,7 +263,6 @@ main_loop:
             beq t4, zero, fall_velocity_update              # Current button value is zero aka button are not pressed
             NOP_SEQ
 
-            # Update velocity
             rise_velocity_update:
                 mv s3, s5
                 j update_bird_position
@@ -279,50 +278,67 @@ main_loop:
                 PUSH s2                                     # Update previous bird y position. t6 will pop this out.
                 add s2, s2, s3                              # Update y with velocity directly
                 NOP_SEQ
-                bge s2, s7, game_over_pause                 # Check if the bird is out of border. If so, game over.
+
+                # Check if the bird is out of play border. If so, game over.
+                bge s2, s7, game_over_pause
                 NOP_SEQ
                 ble s2, s6, game_over_pause
                 NOP_SEQ
-
+                
                 # Check if the bird is hitting the pipe
+                addi t0, s9, 20                             # Right side of the pipe
+                li t4, 75                                   # Bird left side x value
+                li t5, 85                                   # Bird right side x value
+                NOP_SEQ
+                blt t0, t4, update_pipe_position            # Pipe already pass the bird
+                NOP_SEQ
+                bge s9, t5, update_pipe_position            # Pipe doesn't reach the bird yet
+                NOP_SEQ
 
-            # Update pipe position
-            PUSH s9                                         # Record current position. t6 will pop this out when overwritting.
-            addi s9, s9, -3
+                addi t4, s2, 10                             # Bird bottom's y value
+                addi t5, s8, 50                             # Bottom pipe's y value
+                ble s2, s8, game_over_pause                 # Bird is overlapping the top pipe
+                NOP_SEQ
+                bge t4, t5, game_over_pause                 # Bird is overlapping the bottom pipe
+                NOP_SEQ
 
-            # Check if the pipe have reach the left part of the screen
-            li t6, 10
-            NOP_SEQ
-            bgt s9, t6, 2f                                  # Skip new pipe generating if not in the deleting zone yet.
-            NOP_SEQ
-            li s9, 279
+            update_pipe_position:
+                PUSH s9                                         # Record current position. t6 will pop this out when overwritting.
+                addi s9, s9, -3
 
-            # Overwrite the pipe
-            # Top Pipe
-            PEEK t6
-            NOP_SEQ
-            mv a0, t6
-            mv a1, zero
-            li a2, 0b00111
-            addi a3, t6, 20
-            mv a4, s8
-            NOP_SEQ
-            jal ra, draw_box
-            NOP_SEQ
-            # Bottom Pipe
-            POP t6
-            NOP_SEQ
-            mv a0, t6
-            addi a1, s8, 50
-            li a2, 0b00111
-            addi a3, t6, 20
-            li a4, 179
-            NOP_SEQ
-            jal ra, draw_box
-            NOP_SEQ
+                # Check if the pipe have reach the left part of the screen
+                li t6, 10
+                NOP_SEQ
+                bgt s9, t6, 2f                                  # Skip new pipe generating if not in the deleting zone yet.
+                NOP_SEQ
+                li s9, 279
 
-            PUSH s9                                         # Push the original s9 (when the program start) back.
-            2:
+                # Overwrite the pipe
+                # Top Pipe
+                PEEK t6
+                NOP_SEQ
+                mv a0, t6
+                mv a1, zero
+                li a2, 0b00111
+                addi a3, t6, 20
+                mv a4, s8
+                NOP_SEQ
+                jal ra, draw_box
+                NOP_SEQ
+                # Bottom Pipe
+                POP t6
+                NOP_SEQ
+                mv a0, t6
+                addi a1, s8, 50
+                li a2, 0b00111
+                addi a3, t6, 20
+                li a4, 179
+                NOP_SEQ
+                jal ra, draw_box
+                NOP_SEQ
+
+                PUSH s9                                         # Push the original s9 (when the program start) back.
+                2:
 
             # Pause for roughly 42 miliseconds per each frame
             li a0, 2097152
