@@ -140,27 +140,35 @@ main_loop:
     # Using register
     # s0 = button origin
     # s1 = vga origin
+    #
     # s2 = current bird y position
     # s3 = Current bird y velocity
     # s4 = Min bird y velocity
     # s5 = Max bird y velocity
     # s6 = Min bird y
     # s7 = Max bird y
+    #
+    # s8 = Top pipe y
+    # s9 = Pipe x
 
     # t4 = Current button value
     # t5 = Last button value
     # t6 = Previous bird y
 
-    li s2, 80
-    li s3, 0
-    li s4, -5
-    li s5, 5
-    li s6, 19
-    li s7, 160
-
-    mv t4, zero
     mv t5, zero
     mv t6, s2
+
+    li s2, 80
+    li s3, 0
+    li s4, 3
+    li s5, -7
+    li s6, 0
+    li s7, 170
+
+    li s8, 55
+    li s9, 279
+
+    PUSH t5
 
     begin:
         # Draw background
@@ -194,26 +202,48 @@ main_loop:
             jal ra, draw_box
             NOP_SEQ
 
-            # Check if button is newly pressed
+            # Overwrite previous pipe
+
+
+            # Draw pipe
+
+            # Check if button is newly pressed.
+            # If newly press go to rise_velocity_update.
+            # Else, branch to fall_velocity_update.
+            lbu t4, 0(s0)
+            POP t5
+            NOP_SEQ
+            PUSH t4                                         # Push current button value. t5 will pop this out later.
+            bne t5, zero, fall_velocity_update              # Previous button value is not zero aka already pressed
+            NOP_SEQ
+            beq t4, zero, fall_velocity_update              # Current button value is zero aka button are not pressed
+            NOP_SEQ
 
             # Update velocity
-            ble s3, s4, update_position         # Check if velocity reach it minimum yet. If so, don't update.
-            NOP_SEQ
-            add s3, s3, 1
-            NOP_SEQ
+            rise_velocity_update:
+                mv s3, s5
+                j update_position
+                NOP_SEQ
+
+            fall_velocity_update:
+                bge s3, s4, update_position                 # Check if velocity reach it minimum yet. If so, don't update velocity.
+                NOP_SEQ
+                addi s3, s3, 1
+                NOP_SEQ
 
             update_position:
-                mv t6, s2                       # Update previous bird y position.
-                add s2, s2, s3                  # Update first
+                mv t6, s2                                   # Update previous bird y position.
+                add s2, s2, s3                              # Update first
                 NOP_SEQ
-                bge s2, s7, game_over_pause     # Check if the bird is out of border. If so, game over.
+                bge s2, s7, game_over_pause                 # Check if the bird is out of border. If so, game over.
+                NOP_SEQ
                 ble s2, s6, game_over_pause
                 NOP_SEQ
 
                 NOP_SEQ
 
-            # Pause for roughly 300 miliseconds per each frame
-            li a0, 16777216
+            # Pause for roughly 42 miliseconds per each frame
+            li a0, 2097152
             jal ra, counter
             NOP_SEQ
 
@@ -311,6 +341,24 @@ main_loop:
             NOP_SEQ
             jal ra, draw_box
             NOP_SEQ
+
+            game_over_loop:
+                # Check if button is newly pressed.
+                # If newly press back to the main loop
+                # Else, continue to stuck in this cycle
+                lbu t4, 0(s0)
+                POP t5                                          # Read previous button value from previous loop and from the update loop.
+                NOP_SEQ
+                PUSH t4                                         # Push current button value. t5 will pop this out later.
+                NOP_SEQ
+                bne t5, zero, game_over_loop                    # Previous button value is not zero aka already pressed
+                NOP_SEQ
+                beq t4, zero, game_over_loop                    # Current button value is zero aka button are not pressed
+                NOP_SEQ
+
+                POP zero                                        # Pop out last button value
+                j main_loop
+                NOP_SEQ
 
             j exit_loop
             NOP_SEQ
