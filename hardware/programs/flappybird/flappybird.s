@@ -349,6 +349,47 @@ main_loop:
             NOP_SEQ
 
         game_over_pause:
+            # Draw white background
+            li a0, 0
+            li a1, 0
+            li a2, 0b11111
+            li a3, 319
+            li a4, 179
+            NOP_SEQ
+            jal ra, draw_box
+            NOP_SEQ
+
+            # Draw black pipe
+            # Top Pipe
+            mv a0, s9
+            mv a1, zero
+            li a2, 0b00000
+            addi a3, s9, 20
+            mv a4, s8
+            NOP_SEQ
+            jal ra, draw_box
+            NOP_SEQ
+            # Bottom Pipe
+            mv a0, s9
+            addi a1, s8, 50
+            li a2, 0b00000
+            addi a3, s9, 20
+            li a4, 179
+            NOP_SEQ
+            jal ra, draw_box
+            NOP_SEQ
+
+            # Draw black bird
+            li a0, 75
+            mv a1, s2
+            li a2, 0b00000
+            li a3, 85
+            addi a4, s2, 10
+            NOP_SEQ
+            jal ra, draw_box
+            NOP_SEQ
+
+
             # Pause for roughly 1 sec
             li a0, 67108864
             jal ra, counter
